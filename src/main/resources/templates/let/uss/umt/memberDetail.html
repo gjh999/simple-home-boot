@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head><title>회원 상세</title></head>
+<body>
+<main layout:fragment="content">
+
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/member/list}">회원관리</a></li>
+                    <li class="breadcrumb-item active">상세</li>
+                </ol>
+            </nav>
+            <h2>회원 상세</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+        <div class="card">
+            <div class="card-body">
+                <table class="egov-table">
+                    <colgroup><col style="width:150px"/><col/><col style="width:150px"/><col/></colgroup>
+                    <tbody>
+                    <tr>
+                        <th class="text-center bg-light">아이디</th>
+                        <td th:text="${member?.mberId}">-</td>
+                        <th class="text-center bg-light">이름</th>
+                        <td th:text="${member?.mberNm}">-</td>
+                    </tr>
+                    <tr>
+                        <th class="text-center bg-light">이메일</th>
+                        <td th:text="${member?.mberEmailAdres}">-</td>
+                        <th class="text-center bg-light">휴대폰</th>
+                        <td th:text="${member?.moblphonNo}">-</td>
+                    </tr>
+                    <tr>
+                        <th class="text-center bg-light">우편번호</th>
+                        <td th:text="${member?.zip}">-</td>
+                        <th class="text-center bg-light">주소</th>
+                        <td th:text="${member?.adres}">-</td>
+                    </tr>
+                    <tr>
+                        <th class="text-center bg-light">회원상태</th>
+                        <td th:text="${member?.mberSttus}">-</td>
+                        <th class="text-center bg-light">가입일</th>
+                        <td th:text="${member?.sbscrbDe}">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a th:href="@{/member/list}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-list-ul me-1"></i>목록
+                </a>
+                <div class="d-flex gap-2">
+                    <a th:href="@{/member/{id}/update(id=${member?.mberId})}" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-pencil me-1"></i>수정
+                    </a>
+                    <form th:action="@{/member/{id}/delete(id=${member?.mberId})}" method="post" id="delMemberForm" class="d-inline">
+                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                onclick="if(confirm('회원을 삭제하시겠습니까?')) document.getElementById('delMemberForm').submit()">
+                            <i class="bi bi-trash me-1"></i>삭제
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

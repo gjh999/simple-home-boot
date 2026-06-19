@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head><title>회원관리</title></head>
+<body>
+<main layout:fragment="content">
+
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item active">회원관리</li>
+                </ol>
+            </nav>
+            <h2>회원관리</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+
+        <!-- 플래시 메시지 -->
+        <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show auto-dismiss" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- 검색 -->
+        <form th:action="@{/member/list}" method="get" class="search-bar">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-2">
+                    <select name="searchCondition" class="form-select form-select-sm">
+                        <option value="0" th:selected="${searchVO.searchCondition == '0'}">아이디</option>
+                        <option value="1" th:selected="${searchVO.searchCondition == '1'}">이름</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="searchKeyword" class="form-control form-control-sm"
+                           th:value="${searchVO.searchKeyword}" placeholder="검색어" maxlength="50"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                        <i class="bi bi-search me-1"></i>검색
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- 목록 -->
+        <div class="card">
+            <div class="card-body p-0">
+                <table class="egov-table mb-0">
+                    <thead>
+                    <tr>
+                        <th style="width:60px">번호</th>
+                        <th style="width:120px">아이디</th>
+                        <th>이름</th>
+                        <th style="width:130px">이메일</th>
+                        <th style="width:100px">상태</th>
+                        <th style="width:110px">가입일</th>
+                        <th style="width:100px">관리</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="member, stat : ${memberList}" th:if="${memberList != null and !#lists.isEmpty(memberList)}">
+                        <td class="text-center small text-muted" th:text="${stat.count}">1</td>
+                        <td class="text-center small" th:text="${member.mberId}">id</td>
+                        <td>
+                            <a th:href="@{/member/{id}/detail(id=${member.mberId})}"
+                               class="text-decoration-none text-dark"
+                               th:text="${member.mberNm}">이름</a>
+                        </td>
+                        <td class="small text-muted" th:text="${member.mberEmailAdres}">email</td>
+                        <td class="text-center">
+                            <span class="badge"
+                                  th:classappend="${member.mberSttus == '정상'} ? 'bg-success' : 'bg-secondary'"
+                                  th:text="${member.mberSttus}">상태</span>
+                        </td>
+                        <td class="text-center small text-muted"
+                            th:text="${member.sbscrbDe != null ? #strings.substring(member.sbscrbDe, 0, 10) : ''}">2026-01-01</td>
+                        <td class="text-center">
+                            <a th:href="@{/member/{id}/update(id=${member.mberId})}"
+                               class="btn btn-outline-primary btn-sm py-0 px-2">수정</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${memberList == null or #lists.isEmpty(memberList)}">
+                        <td colspan="7" class="text-center py-4 text-muted">
+                            <i class="bi bi-people fs-3 d-block mb-2"></i>등록된 회원이 없습니다.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 페이징 -->
+        <div th:replace="~{fragments/pagination :: pagination(paginationInfo=${paginationInfo}, baseUrl='/member/list', searchCnd='', searchWrd='')}"></div>
+
+    </div>
+</main>
+</body>
+</html>

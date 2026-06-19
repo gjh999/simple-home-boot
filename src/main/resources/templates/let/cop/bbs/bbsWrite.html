@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head><title>게시물 등록</title></head>
+<body>
+<main layout:fragment="content">
+
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/bbs/{bbsId}/list(bbsId=${bbsId})}">게시판</a></li>
+                    <li class="breadcrumb-item active">게시물 등록</li>
+                </ol>
+            </nav>
+            <h2>게시물 등록</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+
+        <!-- 등록 실패 시 사유 표시 (예: 허용되지 않는 파일 확장자) -->
+        <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form th:action="@{/bbs/{bbsId}/write(bbsId=${bbsId})}" method="post"
+                      id="writeForm" enctype="multipart/form-data" novalidate>
+
+                    <div class="mb-3">
+                        <label for="nttSj" class="form-label fw-semibold">제목 <span class="text-danger">*</span></label>
+                        <input type="text" id="nttSj" name="nttSj" class="form-control"
+                               th:value="${board.nttSj}"
+                               placeholder="제목을 입력하세요" required maxlength="2000"/>
+                        <div class="invalid-feedback">제목을 입력하세요.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nttCn" class="form-label fw-semibold">내용 <span class="text-danger">*</span></label>
+                        <textarea id="nttCn" name="nttCn" class="form-control"
+                                  rows="15" placeholder="내용을 입력하세요" required
+                                  th:text="${board.nttCn}"></textarea>
+                        <div class="invalid-feedback">내용을 입력하세요.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="file_1" class="form-label fw-semibold">
+                            <i class="bi bi-paperclip me-1"></i>첨부파일
+                        </label>
+                        <input type="file" id="file_1" name="file_1" class="form-control"
+                               accept=".gif,.jpg,.jpeg,.png,.xls,.xlsx,.pdf,.doc,.docx,.ppt,.pptx,.hwp,.hwpx,.txt,.zip"/>
+                        <input type="file" id="file_2" name="file_2" class="form-control mt-2"
+                               accept=".gif,.jpg,.jpeg,.png,.xls,.xlsx,.pdf,.doc,.docx,.ppt,.pptx,.hwp,.hwpx,.txt,.zip"/>
+                        <input type="file" id="file_3" name="file_3" class="form-control mt-2"
+                               accept=".gif,.jpg,.jpeg,.png,.xls,.xlsx,.pdf,.doc,.docx,.ppt,.pptx,.hwp,.hwpx,.txt,.zip"/>
+                        <div class="form-text">
+                            최대 3개, 파일당 10MB 이하.
+                            허용 확장자: gif, jpg, jpeg, png, xls, xlsx, pdf, doc, docx, ppt, pptx, hwp, hwpx, txt, zip
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a th:href="@{/bbs/{bbsId}/list(bbsId=${bbsId})}"
+                           class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>취소
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-1"></i>등록
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main>
+<th:block layout:fragment="body-js">
+<script>
+(function () {
+    'use strict';
+    var form = document.getElementById('writeForm');
+    form.addEventListener('submit', function (e) {
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    });
+})();
+</script>
+</th:block>
+</body>
+</html>

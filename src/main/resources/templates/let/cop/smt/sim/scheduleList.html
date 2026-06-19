@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head><title>일정관리</title></head>
+<body>
+<main layout:fragment="content">
+
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item active">일정관리</li>
+                </ol>
+            </nav>
+            <h2>일정관리</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+
+        <!-- 플래시 메시지 -->
+        <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show auto-dismiss" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- 검색 -->
+        <form th:action="@{/schedule}" method="get" class="search-bar">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <input type="text" name="searchKeyword" class="form-control form-control-sm"
+                           th:value="${searchVO.searchKeyword}" placeholder="일정명 검색" maxlength="100"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                        <i class="bi bi-search me-1"></i>검색
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- 목록 -->
+        <div class="card">
+            <div class="card-body p-0">
+                <table class="egov-table mb-0">
+                    <thead>
+                    <tr>
+                        <th style="width:60px">번호</th>
+                        <th>일정명</th>
+                        <th style="width:150px">시작일시</th>
+                        <th style="width:150px">종료일시</th>
+                        <th style="width:80px">중요도</th>
+                        <th style="width:100px">담당자</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item, stat : ${scheduleList}"
+                        th:if="${scheduleList != null and !#lists.isEmpty(scheduleList)}">
+                        <td class="text-center small text-muted" th:text="${stat.count}">1</td>
+                        <td>
+                            <a th:href="@{/schedule/{id}/detail(id=${item.schdulId})}"
+                               class="text-decoration-none text-dark"
+                               th:text="${item.schdulNm}">일정명</a>
+                        </td>
+                        <td class="text-center small" th:text="${item.schdulBeginde}">-</td>
+                        <td class="text-center small" th:text="${item.schdulEndde}">-</td>
+                        <td class="text-center">
+                            <span th:text="${item.schdulIpcrCode}"
+                                  class="badge"
+                                  th:classappend="${item.schdulIpcrCode == '1'} ? 'bg-danger' : (${item.schdulIpcrCode == '2'} ? 'bg-warning text-dark' : 'bg-secondary')">-</span>
+                        </td>
+                        <td class="text-center small" th:text="${item.schdulChargerId}">-</td>
+                    </tr>
+                    <tr th:if="${scheduleList == null or #lists.isEmpty(scheduleList)}">
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            <i class="bi bi-calendar-x fs-3 d-block mb-2"></i>등록된 일정이 없습니다.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 페이징 -->
+        <div th:replace="~{fragments/pagination :: pagination(paginationInfo=${paginationInfo}, baseUrl='/schedule', searchCnd='', searchWrd='')}"></div>
+
+        <!-- 등록 버튼 -->
+        <div class="d-flex justify-content-end mt-3">
+            <th:block sec:authorize="isAuthenticated()">
+                <a th:href="@{/schedule/write}" class="btn btn-primary">
+                    <i class="bi bi-calendar-plus me-1"></i>일정 등록
+                </a>
+            </th:block>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>

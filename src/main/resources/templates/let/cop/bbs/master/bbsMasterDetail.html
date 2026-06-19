@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head>
+    <title>게시판 상세</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/bbs/master/list}">게시판 관리</a></li>
+                    <li class="breadcrumb-item active">상세</li>
+                </ol>
+            </nav>
+            <h2>게시판 마스터 상세</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+
+        <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered table-sm">
+                    <colgroup>
+                        <col style="width:30%"/>
+                        <col style="width:70%"/>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th class="table-light text-end pe-3">게시판 ID</th>
+                        <td th:text="${bbsId}"></td>
+                    </tr>
+                    <tr>
+                        <th class="table-light text-end pe-3">게시판명</th>
+                        <td th:text="${detail?.bbsNm}"></td>
+                    </tr>
+                    <tr>
+                        <th class="table-light text-end pe-3">게시판 소개</th>
+                        <td th:text="${detail?.bbsIntrcn}"></td>
+                    </tr>
+                    <tr>
+                        <th class="table-light text-end pe-3">게시판 유형</th>
+                        <td th:text="${detail?.bbsTyCodeNm} ?: '-'"></td>
+                    </tr>
+                    <tr>
+                        <th class="table-light text-end pe-3">게시판 속성</th>
+                        <td th:text="${detail?.bbsAttrbCodeNm} ?: '-'"></td>
+                    </tr>
+                    <tr>
+                        <th class="table-light text-end pe-3">사용여부</th>
+                        <td>
+                            <span th:if="${detail?.useAt == 'Y'}" class="badge bg-success">사용</span>
+                            <span th:unless="${detail?.useAt == 'Y'}" class="badge bg-secondary">미사용</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="table-light text-end pe-3">첨부파일 허용</th>
+                        <td>
+                            <span th:if="${detail?.fileAtchPosblAt == 'Y'}" class="text-success">허용</span>
+                            <span th:unless="${detail?.fileAtchPosblAt == 'Y'}" class="text-secondary">불가</span>
+                            <span th:if="${detail?.fileAtchPosblAt == 'Y'}" class="text-muted ms-2 small"
+                                  th:text="'(최대 ' + ${detail?.posblAtchFileNumber} + '개)'"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="table-light text-end pe-3">답글 허용</th>
+                        <td>
+                            <span th:if="${detail?.replyPosblAt == 'Y'}" class="text-success">허용</span>
+                            <span th:unless="${detail?.replyPosblAt == 'Y'}" class="text-secondary">불가</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="table-light text-end pe-3">등록일</th>
+                        <td th:text="${detail?.frstRegisterPnttm != null ? #strings.substring(detail.frstRegisterPnttm, 0, 10) : '-'}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-3">
+            <a th:href="@{/bbs/master/list}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i>목록
+            </a>
+            <div>
+                <a th:href="@{/bbs/master/{id}/update(id=${bbsId})}" class="btn btn-warning me-2">
+                    <i class="bi bi-pencil me-1"></i>수정
+                </a>
+                <form th:action="@{/bbs/master/{id}/delete(id=${bbsId})}" method="post" class="d-inline"
+                      onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i>삭제
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>

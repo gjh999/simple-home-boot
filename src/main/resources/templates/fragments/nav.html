@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ko">
+<body>
+<nav th:fragment="nav" class="egov-nav navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid px-4">
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="메뉴 펼치기">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <!-- 회사소개 (랜딩 = 홈) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/" th:href="@{/}" th:text="#{nav.home}">홈</a>
+                </li>
+
+                <!-- 포털 대시보드 -->
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/portal}" th:text="#{nav.portal}">포털</a>
+                </li>
+
+                <!-- 게시판 -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false" th:text="#{nav.board}">게시판</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}" th:text="#{nav.notice}">공지사항</a></li>
+                        <li><a class="dropdown-item" th:href="@{/bbs/BBSMSTR_BBBBBBBBBBBB/list}" th:text="#{nav.gallery}">갤러리</a></li>
+                        <li><hr class="dropdown-divider"/></li>
+                        <th:block sec:authorize="hasRole('ADMIN')">
+                            <li><a class="dropdown-item" th:href="@{/bbs/master/list}" th:text="#{nav.boardManage}">게시판 관리</a></li>
+                        </th:block>
+                    </ul>
+                </li>
+
+                <!-- 일정 -->
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/schedule}" th:text="#{nav.schedule}">일정관리</a>
+                </li>
+
+                <!-- 마이페이지 (일반 로그인 사용자만; 관리자는 회원관리 사용) -->
+                <li class="nav-item" sec:authorize="isAuthenticated() and !hasRole('ADMIN')">
+                    <a class="nav-link" th:href="@{/mypage}" th:text="#{nav.mypage}">마이페이지</a>
+                </li>
+
+                <!-- 관리자 메뉴 -->
+                <th:block sec:authorize="hasRole('ADMIN')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false" th:text="#{nav.admin}">관리자</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/member/list}" th:text="#{nav.member}">회원관리</a></li>
+                            <li><a class="dropdown-item" th:href="@{/bbs/use/list}" th:text="#{nav.boardUse}">게시판 사용정보</a></li>
+                            <li><a class="dropdown-item" th:href="@{/admin/password}" th:text="#{nav.changePw}">비밀번호 변경</a></li>
+                        </ul>
+                    </li>
+                </th:block>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

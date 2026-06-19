@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head>
+    <title th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <!-- 페이지 타이틀 -->
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item active" th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</li>
+                </ol>
+            </nav>
+            <h2 th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+
+        <!-- 플래시 메시지 -->
+        <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show auto-dismiss" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- 검색 영역 -->
+        <form th:action="@{/bbs/{bbsId}/list(bbsId=${bbsId})}" method="get" class="search-bar">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-2">
+                    <label for="searchCnd" class="form-label small fw-semibold">검색구분</label>
+                    <select id="searchCnd" name="searchCnd" class="form-select form-select-sm">
+                        <option value="0" th:selected="${search.searchCnd == '0'}">제목</option>
+                        <option value="1" th:selected="${search.searchCnd == '1'}">내용</option>
+                        <option value="2" th:selected="${search.searchCnd == '2'}">작성자</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="searchWrd" class="form-label small fw-semibold">검색어</label>
+                    <input type="text" id="searchWrd" name="searchWrd" class="form-control form-control-sm"
+                           th:value="${search.searchWrd}" placeholder="검색어를 입력하세요" maxlength="100"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                        <i class="bi bi-search me-1"></i>검색
+                    </button>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="text-muted small">
+                        전체 <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong>건
+                    </span>
+                </div>
+            </div>
+        </form>
+
+        <!-- 게시물 목록 -->
+        <div class="card">
+            <div class="card-body p-0">
+                <table class="egov-table mb-0">
+                    <thead>
+                    <tr>
+                        <th style="width:70px">번호</th>
+                        <th>제목</th>
+                        <th style="width:100px">작성자</th>
+                        <th style="width:110px">등록일</th>
+                        <th style="width:70px">조회</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item, stat : ${result?.resultList}"
+                        th:if="${result != null and !#lists.isEmpty(result.resultList)}">
+                        <td class="text-center text-muted small"
+                            th:text="${paginationInfo.totalRecordCount - (paginationInfo.currentPageNo - 1) * paginationInfo.recordCountPerPage - stat.index}">1</td>
+                        <td>
+                            <a th:href="@{/bbs/{bbsId}/{nttId}/detail(bbsId=${bbsId}, nttId=${item.nttId})}"
+                               class="text-decoration-none text-dark">
+                                <span th:text="${item.nttSj}">제목</span>
+                            </a>
+                        </td>
+                        <td class="text-center small" th:text="${item.frstRegisterNm}">작성자</td>
+                        <td class="text-center small text-muted"
+                            th:text="${item.frstRegisterPnttm != null ? #strings.substring(item.frstRegisterPnttm, 0, 10) : ''}">2026-01-01</td>
+                        <td class="text-center small text-muted" th:text="${item.inqireCo}">0</td>
+                    </tr>
+                    <tr th:if="${result == null or result.resultList == null or #lists.isEmpty(result.resultList)}">
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                            등록된 게시물이 없습니다.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div th:replace="~{fragments/pagination :: pagination(paginationInfo=${paginationInfo}, baseUrl=${'/bbs/' + bbsId + '/list'}, searchCnd=${search != null ? search.searchCnd : ''}, searchWrd=${search != null ? search.searchWrd : ''})}"></div>
+
+        <!-- 하단 버튼 -->
+        <div class="d-flex justify-content-end mt-3">
+            <th:block sec:authorize="isAuthenticated()">
+                <a th:href="@{/bbs/{bbsId}/write(bbsId=${bbsId})}" class="btn btn-primary">
+                    <i class="bi bi-pencil-square me-1"></i>글쓰기
+                </a>
+            </th:block>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>

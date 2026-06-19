@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head><title>일정 상세</title></head>
+<body>
+<main layout:fragment="content">
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/schedule}">일정관리</a></li>
+                    <li class="breadcrumb-item active">상세</li>
+                </ol>
+            </nav>
+            <h2>일정 상세</h2>
+        </div>
+    </div>
+    <div class="container-fluid px-4">
+        <div class="card">
+            <div class="card-body">
+                <table class="egov-table">
+                    <colgroup><col style="width:150px"/><col/><col style="width:150px"/><col/></colgroup>
+                    <tbody>
+                    <tr>
+                        <th class="text-center bg-light">일정명</th>
+                        <td colspan="3" th:text="${schedule?.schdulNm}">-</td>
+                    </tr>
+                    <tr>
+                        <th class="text-center bg-light">시작일시</th>
+                        <td th:text="${schedule?.schdulBeginde}">-</td>
+                        <th class="text-center bg-light">종료일시</th>
+                        <td th:text="${schedule?.schdulEndde}">-</td>
+                    </tr>
+                    <tr>
+                        <th class="text-center bg-light">장소</th>
+                        <td th:text="${schedule?.schdulPlace}">-</td>
+                        <th class="text-center bg-light">담당자</th>
+                        <td th:text="${schedule?.schdulChargerId}">-</td>
+                    </tr>
+                    <tr>
+                        <th class="text-center bg-light">내용</th>
+                        <td colspan="3" th:text="${schedule?.schdulCn}">-</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a th:href="@{/schedule}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-list-ul me-1"></i>목록
+                </a>
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="d-flex gap-2">
+                        <a th:href="@{/schedule/{id}/update(id=${schedule?.schdulId})}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-pencil me-1"></i>수정
+                        </a>
+                        <form th:action="@{/schedule/{id}/delete(id=${schedule?.schdulId})}" method="post" id="delSchForm" class="d-inline">
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="if(confirm('일정을 삭제하시겠습니까?')) document.getElementById('delSchForm').submit()">
+                                <i class="bi bi-trash me-1"></i>삭제
+                            </button>
+                        </form>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

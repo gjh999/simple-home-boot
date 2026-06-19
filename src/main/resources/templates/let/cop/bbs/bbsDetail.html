@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head>
+    <title th:text="${result?.boardVO?.nttSj} ?: '게시물 상세'">게시물 상세</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item">
+                        <a th:href="@{/bbs/{bbsId}/list(bbsId=${bbsId})}"
+                           th:text="${result?.boardVO?.bbsNm} ?: '게시판'">게시판</a>
+                    </li>
+                    <li class="breadcrumb-item active">상세보기</li>
+                </ol>
+            </nav>
+            <h2 th:text="${result?.boardVO?.nttSj} ?: '게시물 상세'">게시물 상세</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+        <div class="card">
+
+            <!-- 게시물 헤더 정보 -->
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-1" th:text="${result?.boardVO?.nttSj}">제목</h5>
+                        <div class="d-flex gap-3 text-muted small">
+                            <span><i class="bi bi-person me-1"></i><span th:text="${result?.boardVO?.frstRegisterNm}">작성자</span></span>
+                            <span><i class="bi bi-calendar3 me-1"></i>
+                                <span th:text="${result?.boardVO?.frstRegisterPnttm != null ? #strings.substring(result.boardVO.frstRegisterPnttm, 0, 10) : ''}">2026-01-01</span>
+                            </span>
+                            <span><i class="bi bi-eye me-1"></i><span th:text="${result?.boardVO?.inqireCo}">0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 첨부파일 영역 -->
+            <div class="card-body border-bottom py-3 px-4"
+                 th:if="${result?.resultFiles != null and !#lists.isEmpty(result.resultFiles)}">
+                <small class="text-muted d-block mb-2"><i class="bi bi-paperclip me-1"></i>첨부파일</small>
+                <ul class="list-unstyled mb-0">
+                    <li th:each="f : ${result.resultFiles}" class="mb-1">
+                        <a th:href="@{/file(atchFileId=${f.atchFileId}, fileSn=${f.fileSn})}"
+                           class="text-decoration-none">
+                            <i class="bi bi-file-earmark-arrow-down me-1"></i>
+                            <span th:text="${f.orignlFileNm}">파일명</span>
+                            <span class="text-muted small ms-1"
+                                  th:if="${f.fileMg != null and !#strings.isEmpty(f.fileMg)}"
+                                  th:text="'(' + ${f.fileMg} + ' bytes)'">(0 bytes)</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 게시물 본문 -->
+            <!-- XSS 방지: th:text 로 출력 이스케이프(저장형 XSS 차단). 줄바꿈은 CSS(white-space)로 보존 -->
+            <div class="card-body">
+                <div class="bbs-content" style="white-space: pre-wrap;" th:text="${result?.boardVO?.nttCn}">
+                    게시물 내용
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <a th:href="@{/bbs/{bbsId}/list(bbsId=${bbsId})}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-list-ul me-1"></i>목록
+                </a>
+                <div class="d-flex gap-2">
+                    <!-- 작성자 본인 또는 관리자만 수정/삭제 가능 -->
+                    <th:block sec:authorize="isAuthenticated()">
+                        <a th:href="@{/bbs/{bbsId}/{nttId}/update(bbsId=${bbsId}, nttId=${nttId})}"
+                           class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-pencil me-1"></i>수정
+                        </a>
+                        <form th:action="@{/bbs/{bbsId}/{nttId}/delete(bbsId=${bbsId}, nttId=${nttId})}"
+                              method="post" id="deleteForm" class="d-inline">
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                    onclick="if(confirm('정말 삭제하시겠습니까?')) document.getElementById('deleteForm').submit()">
+                                <i class="bi bi-trash me-1"></i>삭제
+                            </button>
+                        </form>
+                    </th:block>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 목록으로 돌아가기 -->
+        <div class="mt-3">
+            <a th:href="@{/bbs/{bbsId}/list(bbsId=${bbsId})}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-list-ul me-1"></i>목록으로
+            </a>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

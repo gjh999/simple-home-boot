@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head>
+    <title>게시판 사용정보 관리</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="page-title-bar">
+        <div class="container-fluid px-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item">관리자</li>
+                    <li class="breadcrumb-item active">게시판 사용정보</li>
+                </ol>
+            </nav>
+            <h2>게시판 사용정보 관리</h2>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+
+        <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- 검색 -->
+        <form th:action="@{/bbs/use/list}" method="get" class="search-bar">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label for="searchWrd" class="form-label small fw-semibold">검색어</label>
+                    <input type="text" id="searchWrd" name="searchWrd" class="form-control form-control-sm"
+                           th:value="${search?.searchWrd}" placeholder="게시판명 검색" maxlength="100"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                        <i class="bi bi-search me-1"></i>검색
+                    </button>
+                </div>
+                <div class="col-md-6 text-end">
+                    <span class="text-muted small">
+                        전체 <strong th:text="${resultCnt} ?: 0">0</strong>건
+                    </span>
+                </div>
+            </div>
+        </form>
+
+        <!-- 목록 -->
+        <div class="card">
+            <div class="card-body p-0">
+                <table class="egov-table mb-0">
+                    <thead>
+                    <tr>
+                        <th style="width:60px">번호</th>
+                        <th>게시판명</th>
+                        <th style="width:140px">대상시스템 ID</th>
+                        <th style="width:100px">등록구분</th>
+                        <th style="width:80px">사용여부</th>
+                        <th style="width:110px">등록일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item, stat : ${resultList}"
+                        th:if="${resultList != null and !#lists.isEmpty(resultList)}">
+                        <td class="text-center text-muted small"
+                            th:text="${paginationInfo.totalRecordCount - (paginationInfo.currentPageNo - 1) * paginationInfo.recordCountPerPage - stat.index}">1</td>
+                        <td>
+                            <a th:href="@{/bbs/use/{trgetId}/{bbsId}/detail(trgetId=${item.trgetId}, bbsId=${item.bbsId})}"
+                               class="text-decoration-none" th:text="${item.bbsNm}">게시판명</a>
+                        </td>
+                        <td class="text-center small" th:text="${item.trgetId}"></td>
+                        <td class="text-center small" th:text="${item.registSeCodeNm}"></td>
+                        <td class="text-center small">
+                            <span th:if="${item.useAt == 'Y'}" class="badge bg-success">사용</span>
+                            <span th:unless="${item.useAt == 'Y'}" class="badge bg-secondary">미사용</span>
+                        </td>
+                        <td class="text-center small text-muted"
+                            th:text="${item.frstRegisterPnttm != null ? #strings.substring(item.frstRegisterPnttm, 0, 10) : ''}"></td>
+                    </tr>
+                    <tr th:if="${resultList == null or #lists.isEmpty(resultList)}">
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>등록된 사용정보가 없습니다.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div th:replace="~{fragments/pagination :: pagination(paginationInfo=${paginationInfo}, baseUrl='/bbs/use/list', searchCnd='', searchWrd=${search != null ? search.searchWrd : ''})}"></div>
+
+        <!-- 하단 버튼 -->
+        <div class="d-flex justify-content-end mt-3">
+            <a th:href="@{/bbs/use/write}" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i>사용정보 등록
+            </a>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>
