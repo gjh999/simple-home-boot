@@ -3,6 +3,15 @@
 <body>
 <footer th:fragment="footer" class="egov-footer bg-dark text-white py-4 mt-5">
     <div class="container-fluid px-4">
+        <!-- 전자정부표준프레임워크 공식 홈페이지 배너 -->
+        <a href="https://www.egovframe.go.kr/home/main.do" target="_blank" rel="noopener"
+           class="egov-official-banner" th:title="#{footer.official.title}">
+            <span class="ban-txt">
+                <strong><i class="bi bi-hexagon-fill"></i> <span th:text="#{footer.official.title}">전자정부표준프레임워크 공식 홈페이지</span></strong>
+                <small th:text="#{footer.official.desc}">가이드·다운로드·커뮤니티 — egovframe.go.kr</small>
+            </span>
+            <span class="ban-go"><span th:text="#{footer.official.go}">바로가기</span> <i class="bi bi-box-arrow-up-right"></i></span>
+        </a>
         <!-- 바로가기 링크 -->
         <div class="d-flex flex-wrap gap-3 mb-3" style="font-size:.85rem;">
             <a th:href="@{/}" class="text-white text-decoration-none">홈</a>
