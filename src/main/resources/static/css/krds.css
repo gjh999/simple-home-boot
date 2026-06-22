@@ -364,6 +364,9 @@ body { font-size: 1rem; line-height: 1.6; }
 .krds-btn.large{ font-size: 1.05rem; padding: .6rem 1.25rem; }
 .krds-btn.xlarge{ font-size: 1.1rem; padding: .7rem 1.4rem; }
 .krds-btn.icon{ padding: .45rem; }
+/* 삭제 등 위험 동작 버튼(KRDS 기본 변형에 없음 → 보조 정의: 빨강 아웃라인) */
+.krds-btn.danger{ background:#fff; color: var(--krds-danger,#E63946); border:1px solid var(--krds-danger,#E63946); }
+.krds-btn.danger:hover{ background: var(--krds-light-danger,#FDECEE); color: var(--krds-danger,#E63946); }
 
 /* 폼 입력/셀렉트 */
 .krds-input,.krds-form-select{ height: auto; font-size: .95rem; padding: .5rem .75rem; line-height: 1.5; }
