@@ -232,8 +232,8 @@ small,.small{ font-size:.875em; }
   border-radius:var(--k-radius); background:none; border:0; text-align:left; cursor:pointer; }
 .dropdown-item:hover,.dropdown-item:focus{ background:var(--k-primary-light); color:var(--k-primary-hover); }
 .dropdown-divider{ height:0; margin:.4rem 0; border-top:1px solid var(--k-g10); }
-.collapse:not(.show){ display:none; }
-.collapse.show{ display:block; }
+/* 일반 .collapse 규칙은 두지 않는다 — KRDS 아코디언(.accordion-collapse.collapse)을 가리지 않도록.
+   모바일 메뉴(.navbar-collapse)는 아래 .navbar-expand-lg 반응형 규칙이 처리한다. */
 
 /* ── 반응형(md=768, lg=992) ── */
 @media (min-width:768px){

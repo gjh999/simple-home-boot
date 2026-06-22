@@ -337,3 +337,46 @@ textarea:focus-visible,
 
 /* ── 로그인/랜딩 로고 배지 크기 (theme.css 대체) ── */
 .logo-badge { width: 56px; height: 56px; }
+
+/* ============================================================
+   KRDS 컴포넌트 크기 정규화 (16px 루트 기준 밸런스 조정)
+   KRDS 토큰은 root 62.5%(10px) 기준이라, 본 프로젝트의 16px 루트에서는
+   1.6배 커진다. 아래에서 실제 사용 KRDS 컴포넌트를 균형 있는 크기로 보정한다.
+   ============================================================ */
+body { font-size: 1rem; line-height: 1.6; }
+
+/* 버튼 */
+.krds-btn{
+  height: auto; min-height: 0; line-height: 1.4; gap: .4em;
+  font-size: .95rem; padding: .5rem 1rem; border-radius: var(--krds-radius, 6px);
+}
+.krds-btn.xsmall,.krds-btn.small{ font-size: .85rem; padding: .35rem .75rem; }
+.krds-btn.large{ font-size: 1.05rem; padding: .6rem 1.25rem; }
+.krds-btn.xlarge{ font-size: 1.1rem; padding: .7rem 1.4rem; }
+.krds-btn.icon{ padding: .45rem; }
+
+/* 폼 입력/셀렉트 */
+.krds-input,.krds-form-select{ height: auto; font-size: .95rem; padding: .5rem .75rem; line-height: 1.5; }
+
+/* 표 */
+.krds-table-wrap .tbl{ font-size: .95rem; }
+.krds-table-wrap .tbl th,.krds-table-wrap .tbl td{ padding: .7rem .75rem; }
+
+/* 브레드크럼 / 페이지네이션 / 배지 */
+.krds-breadcrumb-wrap{ font-size: .9rem; }
+.krds-breadcrumb-wrap .breadcrumb{ background: transparent; border: 0; padding: 6px 0; }
+.krds-pagination{ font-size: .95rem; }
+.krds-pagination .page-link,.krds-pagination .page-navi{ min-width: 2.2rem; height: 2.2rem; line-height: 2.2rem; }
+.krds-badge{ font-size: .8rem; }
+
+/* 탭 / 아코디언 폰트 */
+.krds-tab-area .btn-tab{ font-size: 1rem; }
+.krds-accordion .btn-accordion{ font-size: 1.05rem; }
+.krds-accordion .accordion-body{ font-size: .95rem; }
+
+/* 헤딩 정규화(KRDS 디스플레이 토큰 과대 방지) */
+.egov-content h1{ font-size: 1.75rem; } .egov-content h2{ font-size: 1.375rem; }
+.egov-content h3{ font-size: 1.15rem; } .egov-content h4{ font-size: 1.05rem; }
+
+/* KRDS svg-icon 기본 크기 보정(글자에 비례) */
+.svg-icon{ width: 1.15em; height: 1.15em; }
