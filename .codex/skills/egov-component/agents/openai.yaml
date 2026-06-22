@@ -1,0 +1,4 @@
+interface:
+  display_name: "eGov Component"
+  short_description: "Scaffold eGov components for simple-home-boot"
+  default_prompt: "Use $egov-component to scaffold an eGovFramework component for simple-home-boot."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "eGov Project"
+  short_description: "simple-home-boot conventions and context"
+  default_prompt: "Use $egov-project to work with simple-home-boot conventions and root project context."

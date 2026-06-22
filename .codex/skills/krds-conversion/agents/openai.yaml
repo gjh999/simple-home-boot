@@ -1,0 +1,4 @@
+interface:
+  display_name: "KRDS Conversion"
+  short_description: "Convert and verify screens with KRDS"
+  default_prompt: "Use $krds-conversion to convert Thymeleaf screens to KRDS markup."
