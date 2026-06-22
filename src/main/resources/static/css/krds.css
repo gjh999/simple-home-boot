@@ -144,6 +144,15 @@ textarea:focus-visible,
 .egov-nav .nav-link { font-weight: 600; padding: 14px 18px; position: relative; }
 .egov-nav .nav-link:hover,
 .egov-nav .nav-link:focus { background: rgba(255,255,255,.12); }
+/* KRDS 메인메뉴 관례: 활성/호버 하단 인디케이터 + 포커스 링(접근성).
+   드롭다운 토글은 캐럿(::after)을 쓰므로 인디케이터 대상에서 제외. */
+.egov-nav .nav-link:not(.dropdown-toggle)::after{ content:""; position:absolute; left:18px; right:18px; bottom:7px;
+  height:2px; background:#fff; transform:scaleX(0); transform-origin:left; transition:transform .2s ease; }
+.egov-nav .nav-link:not(.dropdown-toggle):hover::after,
+.egov-nav .nav-link:not(.dropdown-toggle):focus-visible::after,
+.egov-nav .nav-link[aria-current="page"]:not(.dropdown-toggle)::after{ transform:scaleX(1); }
+.egov-nav .nav-link[aria-current="page"]{ font-weight:700; }
+.egov-nav .nav-link:focus-visible{ outline:2px solid #fff; outline-offset:-3px; border-radius:4px; }
 .egov-nav .dropdown-menu {
   border: 1px solid var(--krds-border); border-radius: var(--krds-radius);
   box-shadow: 0 6px 20px rgba(0,0,0,.12); padding: 6px;
