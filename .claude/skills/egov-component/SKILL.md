@@ -4,7 +4,7 @@ description: >-
   eGovFramework(전자정부표준프레임워크) 신규 업무 컴포넌트를 이 프로젝트(simple-home-boot) 관례로
   스캐폴딩하고, MyBatis 매퍼 SQL(7종 DBMS) 작성·설정 정합성 점검·빌드/실행까지 안내한다.
   Controller(MVC+REST)·Service/ServiceImpl·DAO(EgovAbstractMapper)·VO/DTO·SQL XML 일괄 생성,
-  ID 채번·트랜잭션 AOP·Java Config(EgovConfigApp*) 점검 포함. "새 기능/CRUD/매퍼/eGov 컴포넌트/빌드" 요청 시 사용.
+  ID 채번·트랜잭션 AOP·Java Config(EgovConfigApp*)·**다국어(i18n)** 점검 포함. "새 기능/CRUD/매퍼/화면/eGov 컴포넌트/빌드" 요청 시 사용.
 ---
 
 # egov-component — eGovFramework 컴포넌트 스캐폴딩 & 개발
@@ -152,5 +152,23 @@ MVN="/c/eGovCI-5.0.0-Windows-64bit/bin/apache-maven-3.9.9/bin/mvn.cmd"
 `Docs/context-*-convert.md`·`Docs/java-config-convert.md` 참조, 신규 기능 Config는
 `EgovConfigApp<기능>.java`를 만들고 `EgovConfigApp.java`의 `@Import`에 등록.
 
-> 화면(Thymeleaf)을 KRDS로 만들 땐 **`krds-conversion` 스킬**과 함께 사용한다.
+## 8. 다국어(i18n) — 신규 기능·화면 추가/변경 시 **필수 확인**
+- **사용자 노출 텍스트는 하드코딩 금지.** Thymeleaf `th:text="#{message.key}"`(또는 `#{key}`)로 출력. `placeholder`/`title`/`alt`/버튼 라벨/검증 메시지 포함.
+- 메시지 정의: `src/main/resources/egovframework/message/message-ui_{ko,en}.properties` 에 **ko·en 둘 다, 동일 키**로 추가.
+  프레임워크 공통 메시지는 `message/com/message-common_{ko,en}` 사용. 설정은 `EgovConfigAppCommon`(MessageSource)·`EgovMessageSource`.
+- 언어 전환: `/cmm/lang(lang='ko'|'en')`(쿠키 기반). 헤더/레이아웃에 KO/EN 스위치 존재.
+- **신규/변경 작업 시 반드시 점검(체크리스트)**:
+  - [ ] 추가·변경된 **모든 노출 문구**가 메시지 키로 처리됐는가(하드코딩 한글/영문 잔존 0)
+  - [ ] `message-ui_ko`·`message-ui_en` 에 **양쪽 값 존재**(키 집합 일치), en 미번역으로 빈 값/한글 fallback 없음
+  - [ ] 동적 문구는 파라미터 `#{key(${arg})}` 사용, 숫자/날짜 포맷 로캘 대응
+- **검증 스크립트 예**:
+  ```bash
+  # ko/en 키 집합 차이(있으면 누락)
+  comm -3 <(grep -oE '^[a-zA-Z0-9._-]+=' message-ui_ko.properties|sort) <(grep -oE '^[a-zA-Z0-9._-]+=' message-ui_en.properties|sort)
+  # 변경 템플릿의 하드코딩 한글(>=2자) 스캔(th:text/속성 밖 텍스트)
+  grep -nP '>[^<>{]*[가-힣]{2,}' 변경한.html | grep -v '#{'
+  ```
+- 기존 화면이 하드코딩 상태(예: 레거시 포팅분)라도, **그 화면을 건드리면(전환·수정) 함께 i18n 키로 전환**한다.
+
+> 화면(Thymeleaf)을 KRDS로 만들 땐 **`krds-conversion` 스킬**과 함께 사용하고, 위 §8 i18n 점검을 **반드시** 동반한다.
 > 파괴적 DB 변경(DROP/TRUNCATE) 전엔 반드시 복구 가능한 SQL 덤프로 먼저 백업한다(전역 안전 규칙).
