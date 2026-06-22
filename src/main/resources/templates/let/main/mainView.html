@@ -26,8 +26,8 @@
     <div class="container-fluid px-4">
 
         <!-- 환영 배너 (KRDS 히어로) -->
-        <div class="card egov-hero mb-4 border-0">
-            <div class="card-body py-5 px-4">
+        <div class="egov-hero mb-4">
+            <div class="egov-hero-body py-5 px-4">
                 <div class="d-flex align-items-center">
                     <div>
                         <span class="egov-hero-badge"><i class="bi bi-stars me-1"></i>eGovFrame 5.0</span>
@@ -50,39 +50,38 @@
 
         <div class="row g-4">
 
-            <!-- 공지사항 -->
+            <!-- 공지사항 (KRDS 패널) -->
             <div class="col-lg-6">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="krds-panel h-100">
+                    <div class="krds-panel-head">
                         <span><i class="bi bi-megaphone me-2 text-primary"></i><span th:text="#{dash.notice}">공지사항</span></span>
-                        <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}" class="btn btn-sm btn-outline-primary" th:text="#{dash.more}">더보기</a>
+                        <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}" class="krds-btn tertiary small" th:text="#{dash.more}">더보기</a>
                     </div>
-                    <div class="card-body p-0">
-                        <table class="egov-table mb-0" th:if="${notiList != null and !#lists.isEmpty(notiList)}">
+                    <div class="krds-panel-body flush">
+                        <table class="tbl" th:if="${notiList != null and !#lists.isEmpty(notiList)}">
+                            <caption class="sr-only">공지사항 목록</caption>
                             <thead>
                             <tr>
-                                <th style="width:50px" th:text="#{dash.col.no}">번호</th>
-                                <th th:text="#{dash.col.title}">제목</th>
-                                <th style="width:100px" th:text="#{dash.col.date}">등록일</th>
-                                <th style="width:60px" th:text="#{dash.col.views}">조회</th>
+                                <th scope="col" style="width:50px" th:text="#{dash.col.no}">번호</th>
+                                <th scope="col" th:text="#{dash.col.title}">제목</th>
+                                <th scope="col" style="width:100px" th:text="#{dash.col.date}">등록일</th>
+                                <th scope="col" style="width:60px" th:text="#{dash.col.views}">조회</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="item, stat : ${notiList}">
                                 <td class="text-center" th:text="${stat.count}">1</td>
-                                <td>
+                                <td style="text-align:left">
                                     <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/{nttId}/detail(nttId=${item.nttId})}"
-                                       class="text-decoration-none text-dark"
-                                       th:text="${item.nttSj}">제목</a>
+                                       class="txt" th:text="${item.nttSj}">제목</a>
                                 </td>
-                                <td class="text-center text-muted small"
+                                <td class="text-center text-muted"
                                     th:text="${item.frstRegisterPnttm != null ? #strings.substring(item.frstRegisterPnttm, 0, 10) : ''}">2026-01-01</td>
-                                <td class="text-center text-muted small" th:text="${item.inqireCo}">0</td>
+                                <td class="text-center text-muted" th:text="${item.inqireCo}">0</td>
                             </tr>
                             </tbody>
                         </table>
-                        <div th:if="${notiList == null or #lists.isEmpty(notiList)}"
-                             class="text-center text-muted py-4">
+                        <div th:if="${notiList == null or #lists.isEmpty(notiList)}" class="text-center text-muted py-4">
                             <i class="bi bi-inbox fs-3 d-block mb-2"></i>
                             <span th:text="#{dash.empty.notice}">등록된 공지사항이 없습니다.</span>
                         </div>
@@ -90,39 +89,38 @@
                 </div>
             </div>
 
-            <!-- 갤러리/자유게시판 -->
+            <!-- 갤러리/자유게시판 (KRDS 패널) -->
             <div class="col-lg-6">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="krds-panel h-100">
+                    <div class="krds-panel-head">
                         <span><i class="bi bi-images me-2 text-success"></i><span th:text="#{dash.freeboard}">자유게시판</span></span>
-                        <a th:href="@{/bbs/BBSMSTR_BBBBBBBBBBBB/list}" class="btn btn-sm btn-outline-success" th:text="#{dash.more}">더보기</a>
+                        <a th:href="@{/bbs/BBSMSTR_BBBBBBBBBBBB/list}" class="krds-btn tertiary small" th:text="#{dash.more}">더보기</a>
                     </div>
-                    <div class="card-body p-0">
-                        <table class="egov-table mb-0" th:if="${galList != null and !#lists.isEmpty(galList)}">
+                    <div class="krds-panel-body flush">
+                        <table class="tbl" th:if="${galList != null and !#lists.isEmpty(galList)}">
+                            <caption class="sr-only">자유게시판 목록</caption>
                             <thead>
                             <tr>
-                                <th style="width:50px" th:text="#{dash.col.no}">번호</th>
-                                <th th:text="#{dash.col.title}">제목</th>
-                                <th style="width:100px" th:text="#{dash.col.date}">등록일</th>
-                                <th style="width:60px" th:text="#{dash.col.views}">조회</th>
+                                <th scope="col" style="width:50px" th:text="#{dash.col.no}">번호</th>
+                                <th scope="col" th:text="#{dash.col.title}">제목</th>
+                                <th scope="col" style="width:100px" th:text="#{dash.col.date}">등록일</th>
+                                <th scope="col" style="width:60px" th:text="#{dash.col.views}">조회</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="item, stat : ${galList}">
                                 <td class="text-center" th:text="${stat.count}">1</td>
-                                <td>
+                                <td style="text-align:left">
                                     <a th:href="@{/bbs/BBSMSTR_BBBBBBBBBBBB/{nttId}/detail(nttId=${item.nttId})}"
-                                       class="text-decoration-none text-dark"
-                                       th:text="${item.nttSj}">제목</a>
+                                       class="txt" th:text="${item.nttSj}">제목</a>
                                 </td>
-                                <td class="text-center text-muted small"
+                                <td class="text-center text-muted"
                                     th:text="${item.frstRegisterPnttm != null ? #strings.substring(item.frstRegisterPnttm, 0, 10) : ''}">2026-01-01</td>
-                                <td class="text-center text-muted small" th:text="${item.inqireCo}">0</td>
+                                <td class="text-center text-muted" th:text="${item.inqireCo}">0</td>
                             </tr>
                             </tbody>
                         </table>
-                        <div th:if="${galList == null or #lists.isEmpty(galList)}"
-                             class="text-center text-muted py-4">
+                        <div th:if="${galList == null or #lists.isEmpty(galList)}" class="text-center text-muted py-4">
                             <i class="bi bi-inbox fs-3 d-block mb-2"></i>
                             <span th:text="#{dash.empty.board}">등록된 게시글이 없습니다.</span>
                         </div>
@@ -130,55 +128,50 @@
                 </div>
             </div>
 
-            <!-- 빠른 메뉴 -->
+            <!-- 빠른 메뉴 (KRDS 패널 + 타일) -->
             <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="bi bi-grid-3x3-gap me-2 text-primary"></i><span th:text="#{dash.quicklinks}">바로가기</span>
+                <div class="krds-panel">
+                    <div class="krds-panel-head">
+                        <span><i class="bi bi-grid-3x3-gap me-2 text-primary"></i><span th:text="#{dash.quicklinks}">바로가기</span></span>
                     </div>
-                    <div class="card-body">
+                    <div class="krds-panel-body">
                         <div class="row g-3">
                             <div class="col-6 col-md-3">
-                                <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}"
-                                   class="btn btn-outline-primary w-100 d-flex flex-column align-items-center py-3">
-                                    <i class="bi bi-megaphone fs-3 mb-2"></i>
-                                    <span class="small fw-semibold" th:text="#{dash.ql.notice}">공지사항</span>
+                                <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}" class="krds-btn tertiary krds-quicklink">
+                                    <i class="bi bi-megaphone"></i>
+                                    <span class="label" th:text="#{dash.ql.notice}">공지사항</span>
                                 </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <a th:href="@{/schedule}"
-                                   class="btn btn-outline-success w-100 d-flex flex-column align-items-center py-3">
-                                    <i class="bi bi-calendar3 fs-3 mb-2"></i>
-                                    <span class="small fw-semibold" th:text="#{dash.ql.schedule}">일정관리</span>
+                                <a th:href="@{/schedule}" class="krds-btn tertiary krds-quicklink">
+                                    <i class="bi bi-calendar3"></i>
+                                    <span class="label" th:text="#{dash.ql.schedule}">일정관리</span>
                                 </a>
                             </div>
                             <div class="col-6 col-md-3">
                                 <th:block sec:authorize="hasRole('ADMIN')">
-                                    <a th:href="@{/member/list}"
-                                       class="btn btn-outline-info w-100 d-flex flex-column align-items-center py-3">
-                                        <i class="bi bi-person-gear fs-3 mb-2"></i>
-                                        <span class="small fw-semibold" th:text="#{dash.ql.member}">회원관리</span>
+                                    <a th:href="@{/member/list}" class="krds-btn tertiary krds-quicklink">
+                                        <i class="bi bi-person-gear"></i>
+                                        <span class="label" th:text="#{dash.ql.member}">회원관리</span>
                                     </a>
                                 </th:block>
                                 <th:block sec:authorize="isAuthenticated() and !hasRole('ADMIN')">
-                                    <a th:href="@{/mypage}"
-                                       class="btn btn-outline-info w-100 d-flex flex-column align-items-center py-3">
-                                        <i class="bi bi-person-circle fs-3 mb-2"></i>
-                                        <span class="small fw-semibold" th:text="#{dash.ql.mypage}">마이페이지</span>
+                                    <a th:href="@{/mypage}" class="krds-btn tertiary krds-quicklink">
+                                        <i class="bi bi-person-circle"></i>
+                                        <span class="label" th:text="#{dash.ql.mypage}">마이페이지</span>
                                     </a>
                                 </th:block>
                                 <th:block sec:authorize="isAnonymous()">
-                                    <a th:href="@{/login}"
-                                       class="btn btn-outline-info w-100 d-flex flex-column align-items-center py-3">
-                                        <span class="small fw-semibold" th:text="#{dash.ql.login}">로그인</span>
+                                    <a th:href="@{/login}" class="krds-btn tertiary krds-quicklink">
+                                        <i class="bi bi-box-arrow-in-right"></i>
+                                        <span class="label" th:text="#{dash.ql.login}">로그인</span>
                                     </a>
                                 </th:block>
                             </div>
                             <div class="col-6 col-md-3">
-                                <a href="/swagger-ui/index.html" target="_blank"
-                                   class="btn btn-outline-warning w-100 d-flex flex-column align-items-center py-3">
-                                    <i class="bi bi-code-slash fs-3 mb-2"></i>
-                                    <span class="small fw-semibold" th:text="#{dash.ql.apidoc}">API 문서</span>
+                                <a href="/swagger-ui/index.html" target="_blank" class="krds-btn tertiary krds-quicklink">
+                                    <i class="bi bi-code-slash"></i>
+                                    <span class="label" th:text="#{dash.ql.apidoc}">API 문서</span>
                                 </a>
                             </div>
                         </div>
