@@ -374,9 +374,14 @@ body { font-size: 1rem; line-height: 1.6; }
 .krds-table-wrap .tbl.data thead th,.krds-table-wrap .tbl.data tbody td{
   font-size: .95rem !important; padding: .7rem .75rem !important; }
 
-/* 브레드크럼 / 페이지네이션 / 배지 */
-.krds-breadcrumb-wrap,.krds-breadcrumb-wrap .breadcrumb li{ font-size: .875rem !important; }
-.krds-breadcrumb-wrap .breadcrumb{ background: transparent; border: 0; padding: 6px 0; }
+/* 브레드크럼 (KRDS 네이티브) — 상하 여백/글씨 컴팩트 강제 정규화 */
+.krds-breadcrumb-wrap{ margin: 0 0 .5rem !important; padding: 0 !important; }
+.krds-breadcrumb-wrap,.krds-breadcrumb-wrap .breadcrumb li,
+.krds-breadcrumb-wrap .breadcrumb li a,.krds-breadcrumb-wrap .breadcrumb li .txt{ font-size: .85rem !important; }
+.krds-breadcrumb-wrap .breadcrumb{ background: transparent !important; border: 0 !important; padding: 2px 0 !important; margin: 0 !important; gap: .25rem !important; }
+.krds-breadcrumb-wrap .breadcrumb li .txt{ padding: 2px 4px !important; }
+.krds-breadcrumb-wrap .breadcrumb .home .txt::before{ width: 1em !important; height: 1em !important; }
+/* 페이지네이션 / 배지 */
 .krds-pagination .page-link,.krds-pagination .page-navi{
   min-width: 2.1rem !important; height: 2.1rem !important; padding: 0 .55rem !important; font-size: .9rem !important; }
 .krds-badge{ font-size: .8rem !important; }
