@@ -43,11 +43,6 @@
                     <a class="nav-link" th:href="@{/schedule}" th:text="#{nav.schedule}">일정관리</a>
                 </li>
 
-                <!-- KRDS 컴포넌트 사용 예시 -->
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/krds-sample}">KRDS 예시</a>
-                </li>
-
                 <!-- 마이페이지 (일반 로그인 사용자만; 관리자는 회원관리 사용) -->
                 <li class="nav-item" sec:authorize="isAuthenticated() and !hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/mypage}" th:text="#{nav.mypage}">마이페이지</a>

@@ -1,14 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       lang="ko">
 <head>
-    <title>KRDS 사용 예시</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>KRDS 사용 예시 - 전자정부표준프레임워크</title>
+
+    <!-- Bootstrap Icons + 공식 KRDS + 호환 레이어 + 스킨 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons.min.css}"/>
+    <link rel="stylesheet" th:href="@{/krds/resources/cdn/krds.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/krds-compat.css}"/>
+    <link rel="stylesheet" th:href="@{/css/krds.css}"/>
+    <link rel="icon" type="image/svg+xml" th:href="@{/images/logo.svg}"/>
+
     <style>
-        /* 예시 페이지 전용 레이아웃(밸런스 정돈) */
-        .krds-demo-wrap{ max-width:1080px; }
-        .krds-demo-intro{ margin:.25rem 0 1.75rem; }
+        /* 독립 공개 페이지 레이아웃 */
+        body{ background:#fff; }
+        .ksample-top{ position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid #E7E8EA; }
+        .ksample-top-inner{ max-width:1080px; margin:0 auto; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+        .ksample-brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; color:#1E2124; text-decoration:none; }
+        .ksample-brand img{ width:34px; height:34px; }
+        .ksample-top-right{ display:flex; align-items:center; gap:10px; }
+        .ksample-lang{ display:inline-flex; border:1px solid #CDD1D5; border-radius:8px; overflow:hidden; }
+        .ksample-lang a{ font-size:12px; font-weight:700; color:#58616A; text-decoration:none; padding:5px 11px; background:#fff; }
+        .ksample-lang a+a{ border-left:1px solid #E7E8EA; }
+        .ksample-lang a.on{ background:#256EF4; color:#fff; }
+        .ksample-main{ max-width:1080px; margin:0 auto; padding:1.25rem 24px 3rem; }
+        .ksample-foot{ border-top:1px solid #E7E8EA; background:#F4F5F6; color:#58616A; font-size:.85rem; }
+        .ksample-foot .inner{ max-width:1080px; margin:0 auto; padding:1.1rem 24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+        /* 예시 콘텐츠(밸런스 정돈) */
+        .krds-demo-intro{ margin:.25rem 0 1.5rem; }
         .krds-demo-intro h1{ font-size:1.6rem; font-weight:800; margin:0 0 .35rem; }
         .krds-demo-intro p{ color:#58616A; font-size:.95rem; margin:0; }
         .krds-demo-section{ margin:0; padding:1.75rem 0; border-top:1px solid #E7E8EA; }
@@ -19,23 +43,33 @@
         .krds-demo-bar{ display:flex; justify-content:space-between; align-items:center; margin:0 0 .85rem; flex-wrap:wrap; gap:8px; }
         .krds-demo-section code{ background:#F4F5F6; padding:1px 5px; border-radius:4px; font-size:.85em; }
         /* KRDS 소개 박스 */
-        .krds-intro-box{ background:#F0F6FF; border:1px solid #D8E5FF; border-radius:12px; padding:1.25rem 1.5rem; margin:0 0 1.75rem; }
+        .krds-intro-box{ background:#F0F6FF; border:1px solid #D8E5FF; border-radius:12px; padding:1.25rem 1.5rem; margin:0 0 1.5rem; }
         .krds-intro-box h2{ font-size:1.1rem; font-weight:700; color:#0B50D0; margin:0 0 .6rem; display:flex; align-items:center; gap:.4rem; padding:0; border:0; line-height:1.3; }
         .krds-intro-box p{ font-size:.92rem; color:#33363D; margin:0 0 .55rem; line-height:1.65; }
         .krds-intro-box .krds-intro-links{ display:flex; flex-wrap:wrap; gap:8px; margin-top:.6rem; }
     </style>
 </head>
 <body>
-<main layout:fragment="content">
-<div class="krds-demo-wrap">
 
-    <!-- ===== KRDS breadcrumb (네이티브) ===== -->
-    <nav class="krds-breadcrumb-wrap" aria-label="현재 경로">
-        <ol class="breadcrumb">
-            <li class="home"><a th:href="@{/}" class="txt">홈</a></li>
-            <li><a th:href="@{/krds-sample}" class="txt">KRDS 사용 예시</a></li>
-        </ol>
-    </nav>
+<!-- 공개용 간단 헤더 (포털 GNB 미사용 — 로그인 전에도 접근) -->
+<header class="ksample-top">
+    <div class="ksample-top-inner">
+        <a th:href="@{/}" class="ksample-brand">
+            <img th:src="@{/images/logo.svg}" alt="eGovFrame"/>
+            <span>eGovFrame</span>
+        </a>
+        <div class="ksample-top-right">
+            <span class="ksample-lang" role="group" aria-label="언어 선택">
+                <a th:href="@{/cmm/lang(lang='ko')}" th:classappend="${#locale.language == 'ko'} ? 'on'">KO</a>
+                <a th:href="@{/cmm/lang(lang='en')}" th:classappend="${#locale.language == 'en'} ? 'on'">EN</a>
+            </span>
+            <a th:href="@{/}" class="krds-btn tertiary small"><i class="bi bi-house"></i> 홈으로</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/portal}" class="krds-btn primary small"><i class="bi bi-grid-1x2"></i> 포털</a>
+        </div>
+    </div>
+</header>
+
+<main class="ksample-main">
 
     <div class="krds-demo-intro">
         <h1>KRDS 컴포넌트 사용 예시</h1>
@@ -69,9 +103,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         1) 게시판 목록 (보드리스트) — KRDS 표 + 페이지네이션
-         ============================================================ -->
+    <!-- 1) 게시판 목록 (보드리스트) -->
     <section class="krds-demo-section">
         <h2>1. 게시판 목록 (보드리스트)</h2>
         <p class="desc">KRDS 데이터 표(<code>table.tbl</code>)로 구성한 게시판 목록 예시입니다.</p>
@@ -118,7 +150,6 @@
             </table>
         </div>
 
-        <!-- KRDS 페이지네이션 -->
         <div class="krds-pagination" style="margin-top:1rem;">
             <span class="page-navi prev disabled">이전</span>
             <div class="page-links">
@@ -132,9 +163,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         2) 탭 (Tab) — krds.min.js 동작
-         ============================================================ -->
+    <!-- 2) 탭 -->
     <section class="krds-demo-section">
         <h2>2. 탭 (Tab)</h2>
         <p class="desc"><code>role="tab"</code>/<code>aria-controls</code> 기반. 탭 버튼 클릭 시 KRDS JS가 패널을 전환합니다.</p>
@@ -170,9 +199,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         3) 아코디언 (Accordion) — krds.min.js 동작
-         ============================================================ -->
+    <!-- 3) 아코디언 -->
     <section class="krds-demo-section">
         <h2>3. 아코디언 (Accordion)</h2>
         <p class="desc"><code>btn-accordion</code>/<code>aria-controls</code> 기반. 헤더 클릭 시 본문이 펼쳐집니다.</p>
@@ -197,9 +224,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         4) 버튼 / 배지
-         ============================================================ -->
+    <!-- 4) 버튼 / 배지 -->
     <section class="krds-demo-section">
         <h2>4. 버튼 · 배지</h2>
         <p class="desc">계층(primary/secondary/tertiary)과 크기(small/medium/large) 조합.</p>
@@ -218,9 +243,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-         5) 폼 입력 (검색/등록)
-         ============================================================ -->
+    <!-- 5) 폼 입력 -->
     <section class="krds-demo-section">
         <h2>5. 폼 입력</h2>
         <p class="desc">KRDS 폼 그룹(<code>form-group</code> + <code>krds-input</code>).</p>
@@ -239,7 +262,17 @@
         </div>
     </section>
 
-</div><!-- /.krds-demo-wrap -->
 </main>
+
+<footer class="ksample-foot">
+    <div class="inner">
+        <span>KRDS(디지털정부 표준 디자인시스템) 컴포넌트 사용 예시 · 전자정부표준프레임워크</span>
+        <a href="https://www.krds.go.kr" target="_blank" rel="noopener" class="text-primary text-decoration-none">www.krds.go.kr</a>
+    </div>
+</footer>
+
+<!-- 공식 KRDS JS + 호환 JS (탭·아코디언 등) -->
+<script th:src="@{/krds/resources/cdn/krds.min.js}"></script>
+<script th:src="@{/js/krds-compat.js}"></script>
 </body>
 </html>
