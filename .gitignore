@@ -35,7 +35,9 @@ backend
 
 # IDE / 로컬 도구 설정 (머신 특정 경로 포함 가능 — 공개 제외)
 .vscode/
-.claude/
+# Claude Code: 로컬/머신 설정은 제외하되, 공유 자산(skills)은 저장소에 포함
+.claude/settings.local.json
+.claude/settings.json
 
 .git/
 .svn/
