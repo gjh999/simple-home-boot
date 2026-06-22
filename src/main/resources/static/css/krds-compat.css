@@ -12,16 +12,16 @@
  * ============================================================ */
 
 /* ── Pretendard GOV (KRDS 표준 서체) ── */
-@font-face { font-family:"Pretendard GOV"; font-weight:400; font-display:swap;
+@font-face { font-family:"Pretendard GOV"; font-weight:400; font-display:optional;
   src:url("/krds/resources/fonts/PretendardGOV-Regular.subset.woff2") format("woff2"),
       url("/krds/resources/fonts/PretendardGOV-Regular.subset.woff") format("woff"); }
-@font-face { font-family:"Pretendard GOV"; font-weight:500; font-display:swap;
+@font-face { font-family:"Pretendard GOV"; font-weight:500; font-display:optional;
   src:url("/krds/resources/fonts/PretendardGOV-Medium.subset.woff2") format("woff2"),
       url("/krds/resources/fonts/PretendardGOV-Medium.subset.woff") format("woff"); }
-@font-face { font-family:"Pretendard GOV"; font-weight:600; font-display:swap;
+@font-face { font-family:"Pretendard GOV"; font-weight:600; font-display:optional;
   src:url("/krds/resources/fonts/PretendardGOV-Bold.subset.woff2") format("woff2"),
       url("/krds/resources/fonts/PretendardGOV-Bold.subset.woff") format("woff"); }
-@font-face { font-family:"Pretendard GOV"; font-weight:700; font-display:swap;
+@font-face { font-family:"Pretendard GOV"; font-weight:700; font-display:optional;
   src:url("/krds/resources/fonts/PretendardGOV-Bold.subset.woff2") format("woff2"),
       url("/krds/resources/fonts/PretendardGOV-Bold.subset.woff") format("woff"); }
 
