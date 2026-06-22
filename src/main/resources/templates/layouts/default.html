@@ -51,6 +51,8 @@
 <!-- 푸터 -->
 <footer class="egov-footer" th:replace="~{fragments/footer :: footer}"></footer>
 
+<!-- 공식 KRDS JS (탭·아코디언 등 KRDS 네이티브 컴포넌트 동작) -->
+<script th:src="@{/krds/resources/cdn/krds.min.js}"></script>
 <!-- KRDS 호환 JS(data-bs-* 동작 대체: 드롭다운·모바일메뉴·알림닫기) -->
 <script th:src="@{/js/krds-compat.js}"></script>
 <!-- KRDS JS (접근성 보조) -->

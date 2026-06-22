@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      lang="ko">
+<head>
+    <title>KRDS 사용 예시</title>
+    <style>
+        /* 예시 페이지 전용 간격(데모용) */
+        .krds-demo-section{ margin:0 0 2.5rem; }
+        .krds-demo-section > h2{ font-size:1.375rem; font-weight:800; margin:0 0 .5rem; }
+        .krds-demo-section > .desc{ color:#58616A; margin:0 0 1rem; }
+        .krds-demo-row{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+        .krds-demo-bar{ display:flex; justify-content:space-between; align-items:center; margin:0 0 .75rem; flex-wrap:wrap; gap:8px; }
+    </style>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <!-- ===== KRDS breadcrumb (네이티브) ===== -->
+    <nav class="krds-breadcrumb-wrap" aria-label="현재 경로">
+        <ol class="breadcrumb">
+            <li class="home"><a th:href="@{/}" class="txt">홈</a></li>
+            <li><a th:href="@{/krds-sample}" class="txt">KRDS 사용 예시</a></li>
+        </ol>
+    </nav>
+
+    <h1 style="font-size:1.75rem;font-weight:800;margin:.5rem 0 .25rem;">KRDS 컴포넌트 사용 예시</h1>
+    <p style="color:#58616A;margin:0 0 2rem;">
+        디지털정부 표준 디자인시스템(KRDS) <strong>네이티브 클래스(<code>krds-*</code>)</strong>만으로 구성한 참고 페이지입니다.
+        각 섹션의 마크업을 그대로 복사해 다른 화면을 KRDS로 전환할 때 사용하세요.
+        (탭·아코디언은 <code>krds.min.js</code>가 동작을 담당합니다.)
+    </p>
+
+    <!-- ============================================================
+         1) 게시판 목록 (보드리스트) — KRDS 표 + 페이지네이션
+         ============================================================ -->
+    <section class="krds-demo-section">
+        <h2>1. 게시판 목록 (보드리스트)</h2>
+        <p class="desc">KRDS 데이터 표(<code>table.tbl</code>)로 구성한 게시판 목록 예시입니다.</p>
+
+        <div class="krds-demo-bar">
+            <span class="krds-badge outline-primary">전체 128건</span>
+            <a th:href="@{/krds-sample}" class="krds-btn primary small">
+                <i class="svg-icon ico-write"></i> 글쓰기
+            </a>
+        </div>
+
+        <div class="krds-table-wrap">
+            <table class="tbl col data">
+                <caption>게시판 목록 — 번호·제목·작성자·등록일·조회수로 구성</caption>
+                <colgroup>
+                    <col style="width:8%"><col><col style="width:14%"><col style="width:16%"><col style="width:10%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">등록일</th>
+                    <th scope="col">조회</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>128</td>
+                    <td style="text-align:left"><a th:href="@{/krds-sample}" class="txt">KRDS 적용 안내 공지사항입니다</a></td>
+                    <td>관리자</td><td>2026-06-22</td><td>1,024</td>
+                </tr>
+                <tr>
+                    <td>127</td>
+                    <td style="text-align:left"><a th:href="@{/krds-sample}" class="txt">디지털 정부서비스 UI/UX 가이드라인 2025.08 배포</a></td>
+                    <td>운영팀</td><td>2026-06-20</td><td>892</td>
+                </tr>
+                <tr>
+                    <td>126</td>
+                    <td style="text-align:left"><a th:href="@{/krds-sample}" class="txt">접근성 점검 결과 공유</a></td>
+                    <td>홍길동</td><td>2026-06-18</td><td>431</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- KRDS 페이지네이션 -->
+        <div class="krds-pagination" style="margin-top:1rem;">
+            <span class="page-navi prev disabled">이전</span>
+            <div class="page-links">
+                <a class="page-link active" href="#"><span class="sr-only">현재페이지 </span>1</a>
+                <a class="page-link" href="#">2</a>
+                <a class="page-link" href="#">3</a>
+                <a class="page-link" href="#">4</a>
+                <a class="page-link" href="#">5</a>
+            </div>
+            <a class="page-navi next" href="#">다음</a>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         2) 탭 (Tab) — krds.min.js 동작
+         ============================================================ -->
+    <section class="krds-demo-section">
+        <h2>2. 탭 (Tab)</h2>
+        <p class="desc"><code>role="tab"</code>/<code>aria-controls</code> 기반. 탭 버튼 클릭 시 KRDS JS가 패널을 전환합니다.</p>
+
+        <div class="krds-tab-area layer">
+            <div class="tab line full">
+                <ul role="tablist">
+                    <li id="tab_sample_01" role="tab" aria-selected="true" aria-controls="panel_sample_01" class="active">
+                        <button type="button" class="btn-tab">공지사항 <i class="sr-only created"> 선택됨</i></button>
+                    </li>
+                    <li id="tab_sample_02" role="tab" aria-selected="false" aria-controls="panel_sample_02">
+                        <button type="button" class="btn-tab">자주 묻는 질문</button>
+                    </li>
+                    <li id="tab_sample_03" role="tab" aria-selected="false" aria-controls="panel_sample_03">
+                        <button type="button" class="btn-tab">이용 안내</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-conts-wrap">
+                <section id="panel_sample_01" aria-labelledby="tab_sample_01" class="tab-conts active" data-quick-nav="false">
+                    <h3 class="sr-only">공지사항</h3>
+                    <p>KRDS 탭의 첫 번째 패널입니다. 공지/요약 정보를 배치하기에 적합합니다.</p>
+                </section>
+                <section id="panel_sample_02" aria-labelledby="tab_sample_02" class="tab-conts" data-quick-nav="false">
+                    <h3 class="sr-only">자주 묻는 질문</h3>
+                    <p>두 번째 패널입니다. FAQ 목록이나 아코디언을 함께 배치할 수 있습니다.</p>
+                </section>
+                <section id="panel_sample_03" aria-labelledby="tab_sample_03" class="tab-conts" data-quick-nav="false">
+                    <h3 class="sr-only">이용 안내</h3>
+                    <p>세 번째 패널입니다.</p>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         3) 아코디언 (Accordion) — krds.min.js 동작
+         ============================================================ -->
+    <section class="krds-demo-section">
+        <h2>3. 아코디언 (Accordion)</h2>
+        <p class="desc"><code>btn-accordion</code>/<code>aria-controls</code> 기반. 헤더 클릭 시 본문이 펼쳐집니다.</p>
+
+        <div class="krds-accordion">
+            <div class="accordion-item">
+                <h5 class="accordion-header">
+                    <button type="button" id="acc_h_01" class="btn-accordion" aria-controls="acc_c_01">KRDS는 무엇인가요?</button>
+                </h5>
+                <div id="acc_c_01" class="accordion-collapse collapse" aria-labelledby="acc_h_01">
+                    <div class="accordion-body">디지털 정부서비스의 일관성·접근성·사용성을 위한 범정부 표준 디자인 시스템입니다.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h5 class="accordion-header">
+                    <button type="button" id="acc_h_02" class="btn-accordion" aria-controls="acc_c_02">어떻게 적용하나요?</button>
+                </h5>
+                <div id="acc_c_02" class="accordion-collapse collapse" aria-labelledby="acc_h_02">
+                    <div class="accordion-body"><code>krds.min.css</code>/<code>krds.min.js</code>를 로드하고, 이 페이지의 KRDS 네이티브 마크업을 사용하면 됩니다.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         4) 버튼 / 배지
+         ============================================================ -->
+    <section class="krds-demo-section">
+        <h2>4. 버튼 · 배지</h2>
+        <p class="desc">계층(primary/secondary/tertiary)과 크기(small/medium/large) 조합.</p>
+        <div class="krds-demo-row" style="margin-bottom:1rem;">
+            <button type="button" class="krds-btn primary">Primary</button>
+            <button type="button" class="krds-btn secondary">Secondary</button>
+            <button type="button" class="krds-btn tertiary">Tertiary</button>
+            <button type="button" class="krds-btn primary small">Small</button>
+            <button type="button" class="krds-btn primary large">Large</button>
+            <button type="button" class="krds-btn primary" disabled>Disabled</button>
+        </div>
+        <div class="krds-badge-wrap krds-demo-row">
+            <span class="krds-badge outline-primary">Primary</span>
+            <span class="krds-badge outline-secondary">Secondary</span>
+            <span class="krds-badge outline-gray">Gray</span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         5) 폼 입력 (검색/등록)
+         ============================================================ -->
+    <section class="krds-demo-section">
+        <h2>5. 폼 입력</h2>
+        <p class="desc">KRDS 폼 그룹(<code>form-group</code> + <code>krds-input</code>).</p>
+        <div class="fieldset">
+            <div class="form-group">
+                <div class="form-tit"><label for="sample_kw">검색어</label></div>
+                <div class="form-conts">
+                    <input type="text" id="sample_kw" class="krds-input" placeholder="제목 또는 내용을 입력하세요">
+                </div>
+                <p class="form-hint">두 글자 이상 입력해 주세요.</p>
+            </div>
+            <div class="krds-demo-row">
+                <button type="button" class="krds-btn primary">검색</button>
+                <button type="button" class="krds-btn tertiary">초기화</button>
+            </div>
+        </div>
+    </section>
+
+</main>
+</body>
+</html>

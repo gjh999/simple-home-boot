@@ -16,10 +16,12 @@
 - **호환 레이어**: `static/css/krds-compat.css` — Bootstrap이 제공하던 **그리드(`row/col-*`)·유틸리티(여백/flex/text)·컴포넌트 구조(btn/card/table/form/breadcrumb/pagination/navbar/dropdown)**를 **KRDS 토큰으로 재구현** + `@font-face`(Pretendard GOV). 템플릿의 기존 클래스명을 그대로 두고 KRDS 룩으로 동작.
 - **JS 동작 대체**: `static/js/krds-compat.js` — Bootstrap 번들이 하던 `data-bs-*`(드롭다운·모바일 메뉴 collapse·알림 닫기)를 바닐라 JS로 대체.
 - **보안/서빙**: `SecurityConfig`·`WebMvcConfig`에 `/krds/**` 허용. krds.min.css의 **원격 아이콘 350개를 로컬(`/krds/resources/img/`)로 치환**(CDN 미사용 정책 준수).
-- **검증**: Bootstrap 제거 후 `/`·`/portal`·게시판·게시판마스터·일정·회원·마이페이지·관리자 **전 페이지 HTTP 200**, 그리드·GNB 드롭다운·폼·테이블 정상.
+- **KRDS 네이티브 컴포넌트**: `krds.min.js` **전역 로드**(탭·아코디언 등 동작). KRDS 네이티브 클래스(`krds-*`)만으로 구성한 **사용 예시 페이지 `/krds-sample`**(보드리스트·탭·아코디언·버튼·배지·폼·페이지네이션) 제공 → 다른 화면을 KRDS 네이티브로 전환할 때의 **표준 패턴**.
+- **헤더 익명 안전화**: 공개(비로그인) 페이지에서 `principal.name` 접근 오류(500)를 막도록 헤더 사용자 영역을 `isAuthenticated()`로 가드, 익명 시 로그인 링크 노출.
+- **검증**: Bootstrap 제거 후 `/`·`/portal`·게시판·게시판마스터·일정·회원·마이페이지·관리자·`/krds-sample` **전 페이지 HTTP 200**, 그리드·GNB 드롭다운·탭·아코디언·폼·테이블 정상.
 
-> 로드 순서(레이아웃): `bootstrap-icons` → `krds.min.css`(공식) → `common.css` → `krds-compat.css` → `krds.css`(스킨).
-> JS: `krds-compat.js` → `krds.js` → `common.js`. (krds.min.js는 KRDS 네이티브 컴포넌트 채택 시 추가)
+> 로드 순서(레이아웃) — CSS: `bootstrap-icons` → `krds.min.css`(공식) → `common.css` → `krds-compat.css` → `krds.css`(스킨).
+> JS: `krds.min.js`(공식) → `krds-compat.js` → `krds.js` → `common.js`.
 
 아래 §1~9는 초기 하이브리드 적용 시점의 기록이며, 토큰·컴포넌트 매핑 원칙은 현재도 유효합니다.
 
