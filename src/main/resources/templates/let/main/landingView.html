@@ -142,26 +142,26 @@
         .grid { display: grid; gap: 24px; }
         .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
         .grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
-        .card {
+        .svc-card {
             background: #fff; border-radius: var(--radius); padding: 32px 28px;
             border: 1px solid var(--line); transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
             position: relative; overflow: hidden;
         }
-        .card::after { content:""; position:absolute; left:0; top:0; height:4px; width:0; background:var(--primary); transition:width .4s ease; }
-        .card:hover { transform: translateY(-6px); box-shadow: 0 20px 44px rgba(30,33,36,.10); border-color: rgba(37,110,244,.4); }
-        .card:hover::after { width: 100%; }
-        .card .ico {
+        .svc-card::after { content:""; position:absolute; left:0; top:0; height:4px; width:0; background:var(--primary); transition:width .4s ease; }
+        .svc-card:hover { transform: translateY(-6px); box-shadow: 0 20px 44px rgba(30,33,36,.10); border-color: rgba(37,110,244,.4); }
+        .svc-card:hover::after { width: 100%; }
+        .svc-card .ico {
             width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center;
             font-size: 26px; color: #fff; margin-bottom: 20px;
             background: linear-gradient(135deg, var(--primary), var(--primary-hover));
             box-shadow: 0 10px 22px rgba(37,110,244,.28);
         }
-        .card.c2 .ico { background: linear-gradient(135deg,#19A7DA,#1597D6); box-shadow:0 10px 22px rgba(25,167,218,.28); }
-        .card.c3 .ico { background: linear-gradient(135deg,#FF8A65,#FF6B81); box-shadow:0 10px 22px rgba(255,107,129,.28); }
-        .card.c4 .ico { background: linear-gradient(135deg,#7A5CFF,#9B6BFF); box-shadow:0 10px 22px rgba(122,92,255,.28); }
-        .card.c5 .ico { background: linear-gradient(135deg,#228738,#1BA94C); box-shadow:0 10px 22px rgba(34,135,56,.28); }
-        .card h3 { font-size: 19px; color: var(--ink); font-weight: 700; margin-bottom: 10px; }
-        .card p { color: var(--sub); font-size: 15px; }
+        .svc-card.c2 .ico { background: linear-gradient(135deg,#19A7DA,#1597D6); box-shadow:0 10px 22px rgba(25,167,218,.28); }
+        .svc-card.c3 .ico { background: linear-gradient(135deg,#FF8A65,#FF6B81); box-shadow:0 10px 22px rgba(255,107,129,.28); }
+        .svc-card.c4 .ico { background: linear-gradient(135deg,#7A5CFF,#9B6BFF); box-shadow:0 10px 22px rgba(122,92,255,.28); }
+        .svc-card.c5 .ico { background: linear-gradient(135deg,#228738,#1BA94C); box-shadow:0 10px 22px rgba(34,135,56,.28); }
+        .svc-card h3 { font-size: 19px; color: var(--ink); font-weight: 700; margin-bottom: 10px; }
+        .svc-card p { color: var(--sub); font-size: 15px; }
 
         /* ============ ABOUT split ============ */
         .split { display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: center; }
@@ -335,32 +335,32 @@
             <p class="sec-sub" th:text="#{landing.svc.sub}">실행환경은 화면처리부터 공통기반까지, 애플리케이션 개발에 필요한 모든 영역을 표준 서비스로 제공합니다.</p>
         </div>
         <div class="grid cols-3" style="margin-top:56px;">
-            <div class="card c1 reveal">
+            <div class="svc-card c1 reveal">
                 <div class="ico"><i class="bi bi-window-stack"></i></div>
                 <h3 th:text="#{landing.svc.1.t}">화면처리</h3>
                 <p th:text="#{landing.svc.1.d}">사용자 인터페이스 구성과 입력값 검증을 담당합니다.</p>
             </div>
-            <div class="card c2 reveal d1">
+            <div class="svc-card c2 reveal d1">
                 <div class="ico"><i class="bi bi-cpu"></i></div>
                 <h3 th:text="#{landing.svc.2.t}">업무처리</h3>
                 <p th:text="#{landing.svc.2.d}">업무 로직의 흐름 제어, 트랜잭션 관리, 예외 처리 등 비즈니스 처리의 핵심 기능을 제공합니다.</p>
             </div>
-            <div class="card c3 reveal d2">
+            <div class="svc-card c3 reveal d2">
                 <div class="ico"><i class="bi bi-database-gear"></i></div>
                 <h3 th:text="#{landing.svc.3.t}">데이터처리</h3>
                 <p th:text="#{landing.svc.3.d}">데이터의 영속성 관리와 데이터소스, ORM, 캐시 등 데이터 접근 계층을 표준화하여 제공합니다.</p>
             </div>
-            <div class="card c4 reveal">
+            <div class="svc-card c4 reveal">
                 <div class="ico"><i class="bi bi-share"></i></div>
                 <h3 th:text="#{landing.svc.4.t}">연계통합</h3>
                 <p th:text="#{landing.svc.4.d}">이기종 시스템 간 연계와 통합 기능을 지원하여 서비스 간 원활한 상호운용성을 보장합니다.</p>
             </div>
-            <div class="card c5 reveal d1">
+            <div class="svc-card c5 reveal d1">
                 <div class="ico"><i class="bi bi-stack"></i></div>
                 <h3 th:text="#{landing.svc.5.t}">공통기반</h3>
                 <p th:text="#{landing.svc.5.d}">AOP, IoC, 로깅, 보안, 암호화, 파일처리 등 전 영역에서 공통으로 활용되는 기반 서비스를 제공합니다.</p>
             </div>
-            <div class="card reveal d2" style="background:linear-gradient(135deg,var(--primary),var(--primary-hover)); border:0;">
+            <div class="svc-card reveal d2" style="background:linear-gradient(135deg,var(--primary),var(--primary-hover)); border:0;">
                 <div class="ico" style="background:rgba(255,255,255,.18);box-shadow:none;"><i class="bi bi-arrow-up-right"></i></div>
                 <h3 style="color:#fff;" th:text="#{landing.svc.more.t}">219+ 공통 컴포넌트</h3>
                 <p style="color:#E6EEFF;" th:text="#{landing.svc.more.d}">게시판, 일정, 회원관리 등 즉시 활용 가능한 검증된 공통 컴포넌트로 개발 기간을 단축하세요.</p>
