@@ -16,6 +16,10 @@
         최종 권위로 덮어쓴다(반드시 마지막 로드). 기존 다크 theme.css 는 KRDS 밝은
         정부 표준 톤과 상충하므로 미사용(파일은 보존).
     -->
+    <!-- Pretendard GOV 폰트 프리로드 (FOUT/글꼴 교체 깜빡임 최소화) -->
+    <link rel="preload" th:href="@{/krds/resources/fonts/PretendardGOV-Regular.subset.woff2}" as="font" type="font/woff2" crossorigin/>
+    <link rel="preload" th:href="@{/krds/resources/fonts/PretendardGOV-Medium.subset.woff2}" as="font" type="font/woff2" crossorigin/>
+    <link rel="preload" th:href="@{/krds/resources/fonts/PretendardGOV-Bold.subset.woff2}" as="font" type="font/woff2" crossorigin/>
     <!-- Bootstrap Icons (아이콘 폰트 — 프레임워크 아님, 유지) -->
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons.min.css}">
     <!-- 공식 KRDS 디자인 시스템 (HTML Component Kit, /krds) -->

@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title layout:title-pattern="$CONTENT_TITLE - 전자정부표준프레임워크">전자정부표준프레임워크</title>
 
+    <!-- Pretendard GOV 폰트 프리로드 (FOUT 최소화) -->
+    <link rel="preload" th:href="@{/krds/resources/fonts/PretendardGOV-Regular.subset.woff2}" as="font" type="font/woff2" crossorigin/>
+    <link rel="preload" th:href="@{/krds/resources/fonts/PretendardGOV-Medium.subset.woff2}" as="font" type="font/woff2" crossorigin/>
+    <link rel="preload" th:href="@{/krds/resources/fonts/PretendardGOV-Bold.subset.woff2}" as="font" type="font/woff2" crossorigin/>
     <!-- Bootstrap Icons + 공식 KRDS + 호환 레이어 + 스킨 -->
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons.min.css}"/>
     <link rel="stylesheet" th:href="@{/krds/resources/cdn/krds.min.css}"/>
