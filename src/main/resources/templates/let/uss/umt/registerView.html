@@ -31,7 +31,7 @@
                 <label for="mberId" class="form-label fw-semibold" th:text="#{register.id}">아이디</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-person text-primary"></i></span>
-                    <input type="text" id="mberId" name="mberId" class="form-control"
+                    <input type="text" id="mberId" name="mberId" class="krds-input"
                            th:value="${mberId}" th:placeholder="#{register.id.ph}" placeholder="아이디 (4자 이상)" required
                            autocomplete="username" minlength="4" maxlength="20"/>
                     <div class="invalid-feedback" th:text="#{register.id.ph}">아이디를 입력하세요.</div>
@@ -42,7 +42,7 @@
                 <label for="mberNm" class="form-label fw-semibold" th:text="#{register.name}">이름</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-card-text text-primary"></i></span>
-                    <input type="text" id="mberNm" name="mberNm" class="form-control"
+                    <input type="text" id="mberNm" name="mberNm" class="krds-input"
                            th:value="${mberNm}" th:placeholder="#{register.name.ph}" placeholder="이름을 입력하세요" required maxlength="50"/>
                     <div class="invalid-feedback" th:text="#{register.name.ph}">이름을 입력하세요.</div>
                 </div>
@@ -55,7 +55,7 @@
                 </label>
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-envelope text-primary"></i></span>
-                    <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="form-control"
+                    <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="krds-input"
                            th:value="${mberEmailAdres}" th:placeholder="#{register.email.ph}" placeholder="name@example.com" maxlength="50"/>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <label for="password" class="form-label fw-semibold" th:text="#{register.pw}">비밀번호</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-lock text-primary"></i></span>
-                    <input type="password" id="password" name="password" class="form-control"
+                    <input type="password" id="password" name="password" class="krds-input"
                            th:placeholder="#{register.pw.ph}" placeholder="비밀번호 (4자 이상)" required autocomplete="new-password"
                            minlength="4" maxlength="100"/>
                     <div class="invalid-feedback" th:text="#{register.pw.ph}">비밀번호를 입력하세요.</div>
@@ -75,15 +75,15 @@
                 <label for="passwordConfirm" class="form-label fw-semibold" th:text="#{register.pwConfirm}">비밀번호 확인</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-lock-fill text-primary"></i></span>
-                    <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control"
+                    <input type="password" id="passwordConfirm" name="passwordConfirm" class="krds-input"
                            th:placeholder="#{register.pwConfirm.ph}" placeholder="비밀번호를 다시 입력하세요" required autocomplete="new-password"
                            maxlength="100"/>
                     <div class="invalid-feedback" id="pwMismatch" th:text="#{register.pwMismatch}">비밀번호가 일치하지 않습니다.</div>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold fs-6">
-                <i class="bi bi-person-plus me-1"></i> <span th:text="#{register.submit}">가입하기</span>
+            <button type="submit" class="krds-btn primary w-100 py-2 fw-semibold fs-6">
+                <i class="bi bi-person-plus"></i> <span th:text="#{register.submit}">가입하기</span>
             </button>
         </form>
 

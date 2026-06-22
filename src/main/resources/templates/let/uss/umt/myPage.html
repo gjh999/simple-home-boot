@@ -26,73 +26,92 @@
     <div class="container-fluid px-4">
 
         <!-- 플래시 메시지 -->
-        <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <div th:if="${successMsg}" class="alert alert-success" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
         </div>
-        <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div th:if="${errorMsg}" class="alert alert-danger" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
         </div>
 
         <div class="row g-4">
 
             <!-- 회원정보 수정 -->
             <div class="col-lg-7">
-                <div class="card h-100">
-                    <div class="card-header">
+                <div class="krds-panel h-100">
+                    <div class="krds-panel-head">
                         <i class="bi bi-person-vcard me-2 text-primary"></i>회원정보
                     </div>
-                    <div class="card-body">
-                        <form th:action="@{/mypage/info}" method="post" id="infoForm" novalidate>
+                    <div class="krds-panel-body">
+                        <form th:action="@{/mypage/info}" method="post" id="infoForm">
 
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">아이디</label>
-                                <input type="text" class="form-control" th:value="${mber?.mberId}" disabled readonly/>
-                                <div class="form-text">아이디는 변경할 수 없습니다.</div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="mberNm" class="form-label fw-semibold">이름 <span class="text-danger">*</span></label>
-                                <input type="text" id="mberNm" name="mberNm" class="form-control"
-                                       th:value="${mber?.mberNm}" required maxlength="50"/>
-                                <div class="invalid-feedback">이름을 입력하세요.</div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="mberEmailAdres" class="form-label fw-semibold">이메일</label>
-                                <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="form-control"
-                                       th:value="${mber?.mberEmailAdres}" placeholder="name@example.com" maxlength="50"/>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="moblphonNo" class="form-label fw-semibold">휴대전화</label>
-                                <input type="text" id="moblphonNo" name="moblphonNo" class="form-control"
-                                       th:value="${mber?.moblphonNo}" placeholder="010-0000-0000" maxlength="20"/>
-                            </div>
-
-                            <div class="row g-2 mb-3">
-                                <div class="col-sm-4">
-                                    <label for="zip" class="form-label fw-semibold">우편번호</label>
-                                    <input type="text" id="zip" name="zip" class="form-control"
-                                           th:value="${mber?.zip}" maxlength="6"/>
+                            <div class="fieldset">
+                                <div class="form-group">
+                                    <div class="form-tit"><label>아이디</label></div>
+                                    <div class="form-conts">
+                                        <input type="text" class="krds-input" th:value="${mber?.mberId}" disabled readonly/>
+                                        <p class="form-hint">아이디는 변경할 수 없습니다.</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-8">
-                                    <label for="adres" class="form-label fw-semibold">주소</label>
-                                    <input type="text" id="adres" name="adres" class="form-control"
-                                           th:value="${mber?.adres}" maxlength="100"/>
-                                </div>
-                            </div>
 
-                            <div class="mb-4">
-                                <label for="detailAdres" class="form-label fw-semibold">상세주소</label>
-                                <input type="text" id="detailAdres" name="detailAdres" class="form-control"
-                                       th:value="${mber?.detailAdres}" maxlength="100"/>
+                                <div class="form-group">
+                                    <div class="form-tit"><label for="mberNm">이름 <span class="frm-rq">*</span></label></div>
+                                    <div class="form-conts">
+                                        <input type="text" id="mberNm" name="mberNm" class="krds-input"
+                                               th:value="${mber?.mberNm}" required maxlength="50"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-tit"><label for="mberEmailAdres">이메일</label></div>
+                                    <div class="form-conts">
+                                        <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="krds-input"
+                                               th:value="${mber?.mberEmailAdres}" placeholder="name@example.com" maxlength="50"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-tit"><label for="moblphonNo">휴대전화</label></div>
+                                    <div class="form-conts">
+                                        <input type="text" id="moblphonNo" name="moblphonNo" class="krds-input"
+                                               th:value="${mber?.moblphonNo}" placeholder="010-0000-0000" maxlength="20"/>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <div class="form-tit"><label for="zip">우편번호</label></div>
+                                            <div class="form-conts">
+                                                <input type="text" id="zip" name="zip" class="krds-input"
+                                                       th:value="${mber?.zip}" maxlength="6"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <div class="form-tit"><label for="adres">주소</label></div>
+                                            <div class="form-conts">
+                                                <input type="text" id="adres" name="adres" class="krds-input"
+                                                       th:value="${mber?.adres}" maxlength="100"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-tit"><label for="detailAdres">상세주소</label></div>
+                                    <div class="form-conts">
+                                        <input type="text" id="detailAdres" name="detailAdres" class="krds-input"
+                                               th:value="${mber?.detailAdres}" maxlength="100"/>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="text-end">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save me-1"></i>정보 저장
+                                <button type="submit" class="krds-btn primary">
+                                    <i class="bi bi-save"></i> 정보 저장
                                 </button>
                             </div>
                         </form>
@@ -102,11 +121,11 @@
 
             <!-- 비밀번호 변경 -->
             <div class="col-lg-5">
-                <div class="card h-100">
-                    <div class="card-header">
+                <div class="krds-panel h-100">
+                    <div class="krds-panel-head">
                         <i class="bi bi-shield-lock me-2 text-info"></i>비밀번호 변경
                     </div>
-                    <div class="card-body">
+                    <div class="krds-panel-body">
                         <div th:if="${pwSuccessMsg}" class="alert alert-success" role="alert">
                             <i class="bi bi-check-circle-fill me-2"></i><span th:text="${pwSuccessMsg}"></span>
                         </div>
@@ -114,29 +133,34 @@
                             <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${pwErrorMsg}"></span>
                         </div>
 
-                        <form th:action="@{/mypage/password}" method="post" id="pwForm" novalidate>
-                            <div class="mb-3">
-                                <label for="oldPassword" class="form-label fw-semibold">현재 비밀번호 <span class="text-danger">*</span></label>
-                                <input type="password" id="oldPassword" name="oldPassword" class="form-control"
-                                       required autocomplete="current-password" maxlength="100"/>
-                                <div class="invalid-feedback">현재 비밀번호를 입력하세요.</div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="newPassword" class="form-label fw-semibold">새 비밀번호 <span class="text-danger">*</span></label>
-                                <input type="password" id="newPassword" name="newPassword" class="form-control"
-                                       required autocomplete="new-password" minlength="4" maxlength="100"
-                                       placeholder="4자 이상"/>
-                                <div class="invalid-feedback">새 비밀번호를 입력하세요.</div>
-                            </div>
-                            <div class="mb-4">
-                                <label for="confirmPassword" class="form-label fw-semibold">새 비밀번호 확인 <span class="text-danger">*</span></label>
-                                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
-                                       required autocomplete="new-password" maxlength="100"/>
-                                <div class="invalid-feedback" id="pwMismatch">비밀번호가 일치하지 않습니다.</div>
+                        <form th:action="@{/mypage/password}" method="post" id="pwForm">
+                            <div class="fieldset">
+                                <div class="form-group">
+                                    <div class="form-tit"><label for="oldPassword">현재 비밀번호 <span class="frm-rq">*</span></label></div>
+                                    <div class="form-conts">
+                                        <input type="password" id="oldPassword" name="oldPassword" class="krds-input"
+                                               required autocomplete="current-password" maxlength="100"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-tit"><label for="newPassword">새 비밀번호 <span class="frm-rq">*</span></label></div>
+                                    <div class="form-conts">
+                                        <input type="password" id="newPassword" name="newPassword" class="krds-input"
+                                               required autocomplete="new-password" minlength="4" maxlength="100"
+                                               placeholder="4자 이상"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-tit"><label for="confirmPassword">새 비밀번호 확인 <span class="frm-rq">*</span></label></div>
+                                    <div class="form-conts">
+                                        <input type="password" id="confirmPassword" name="confirmPassword" class="krds-input"
+                                               required autocomplete="new-password" maxlength="100"/>
+                                    </div>
+                                </div>
                             </div>
                             <div class="text-end">
-                                <button type="submit" class="btn btn-info">
-                                    <i class="bi bi-key me-1"></i>비밀번호 변경
+                                <button type="submit" class="krds-btn primary">
+                                    <i class="bi bi-key"></i> 비밀번호 변경
                                 </button>
                             </div>
                         </form>

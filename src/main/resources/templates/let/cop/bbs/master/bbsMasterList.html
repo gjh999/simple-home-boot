@@ -25,26 +25,30 @@
 
     <div class="container-fluid px-4">
 
-        <div th:if="${successMsg}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <div th:if="${successMsg}" class="alert alert-success" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
         </div>
-        <div th:if="${errorMsg}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div th:if="${errorMsg}" class="alert alert-danger" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
         </div>
 
         <!-- 검색 -->
-        <form th:action="@{/bbs/master/list}" method="get" class="search-bar">
+        <form th:action="@{/bbs/master/list}" method="get" class="search-bar krds-search">
             <div class="row g-2 align-items-end">
                 <div class="col-md-4">
-                    <label for="searchWrd" class="form-label small fw-semibold">검색어</label>
-                    <input type="text" id="searchWrd" name="searchWrd" class="form-control form-control-sm"
-                           th:value="${search?.searchWrd}" placeholder="게시판명 검색" maxlength="100"/>
+                    <div class="form-group">
+                        <div class="form-tit"><label for="searchWrd">검색어</label></div>
+                        <div class="form-conts">
+                            <input type="text" id="searchWrd" name="searchWrd" class="krds-input"
+                                   th:value="${search?.searchWrd}" placeholder="게시판명 검색" maxlength="100"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary btn-sm w-100">
-                        <i class="bi bi-search me-1"></i>검색
+                    <button type="submit" class="krds-btn primary small w-100">
+                        <i class="bi bi-search"></i> 검색
                     </button>
                 </div>
                 <div class="col-md-6 text-end">
@@ -56,50 +60,52 @@
         </form>
 
         <!-- 목록 -->
-        <div class="card">
-            <div class="card-body p-0">
-                <table class="egov-table mb-0">
-                    <thead>
-                    <tr>
-                        <th style="width:60px">번호</th>
-                        <th>게시판명</th>
-                        <th style="width:120px">게시판유형</th>
-                        <th style="width:120px">게시판속성</th>
-                        <th style="width:80px">사용여부</th>
-                        <th style="width:110px">등록일</th>
-                        <th style="width:100px">관리</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="item, stat : ${result?.resultList}"
-                        th:if="${result != null and !#lists.isEmpty(result.resultList)}">
-                        <td class="text-center text-muted small"
-                            th:text="${paginationInfo.totalRecordCount - (paginationInfo.currentPageNo - 1) * paginationInfo.recordCountPerPage - stat.index}">1</td>
-                        <td>
-                            <a th:href="@{/bbs/master/{bbsId}/detail(bbsId=${item.bbsId})}"
-                               class="text-decoration-none" th:text="${item.bbsNm}">게시판명</a>
-                        </td>
-                        <td class="text-center small" th:text="${item.bbsTyCodeNm}">일반</td>
-                        <td class="text-center small" th:text="${item.bbsAttrbCodeNm}">일반</td>
-                        <td class="text-center small">
-                            <span th:if="${item.useAt == 'Y'}" class="badge bg-success">사용</span>
-                            <span th:unless="${item.useAt == 'Y'}" class="badge bg-secondary">미사용</span>
-                        </td>
-                        <td class="text-center small text-muted"
-                            th:text="${item.frstRegisterPnttm != null ? #strings.substring(item.frstRegisterPnttm, 0, 10) : ''}"></td>
-                        <td class="text-center">
-                            <a th:href="@{/bbs/master/{id}/update(id=${item.bbsId})}"
-                               class="btn btn-outline-secondary btn-sm">수정</a>
-                        </td>
-                    </tr>
-                    <tr th:if="${result == null or result.resultList == null or #lists.isEmpty(result.resultList)}">
-                        <td colspan="7" class="text-center py-4 text-muted">
-                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>등록된 게시판이 없습니다.
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="krds-table-wrap">
+            <table class="tbl">
+                <caption>게시판 마스터 목록 — 번호·게시판명·유형·속성·사용여부·등록일·관리</caption>
+                <colgroup>
+                    <col style="width:60px"><col><col style="width:120px"><col style="width:120px"><col style="width:80px"><col style="width:110px"><col style="width:100px">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">게시판명</th>
+                    <th scope="col">게시판유형</th>
+                    <th scope="col">게시판속성</th>
+                    <th scope="col">사용여부</th>
+                    <th scope="col">등록일</th>
+                    <th scope="col">관리</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item, stat : ${result?.resultList}"
+                    th:if="${result != null and !#lists.isEmpty(result.resultList)}">
+                    <td class="text-center text-muted small"
+                        th:text="${paginationInfo.totalRecordCount - (paginationInfo.currentPageNo - 1) * paginationInfo.recordCountPerPage - stat.index}">1</td>
+                    <td style="text-align:left">
+                        <a th:href="@{/bbs/master/{bbsId}/detail(bbsId=${item.bbsId})}"
+                           class="txt" th:text="${item.bbsNm}">게시판명</a>
+                    </td>
+                    <td class="text-center small" th:text="${item.bbsTyCodeNm}">일반</td>
+                    <td class="text-center small" th:text="${item.bbsAttrbCodeNm}">일반</td>
+                    <td class="text-center small">
+                        <span th:if="${item.useAt == 'Y'}" class="krds-badge bg-success">사용</span>
+                        <span th:unless="${item.useAt == 'Y'}" class="krds-badge bg-gray">미사용</span>
+                    </td>
+                    <td class="text-center small text-muted"
+                        th:text="${item.frstRegisterPnttm != null ? #strings.substring(item.frstRegisterPnttm, 0, 10) : ''}"></td>
+                    <td class="text-center">
+                        <a th:href="@{/bbs/master/{id}/update(id=${item.bbsId})}"
+                           class="krds-btn tertiary small">수정</a>
+                    </td>
+                </tr>
+                <tr th:if="${result == null or result.resultList == null or #lists.isEmpty(result.resultList)}">
+                    <td colspan="7" class="text-center py-4 text-muted">
+                        <i class="bi bi-inbox fs-3 d-block mb-2"></i>등록된 게시판이 없습니다.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
         <!-- 페이지네이션 -->
@@ -107,8 +113,8 @@
 
         <!-- 하단 버튼 -->
         <div class="d-flex justify-content-end mt-3">
-            <a th:href="@{/bbs/master/write}" class="btn btn-primary">
-                <i class="bi bi-plus-circle me-1"></i>게시판 등록
+            <a th:href="@{/bbs/master/write}" class="krds-btn primary">
+                <i class="bi bi-plus-circle"></i> 게시판 등록
             </a>
         </div>
 

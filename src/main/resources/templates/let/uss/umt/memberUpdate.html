@@ -20,44 +20,64 @@
     </div>
 
     <div class="container-fluid px-4">
-        <div class="card">
-            <div class="card-body">
+        <div class="krds-panel">
+            <div class="krds-panel-body">
                 <form th:action="@{/member/{id}/update(id=${member?.mberId})}" method="post"
-                      id="updateMemberForm" novalidate>
+                      id="updateMemberForm">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label for="mberNm" class="form-label fw-semibold">이름 <span class="text-danger">*</span></label>
-                            <input type="text" id="mberNm" name="mberNm" class="form-control"
-                                   th:value="${member?.mberNm}" required maxlength="50"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="mberNm">이름 <span class="frm-rq">*</span></label></div>
+                                <div class="form-conts">
+                                    <input type="text" id="mberNm" name="mberNm" class="krds-input"
+                                           th:value="${member?.mberNm}" required maxlength="50"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="mberEmailAdres" class="form-label fw-semibold">이메일</label>
-                            <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="form-control"
-                                   th:value="${member?.mberEmailAdres}" maxlength="50"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="mberEmailAdres">이메일</label></div>
+                                <div class="form-conts">
+                                    <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="krds-input"
+                                           th:value="${member?.mberEmailAdres}" maxlength="50"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="moblphonNo" class="form-label fw-semibold">휴대폰</label>
-                            <input type="text" id="moblphonNo" name="moblphonNo" class="form-control"
-                                   th:value="${member?.moblphonNo}" maxlength="20"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="moblphonNo">휴대폰</label></div>
+                                <div class="form-conts">
+                                    <input type="text" id="moblphonNo" name="moblphonNo" class="krds-input"
+                                           th:value="${member?.moblphonNo}" maxlength="20"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="zip" class="form-label fw-semibold">우편번호</label>
-                            <input type="text" id="zip" name="zip" class="form-control"
-                                   th:value="${member?.zip}" maxlength="6"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="zip">우편번호</label></div>
+                                <div class="form-conts">
+                                    <input type="text" id="zip" name="zip" class="krds-input"
+                                           th:value="${member?.zip}" maxlength="6"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12">
-                            <label for="adres" class="form-label fw-semibold">주소</label>
-                            <input type="text" id="adres" name="adres" class="form-control"
-                                   th:value="${member?.adres}" maxlength="100"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="adres">주소</label></div>
+                                <div class="form-conts">
+                                    <input type="text" id="adres" name="adres" class="krds-input"
+                                           th:value="${member?.adres}" maxlength="100"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
-                        <a th:href="@{/member/{id}/detail(id=${member?.mberId})}" class="btn btn-outline-secondary">
-                            <i class="bi bi-x-circle me-1"></i>취소
+                        <a th:href="@{/member/{id}/detail(id=${member?.mberId})}" class="krds-btn tertiary">
+                            <i class="bi bi-x-circle"></i> 취소
                         </a>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save me-1"></i>저장
+                        <button type="submit" class="krds-btn primary">
+                            <i class="bi bi-save"></i> 저장
                         </button>
                     </div>
                 </form>

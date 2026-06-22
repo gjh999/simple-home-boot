@@ -19,51 +19,75 @@
         </div>
     </div>
     <div class="container-fluid px-4">
-        <div class="card">
-            <div class="card-body">
+        <div class="krds-panel">
+            <div class="krds-panel-body">
                 <form th:action="@{/schedule/{id}/update(id=${schedule?.schdulId})}" method="post"
-                      id="scheduleUpdateForm" novalidate>
+                      id="scheduleUpdateForm">
                     <div class="row g-3">
                         <div class="col-12">
-                            <label for="schdulNm" class="form-label fw-semibold">일정명 <span class="text-danger">*</span></label>
-                            <input type="text" id="schdulNm" name="schdulNm" class="form-control"
-                                   th:value="${schedule?.schdulNm}" required maxlength="255"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="schdulNm">일정명 <span class="frm-rq">*</span></label></div>
+                                <div class="form-conts">
+                                    <input type="text" id="schdulNm" name="schdulNm" class="krds-input"
+                                           th:value="${schedule?.schdulNm}" required maxlength="255"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="schdulBgnde" class="form-label fw-semibold">시작일시</label>
-                            <input type="datetime-local" id="schdulBgnde" name="schdulBgnde"
-                                   class="form-control" th:value="${schedule?.schdulBgnde}"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="schdulBgnde">시작일시</label></div>
+                                <div class="form-conts">
+                                    <input type="datetime-local" id="schdulBgnde" name="schdulBgnde"
+                                           class="krds-input" th:value="${schedule?.schdulBgnde}"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="schdulEndde" class="form-label fw-semibold">종료일시</label>
-                            <input type="datetime-local" id="schdulEndde" name="schdulEndde"
-                                   class="form-control" th:value="${schedule?.schdulEndde}"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="schdulEndde">종료일시</label></div>
+                                <div class="form-conts">
+                                    <input type="datetime-local" id="schdulEndde" name="schdulEndde"
+                                           class="krds-input" th:value="${schedule?.schdulEndde}"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="schdulPlace" class="form-label fw-semibold">장소</label>
-                            <input type="text" id="schdulPlace" name="schdulPlace" class="form-control"
-                                   th:value="${schedule?.schdulPlace}" maxlength="255"/>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="schdulPlace">장소</label></div>
+                                <div class="form-conts">
+                                    <input type="text" id="schdulPlace" name="schdulPlace" class="krds-input"
+                                           th:value="${schedule?.schdulPlace}" maxlength="255"/>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="schdulIpcrCode" class="form-label fw-semibold">중요도</label>
-                            <select id="schdulIpcrCode" name="schdulIpcrCode" class="form-select">
-                                <option value="3" th:selected="${schedule?.schdulIpcrCode == '3'}">낮음</option>
-                                <option value="2" th:selected="${schedule?.schdulIpcrCode == '2'}">보통</option>
-                                <option value="1" th:selected="${schedule?.schdulIpcrCode == '1'}">높음</option>
-                            </select>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="schdulIpcrCode">중요도</label></div>
+                                <div class="form-conts">
+                                    <select id="schdulIpcrCode" name="schdulIpcrCode" class="krds-form-select">
+                                        <option value="3" th:selected="${schedule?.schdulIpcrCode == '3'}">낮음</option>
+                                        <option value="2" th:selected="${schedule?.schdulIpcrCode == '2'}">보통</option>
+                                        <option value="1" th:selected="${schedule?.schdulIpcrCode == '1'}">높음</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12">
-                            <label for="schdulCn" class="form-label fw-semibold">내용</label>
-                            <textarea id="schdulCn" name="schdulCn" class="form-control" rows="5"
-                                      th:text="${schedule?.schdulCn}"></textarea>
+                            <div class="form-group">
+                                <div class="form-tit"><label for="schdulCn">내용</label></div>
+                                <div class="form-conts">
+                                    <textarea id="schdulCn" name="schdulCn" class="krds-input" rows="5"
+                                              th:text="${schedule?.schdulCn}"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mt-4">
-                        <a th:href="@{/schedule/{id}/detail(id=${schedule?.schdulId})}" class="btn btn-outline-secondary">
-                            <i class="bi bi-x-circle me-1"></i>취소
+                        <a th:href="@{/schedule/{id}/detail(id=${schedule?.schdulId})}" class="krds-btn tertiary">
+                            <i class="bi bi-x-circle"></i> 취소
                         </a>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save me-1"></i>저장
+                        <button type="submit" class="krds-btn primary">
+                            <i class="bi bi-save"></i> 저장
                         </button>
                     </div>
                 </form>

@@ -23,51 +23,53 @@
     </div>
 
     <div class="container-fluid px-4">
-        <div class="card">
-            <div class="card-body">
+        <div class="krds-panel">
+            <div class="krds-panel-body">
                 <form th:action="@{/bbs/use/write}" method="post">
 
-                    <div class="mb-3 row">
-                        <label for="bbsId" class="col-sm-3 col-form-label fw-semibold">게시판 선택 <span class="text-danger">*</span></label>
-                        <div class="col-sm-9">
-                            <select id="bbsId" name="bbsId" class="form-select" required>
-                                <option value="">-- 게시판을 선택하세요 --</option>
-                                <option th:each="bbs : ${notUsedList}"
-                                        th:value="${bbs.bbsId}"
-                                        th:text="${bbs.bbsNm}">게시판명</option>
-                            </select>
-                            <div class="form-text text-muted">미사용 게시판 마스터 목록입니다. 사용하려면 게시판 관리에서 먼저 등록하세요.</div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
-                        <label for="trgetId" class="col-sm-3 col-form-label fw-semibold">대상시스템 ID <span class="text-danger">*</span></label>
-                        <div class="col-sm-9">
-                            <input type="text" id="trgetId" name="trgetId" class="form-control"
-                                   value="SYSTEM_DEFAULT_BOARD" maxlength="20" required/>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 row">
-                        <label class="col-sm-3 col-form-label fw-semibold">사용여부</label>
-                        <div class="col-sm-9 pt-2">
-                            <div class="form-check form-check-inline">
-                                <input type="radio" id="useAtY" name="useAt" value="Y" class="form-check-input" checked/>
-                                <label for="useAtY" class="form-check-label">사용</label>
+                    <div class="fieldset">
+                        <div class="mb-3 row form-group">
+                            <div class="col-sm-3 form-tit"><label for="bbsId">게시판 선택 <span class="frm-rq">*</span></label></div>
+                            <div class="col-sm-9 form-conts">
+                                <select id="bbsId" name="bbsId" class="krds-form-select" required>
+                                    <option value="">-- 게시판을 선택하세요 --</option>
+                                    <option th:each="bbs : ${notUsedList}"
+                                            th:value="${bbs.bbsId}"
+                                            th:text="${bbs.bbsNm}">게시판명</option>
+                                </select>
+                                <p class="form-hint">미사용 게시판 마스터 목록입니다. 사용하려면 게시판 관리에서 먼저 등록하세요.</p>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input type="radio" id="useAtN" name="useAt" value="N" class="form-check-input"/>
-                                <label for="useAtN" class="form-check-label">미사용</label>
+                        </div>
+
+                        <div class="mb-3 row form-group">
+                            <div class="col-sm-3 form-tit"><label for="trgetId">대상시스템 ID <span class="frm-rq">*</span></label></div>
+                            <div class="col-sm-9 form-conts">
+                                <input type="text" id="trgetId" name="trgetId" class="krds-input"
+                                       value="SYSTEM_DEFAULT_BOARD" maxlength="20" required/>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row form-group">
+                            <div class="col-sm-3 form-tit"><label>사용여부</label></div>
+                            <div class="col-sm-9 pt-2 form-conts">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="useAtY" name="useAt" value="Y" class="form-check-input" checked/>
+                                    <label for="useAtY" class="form-check-label">사용</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" id="useAtN" name="useAt" value="N" class="form-check-input"/>
+                                    <label for="useAtN" class="form-check-label">미사용</label>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-between mt-4">
-                        <a th:href="@{/bbs/use/list}" class="btn btn-outline-secondary">
-                            <i class="bi bi-x-circle me-1"></i>취소
+                        <a th:href="@{/bbs/use/list}" class="krds-btn tertiary">
+                            <i class="bi bi-x-circle"></i> 취소
                         </a>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save me-1"></i>저장
+                        <button type="submit" class="krds-btn primary">
+                            <i class="bi bi-save"></i> 저장
                         </button>
                     </div>
                 </form>
