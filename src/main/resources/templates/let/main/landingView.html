@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/public}"
       lang="ko">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>eGovFrame — 전자정부표준프레임워크 경량환경</title>
 
-    <!-- 아이콘 (로컬) -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap-icons.min.css}"/>
-    <!-- 공통 CSS + KRDS 디자인 시스템 (사이트 전역과 동일 토큰 공유) -->
-    <link rel="stylesheet" th:href="@{/css/common.css}"/>
-    <link rel="stylesheet" th:href="@{/css/krds.css}"/>
-    <link rel="icon" type="image/svg+xml" th:href="@{/images/logo.svg}"/>
-
+    <th:block layout:fragment="head-css">
     <style>
         /* ============================================================
            랜딩 페이지 — KRDS(디지털정부 표준 디자인 시스템) 라이트 테마
@@ -89,8 +83,8 @@
 
         /* ============ HERO ============ */
         .hero {
-            position: relative; min-height: 92vh; display: flex; align-items: center; overflow: hidden;
-            padding: 130px 0 90px;
+            position: relative; min-height: 88vh; display: flex; align-items: center; overflow: hidden;
+            padding: 64px 0 90px;
             background: radial-gradient(ellipse 70% 60% at 70% 20%, var(--primary-bg), #fff 70%);
         }
         .hero-bg { position: absolute; inset: 0; z-index: 0; }
@@ -257,34 +251,10 @@
             .cta-box { padding: 44px 24px; }
         }
     </style>
+    </th:block>
 </head>
 <body>
-
-<!-- ============ NAV ============ -->
-<header class="nav" id="nav">
-    <div class="wrap inner">
-        <a href="#top" class="brand">
-            <img class="mark" th:src="@{/images/logo.svg}" alt="eGovFrame" style="padding:0;background:none;"/>
-            <span>eGovFrame</span>
-        </a>
-        <nav class="nav-links" id="navLinks">
-            <a class="link" href="#about" th:text="#{landing.nav.about}">소개</a>
-            <a class="link" href="#services" th:text="#{landing.nav.services}">서비스</a>
-            <a class="link" href="#works" th:text="#{landing.nav.works}">주요사업</a>
-            <a class="link" href="#contact" th:text="#{landing.nav.contact}">문의</a>
-            <a class="link" th:href="@{/krds-sample}">KRDS 예시</a>
-            <!-- 언어 선택 -->
-            <span class="lang-switch" role="group" aria-label="언어 선택">
-                <a th:href="@{/cmm/lang(lang='ko')}" th:classappend="${#locale.language == 'ko'} ? 'on'">KO</a>
-                <a th:href="@{/cmm/lang(lang='en')}" th:classappend="${#locale.language == 'en'} ? 'on'">EN</a>
-            </span>
-            <!-- 로그인 상태/사용자는 노출하지 않음. '포털 바로가기'가 진입(로그인) 관문 역할 -->
-            <a th:href="@{/portal}" class="btn btn-primary"><i class="bi bi-grid-1x2"></i> <span th:text="#{landing.nav.portal}">포털 바로가기</span></a>
-        </nav>
-        <button class="nav-toggle" id="navToggle" aria-label="메뉴"><i class="bi bi-list"></i></button>
-    </div>
-</header>
-<div class="nav-backdrop" id="navBackdrop"></div>
+<main layout:fragment="content">
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
@@ -451,66 +421,10 @@
     </div>
 </section>
 
-<!-- ============ FOOTER ============ -->
-<footer class="ft">
-    <div class="wrap">
-        <div class="ft-top">
-            <div>
-                <a href="#top" class="brand"><img class="mark" th:src="@{/images/logo.svg}" alt="eGovFrame" style="padding:0;background:none;"/><span>eGovFrame</span></a>
-                <p class="desc" th:text="#{landing.footer.desc}">전자정부표준프레임워크 경량환경 — 대한민국 전자정부의 표준이 되는 오픈소스 소프트웨어 플랫폼입니다.</p>
-            </div>
-            <div class="ft-cols">
-                <div class="ft-col">
-                    <h4 th:text="#{landing.footer.col1}">바로가기</h4>
-                    <a href="#about" th:text="#{landing.nav.about}">소개</a>
-                    <a href="#services" th:text="#{landing.nav.services}">서비스</a>
-                    <a href="#works" th:text="#{landing.nav.works}">주요사업</a>
-                </div>
-                <div class="ft-col">
-                    <h4 th:text="#{landing.footer.col2}">포털</h4>
-                    <a th:href="@{/portal}" th:text="#{landing.footer.portal}">포털 대시보드</a>
-                    <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}" th:text="#{landing.footer.notice}">공지사항</a>
-                    <a th:href="@{/login}" th:text="#{landing.footer.login}">로그인</a>
-                </div>
-                <div class="ft-col">
-                    <h4 th:text="#{landing.footer.col3}">지원</h4>
-                    <a href="#contact" th:text="#{landing.footer.contact}">문의하기</a>
-                    <a th:href="@{/krds-sample}">KRDS 컴포넌트 예시</a>
-                    <a href="/swagger-ui/index.html" target="_blank" th:text="#{landing.footer.api}">API 문서</a>
-                </div>
-            </div>
-        </div>
-        <div class="ft-bottom">
-            <span th:text="#{landing.footer.copyright}">© 2026 전자정부표준프레임워크. All rights reserved.</span>
-            <span class="soc">
-                <a href="#top" aria-label="홈"><i class="bi bi-house"></i></a>
-                <a href="#top" aria-label="깃허브"><i class="bi bi-github"></i></a>
-                <a href="#top" aria-label="메일"><i class="bi bi-envelope"></i></a>
-            </span>
-        </div>
-    </div>
-</footer>
+</main>
 
+<th:block layout:fragment="body-js">
 <script th:inline="none">
-    // 네비게이션 스크롤 효과
-    const nav = document.getElementById('nav');
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // 모바일 메뉴 토글 (+ backdrop)
-    const toggle = document.getElementById('navToggle');
-    const links = document.getElementById('navLinks');
-    const backdrop = document.getElementById('navBackdrop');
-    const setMenu = (open) => {
-        links.classList.toggle('open', open);
-        backdrop.classList.toggle('open', open);
-        toggle.innerHTML = open ? '<i class="bi bi-x-lg"></i>' : '<i class="bi bi-list"></i>';
-    };
-    toggle.addEventListener('click', () => setMenu(!links.classList.contains('open')));
-    backdrop.addEventListener('click', () => setMenu(false));
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-
     // 인페이지 앵커 이동 — 주소창에 #해시를 남기지 않고 부드럽게 스크롤
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', (e) => {
@@ -564,6 +478,6 @@
     const stats = document.querySelector('.stats');
     if (stats) statIo.observe(stats);
 </script>
-
+</th:block>
 </body>
 </html>

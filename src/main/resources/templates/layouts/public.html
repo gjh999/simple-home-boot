@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title layout:title-pattern="$CONTENT_TITLE - 전자정부표준프레임워크">전자정부표준프레임워크</title>
+
+    <!-- Bootstrap Icons + 공식 KRDS + 호환 레이어 + 스킨 -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons.min.css}"/>
+    <link rel="stylesheet" th:href="@{/krds/resources/cdn/krds.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/krds-compat.css}"/>
+    <link rel="stylesheet" th:href="@{/css/krds.css}"/>
+    <link rel="icon" type="image/svg+xml" th:href="@{/images/logo.svg}"/>
+
+    <!-- ===== 공통 헤더/푸터(홈 스타일) CSS — self-contained ===== -->
+    <style>
+        .pub-wrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 24px; }
+        /* 헤더 */
+        .pub-nav{ position:sticky; top:0; z-index:100; background:#fff; border-bottom:1px solid #E7E8EA; }
+        .pub-nav .inner{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
+        .pub-brand{ display:flex; align-items:center; gap:12px; font-weight:800; font-size:20px; letter-spacing:-.02em; color:#1E2124; text-decoration:none; }
+        .pub-brand .mark{ width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg,#256EF4,#0B50D0); display:grid; place-items:center; color:#fff; box-shadow:0 6px 16px rgba(37,110,244,.35); padding:0; }
+        .pub-links{ display:flex; align-items:center; gap:28px; }
+        .pub-links a.link{ font-size:15px; color:#58616A; font-weight:600; text-decoration:none; position:relative; }
+        .pub-links a.link::after{ content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:#256EF4; transition:width .3s ease; }
+        .pub-links a.link:hover{ color:#256EF4; } .pub-links a.link:hover::after{ width:100%; }
+        .pub-links a.link.active{ color:#256EF4; } .pub-links a.link.active::after{ width:100%; }
+        .pub-lang{ display:inline-flex; align-items:center; border:1px solid #CDD1D5; border-radius:8px; overflow:hidden; }
+        .pub-lang a{ font-size:12px; font-weight:700; color:#58616A; text-decoration:none; padding:5px 11px; background:#fff; }
+        .pub-lang a+a{ border-left:1px solid #E7E8EA; } .pub-lang a.on{ background:#256EF4; color:#fff; }
+        .pub-cta{ display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:14px; padding:9px 16px; border-radius:8px; background:#256EF4; color:#fff; text-decoration:none; box-shadow:0 6px 18px rgba(37,110,244,.28); }
+        .pub-cta:hover{ background:#0B50D0; color:#fff; transform:translateY(-1px); }
+        .pub-toggle{ display:none; background:none; border:0; color:#1E2124; font-size:26px; cursor:pointer; }
+        .pub-backdrop{ position:fixed; inset:0; z-index:80; background:rgba(30,33,36,.4); opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease; }
+        .pub-backdrop.open{ opacity:1; visibility:visible; }
+        /* 본문 */
+        .pub-main{ min-height:60vh; }
+        /* 푸터 (홈 리치 다크) */
+        .pub-foot{ background:#1E2124; padding:52px 0 32px; margin-top:0; }
+        .pub-foot-top{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; }
+        .pub-foot .pub-brand{ color:#fff; margin-bottom:12px; }
+        .pub-foot .desc{ color:#9EA4AA; font-size:14.5px; max-width:42ch; }
+        .pub-foot-cols{ display:flex; gap:64px; flex-wrap:wrap; }
+        .pub-foot-col h4{ font-size:14px; color:#fff; margin:0 0 14px; letter-spacing:.04em; }
+        .pub-foot-col a{ display:block; color:#9EA4AA; font-size:14px; margin-bottom:10px; text-decoration:none; }
+        .pub-foot-col a:hover{ color:#fff; }
+        .pub-foot-bottom{ margin-top:40px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; color:#6D7882; font-size:13px; }
+        .pub-foot-bottom .soc{ display:flex; gap:14px; font-size:18px; }
+        .pub-foot-bottom .soc a{ color:#9EA4AA; }
+        .pub-foot-bottom .soc a:hover{ color:#fff; }
+        @media (max-width:900px){
+            .pub-links{ position:fixed; inset:0 0 0 auto; width:min(82vw,340px); flex-direction:column; align-items:flex-start;
+                background:#fff; padding:90px 28px 40px; gap:20px; transform:translateX(100%); transition:transform .35s ease;
+                box-shadow:-20px 0 60px rgba(0,0,0,.18); z-index:105; overflow-y:auto; border-left:1px solid #E7E8EA; }
+            .pub-links.open{ transform:translateX(0); }
+            .pub-toggle{ display:block; z-index:120; position:relative; }
+        }
+    </style>
+
+    <th:block layout:fragment="head-css"></th:block>
+</head>
+<body>
+
+<!-- ===== 공통 헤더 ===== -->
+<header class="pub-nav" id="pubNav">
+    <div class="pub-wrap inner">
+        <a th:href="@{/}" class="pub-brand">
+            <img class="mark" th:src="@{/images/logo.svg}" alt="eGovFrame"/>
+            <span>eGovFrame</span>
+        </a>
+        <nav class="pub-links" id="pubLinks" aria-label="주요 메뉴">
+            <a class="link" href="/#about" th:classappend="${activeMenu == 'about'} ? 'active'" th:text="#{landing.nav.about}">소개</a>
+            <a class="link" href="/#services" th:classappend="${activeMenu == 'services'} ? 'active'" th:text="#{landing.nav.services}">서비스</a>
+            <a class="link" href="/#works" th:classappend="${activeMenu == 'works'} ? 'active'" th:text="#{landing.nav.works}">주요사업</a>
+            <a class="link" href="/#contact" th:classappend="${activeMenu == 'contact'} ? 'active'" th:text="#{landing.nav.contact}">문의</a>
+            <a class="link" th:href="@{/krds-sample}" th:classappend="${activeMenu == 'krds'} ? 'active'">KRDS 예시</a>
+            <span class="pub-lang" role="group" aria-label="언어 선택">
+                <a th:href="@{/cmm/lang(lang='ko')}" th:classappend="${#locale.language == 'ko'} ? 'on'">KO</a>
+                <a th:href="@{/cmm/lang(lang='en')}" th:classappend="${#locale.language == 'en'} ? 'on'">EN</a>
+            </span>
+            <a th:href="@{/portal}" class="pub-cta"><i class="bi bi-grid-1x2"></i> <span th:text="#{landing.nav.portal}">포털 바로가기</span></a>
+        </nav>
+        <button class="pub-toggle" id="pubToggle" type="button" aria-label="메뉴"><i class="bi bi-list"></i></button>
+    </div>
+</header>
+<div class="pub-backdrop" id="pubBackdrop"></div>
+
+<!-- ===== 본문 ===== -->
+<main class="pub-main">
+    <th:block layout:fragment="content"></th:block>
+</main>
+
+<!-- ===== 공통 푸터 ===== -->
+<footer class="pub-foot">
+    <div class="pub-wrap">
+        <div class="pub-foot-top">
+            <div>
+                <a th:href="@{/}" class="pub-brand"><img class="mark" th:src="@{/images/logo.svg}" alt="eGovFrame"/><span>eGovFrame</span></a>
+                <p class="desc" th:text="#{landing.footer.desc}">전자정부표준프레임워크 경량환경 — 대한민국 전자정부의 표준이 되는 오픈소스 소프트웨어 플랫폼입니다.</p>
+            </div>
+            <div class="pub-foot-cols">
+                <div class="pub-foot-col">
+                    <h4 th:text="#{landing.footer.col1}">바로가기</h4>
+                    <a href="/#about" th:text="#{landing.nav.about}">소개</a>
+                    <a href="/#services" th:text="#{landing.nav.services}">서비스</a>
+                    <a href="/#works" th:text="#{landing.nav.works}">주요사업</a>
+                </div>
+                <div class="pub-foot-col">
+                    <h4 th:text="#{landing.footer.col2}">포털</h4>
+                    <a th:href="@{/portal}" th:text="#{landing.footer.portal}">포털 대시보드</a>
+                    <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}" th:text="#{landing.footer.notice}">공지사항</a>
+                    <a th:href="@{/login}" th:text="#{landing.footer.login}">로그인</a>
+                </div>
+                <div class="pub-foot-col">
+                    <h4 th:text="#{landing.footer.col3}">지원</h4>
+                    <a href="/#contact" th:text="#{landing.footer.contact}">문의하기</a>
+                    <a th:href="@{/krds-sample}">KRDS 컴포넌트 예시</a>
+                    <a href="/swagger-ui/index.html" target="_blank" th:text="#{landing.footer.api}">API 문서</a>
+                </div>
+            </div>
+        </div>
+        <div class="pub-foot-bottom">
+            <span th:text="#{landing.footer.copyright}">© 2026 전자정부표준프레임워크. All rights reserved.</span>
+            <span class="soc">
+                <a th:href="@{/}" aria-label="홈"><i class="bi bi-house"></i></a>
+                <a href="https://github.com/gjh999/simple-home-boot" target="_blank" rel="noopener" aria-label="깃허브"><i class="bi bi-github"></i></a>
+                <a href="https://www.krds.go.kr" target="_blank" rel="noopener" aria-label="KRDS"><i class="bi bi-globe"></i></a>
+            </span>
+        </div>
+    </div>
+</footer>
+
+<!-- ===== 공통 헤더 JS (스크롤 그림자·모바일 메뉴·해시 스무스 스크롤) ===== -->
+<script th:inline="none">
+(function () {
+    var nav = document.getElementById('pubNav');
+    var toggle = document.getElementById('pubToggle');
+    var links = document.getElementById('pubLinks');
+    var backdrop = document.getElementById('pubBackdrop');
+    if (nav) {
+        var onScroll = function () { nav.style.boxShadow = window.scrollY > 20 ? '0 4px 18px rgba(0,0,0,.08)' : 'none'; };
+        onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    function setMenu(open) {
+        if (!links) return;
+        links.classList.toggle('open', open);
+        if (backdrop) backdrop.classList.toggle('open', open);
+        if (toggle) toggle.innerHTML = open ? '<i class="bi bi-x-lg"></i>' : '<i class="bi bi-list"></i>';
+    }
+    if (toggle) toggle.addEventListener('click', function () { setMenu(!links.classList.contains('open')); });
+    if (backdrop) backdrop.addEventListener('click', function () { setMenu(false); });
+    if (links) links.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+
+    // 헤더 메뉴(/#section): 현재 페이지에 해당 섹션이 있으면 부드럽게 스크롤, 없으면 홈으로 이동
+    document.querySelectorAll('a[href^="/#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+            var hash = a.getAttribute('href').slice(1); // '#about'
+            var target = document.querySelector(hash);
+            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        });
+    });
+})();
+</script>
+
+<!-- 공식 KRDS JS + 호환 JS (탭·아코디언 등 KRDS 컴포넌트) -->
+<script th:src="@{/krds/resources/cdn/krds.min.js}"></script>
+<script th:src="@{/js/krds-compat.js}"></script>
+
+<th:block layout:fragment="body-js"></th:block>
+</body>
+</html>
