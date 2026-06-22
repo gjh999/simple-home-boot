@@ -120,70 +120,24 @@ small,.small{ font-size:.875em; }
   cursor:pointer; text-decoration:none; transition:background .15s,border-color .15s,color .15s; }
 .btn:hover{ text-decoration:none; }
 .btn:disabled,.btn.disabled{ opacity:.5; pointer-events:none; }
-.btn-sm{ padding:.3rem .6rem; font-size:.875rem; }
-.btn-lg{ padding:.7rem 1.4rem; font-size:1.125rem; }
 .btn-primary{ background:var(--k-primary); border-color:var(--k-primary); color:#fff; }
 .btn-primary:hover,.btn-primary:focus{ background:var(--k-primary-hover); border-color:var(--k-primary-hover); color:#fff; }
-.btn-secondary{ background:var(--k-g60); border-color:var(--k-g60); color:#fff; }
-.btn-secondary:hover{ background:var(--k-g80); border-color:var(--k-g80); color:#fff; }
-.btn-success{ background:var(--k-success); border-color:var(--k-success); color:#fff; }
-.btn-danger{ background:var(--k-danger); border-color:var(--k-danger); color:#fff; }
-.btn-light{ background:#fff; border-color:var(--k-g20); color:var(--k-g90); }
-.btn-outline-primary{ color:var(--k-primary); border-color:var(--k-primary); background:transparent; }
-.btn-outline-primary:hover{ background:var(--k-primary); color:#fff; }
-.btn-outline-secondary{ color:var(--k-g60); border-color:var(--k-g20); background:transparent; }
-.btn-outline-secondary:hover{ background:var(--k-g5); color:var(--k-g90); }
-.btn-outline-success{ color:var(--k-success); border-color:var(--k-success); background:transparent; }
-.btn-outline-success:hover{ background:var(--k-success); color:#fff; }
-.btn-outline-info{ color:var(--k-info); border-color:var(--k-info); background:transparent; }
-.btn-outline-info:hover{ background:var(--k-info); color:#fff; }
-.btn-outline-warning{ color:#9a6700; border-color:var(--k-warning); background:transparent; }
-.btn-outline-warning:hover{ background:var(--k-warning); color:#3a2a00; }
-.btn-outline-danger{ color:var(--k-danger); border-color:var(--k-danger); background:transparent; }
-.btn-outline-danger:hover{ background:var(--k-danger); color:#fff; }
-.btn-link{ background:none; border:0; color:var(--k-primary); text-decoration:underline; }
+/* NOTE: secondary/outline/link 등 그 외 버튼 변형과 .card·.table·.badge 컴포넌트는
+   KRDS 네이티브(krds-btn / krds-panel / table.tbl / krds-badge)로 전면 대체되어 제거함.
+   (.btn/.btn-primary 는 error.html·랜딩 등 잔여 사용처가 있어 유지) */
 
-/* ── 카드 ── */
-.card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--k-g10);
-  border-radius:var(--k-radius-lg); }
-.card-header{ padding:.85rem 1.25rem; background:var(--k-g5); border-bottom:1px solid var(--k-g10); font-weight:700; }
-.card-body{ flex:1 1 auto; padding:1.25rem; }
-.card-title{ margin-bottom:.5rem; font-weight:700; }
-.card-footer{ padding:.85rem 1.25rem; background:var(--k-g5); border-top:1px solid var(--k-g10); }
-
-/* ── 표 ── */
-.table{ width:100%; border-collapse:collapse; color:var(--k-g90); margin-bottom:1rem; }
-.table th,.table td{ padding:.7rem .75rem; border-bottom:1px solid var(--k-g10); vertical-align:middle; text-align:left; }
-.table thead th{ background:var(--k-g5); font-weight:700; border-bottom:2px solid var(--k-g20); }
-.table-hover tbody tr:hover{ background:var(--k-primary-bg); }
-.table-striped tbody tr:nth-child(odd){ background:var(--k-g5); }
-.table-bordered th,.table-bordered td{ border:1px solid var(--k-g10); }
-
-/* ── 폼 ── */
-.form-label{ display:inline-block; margin-bottom:.4rem; font-weight:600; color:var(--k-g80); }
-.form-control,.form-select{ display:block; width:100%; padding:.5rem .75rem; font-family:inherit; font-size:1rem;
-  line-height:1.5; color:var(--k-g90); background:#fff; border:1px solid var(--k-g20); border-radius:var(--k-radius); }
-.form-select{ appearance:auto; }
-.form-control:focus,.form-select:focus{ outline:0; border-color:var(--k-primary); box-shadow:0 0 0 3px rgba(37,110,244,.18); }
-.form-control::placeholder{ color:var(--k-g40); }
-.form-control:disabled,.form-control[readonly]{ background:var(--k-g5); }
+/* ── 폼 보조(KRDS 폼과 병행): 라디오 form-check / 로그인 input-group / JS검증 is-invalid ── */
 .form-check{ display:block; min-height:1.5rem; padding-left:1.6em; margin-bottom:.3rem; }
 .form-check-input{ margin-left:-1.6em; }
 .input-group{ display:flex; flex-wrap:wrap; align-items:stretch; width:100%; }
-.input-group>.form-control,.input-group>.form-select{ flex:1 1 auto; width:1%; min-width:0; }
+.input-group>.krds-input,.input-group>.form-control,.input-group>.form-select{ flex:1 1 auto; width:1%; min-width:0; }
 .input-group-text{ display:flex; align-items:center; padding:.5rem .75rem; background:var(--k-g5);
   border:1px solid var(--k-g20); }
 .input-group>:not(:first-child){ margin-left:-1px; border-top-left-radius:0; border-bottom-left-radius:0; }
 .input-group>:not(:last-child){ border-top-right-radius:0; border-bottom-right-radius:0; }
 .invalid-feedback{ display:none; width:100%; margin-top:.25rem; font-size:.875rem; color:var(--k-danger); }
 .was-validated :invalid~.invalid-feedback,.is-invalid~.invalid-feedback{ display:block; }
-.was-validated .form-control:invalid,.form-control.is-invalid{ border-color:var(--k-danger); }
-
-/* ── 배지 ── */
-.badge{ display:inline-block; padding:.3em .55em; font-size:.78em; font-weight:700; line-height:1;
-  border-radius:var(--k-radius); color:#fff; background:var(--k-g60); }
-.badge.bg-primary{ background:var(--k-primary)!important; } .badge.bg-success{ background:var(--k-success)!important; }
-.badge.bg-danger{ background:var(--k-danger)!important; } .badge.bg-secondary{ background:var(--k-g60)!important; }
+.krds-input.is-invalid,.form-control.is-invalid{ border-color:var(--k-danger); }
 
 /* ── 알림 ── */
 .alert{ position:relative; display:flex; align-items:center; padding:.85rem 1rem; margin-bottom:1rem;
