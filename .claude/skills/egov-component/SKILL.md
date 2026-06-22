@@ -138,8 +138,8 @@ public class EgovSampleController {
 
 ## 6. 빌드·실행 (eGovCI 번들 — PATH에 mvn/jdk 없음)
 ```bash
-export JAVA_HOME="/d/eGovCI-5.0.0-Windows-64bit/bin/jdk-17.0.17+10"
-MVN="/d/eGovCI-5.0.0-Windows-64bit/bin/apache-maven-3.9.9/bin/mvn.cmd"
+export JAVA_HOME="/c/eGovCI-5.0.0-Windows-64bit/bin/jdk-17.0.17+10"
+MVN="/c/eGovCI-5.0.0-Windows-64bit/bin/apache-maven-3.9.9/bin/mvn.cmd"
 # 컴파일만(테스트 소스 QueryDSL 이슈 회피)
 "$MVN" -f pom.xml -Dmaven.test.skip=true clean compile
 # 실행(백그라운드, UTF-8) — 템플릿/정적리소스는 devtools 자동 반영, Java 변경은 재기동 필요
@@ -153,4 +153,4 @@ MVN="/d/eGovCI-5.0.0-Windows-64bit/bin/apache-maven-3.9.9/bin/mvn.cmd"
 `EgovConfigApp<기능>.java`를 만들고 `EgovConfigApp.java`의 `@Import`에 등록.
 
 > 화면(Thymeleaf)을 KRDS로 만들 땐 **`krds-conversion` 스킬**과 함께 사용한다.
-> 파괴적 DB 변경 전엔 **`db-safe-migrate` 스킬**로 먼저 백업한다.
+> 파괴적 DB 변경(DROP/TRUNCATE) 전엔 반드시 복구 가능한 SQL 덤프로 먼저 백업한다(전역 안전 규칙).

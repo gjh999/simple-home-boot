@@ -16,6 +16,7 @@
 ## 목차
 - [기술 스택](#기술-스택)
 - [주요 기능](#주요-기능)
+- [미리보기](#미리보기)
 - [빠른 시작](#빠른-시작)
 - [테스트 계정](#테스트-계정)
 - [아키텍처](#아키텍처)
@@ -60,6 +61,21 @@
 | 다국어 전환 | `GET /cmm/lang?lang=ko\|en` | - | 쿠키 기반, 한/영 |
 
 > MVC 컨트롤러는 `Egov{기능}Controller`, REST 컨트롤러는 `Egov{기능}ApiController` 로 구분됩니다.
+
+---
+
+## 미리보기
+
+전 화면이 **KRDS(디지털정부 표준 디자인시스템)** 네이티브 컴포넌트 + **Pretendard GOV** 서체로 구성됩니다.
+
+**랜딩(홈)** — 공통 KRDS 헤더/푸터, 그라데이션 히어로
+![랜딩(홈) 화면](Docs/screenshots/landing.png)
+
+| KRDS 컴포넌트 예시(`/krds-sample`) | 로그인(`/login`) |
+| :---: | :---: |
+| ![KRDS 컴포넌트 예시](Docs/screenshots/krds-sample.png) | ![로그인 화면](Docs/screenshots/login.png) |
+
+> KRDS 적용 상세는 [Docs/krds-적용-가이드.md](Docs/krds-적용-가이드.md), 자체검증은 `.claude/skills/krds-conversion/scripts/krds-verify.sh` 참조.
 
 ---
 
@@ -286,9 +302,10 @@ java -jar target/*.jar --spring.profiles.active=prod
 | 문서 | 설명 |
 | :--- | :--- |
 | [Docs/krds-적용-가이드.md](Docs/krds-적용-가이드.md) | **KRDS 적용** 내역 — Bootstrap 제거·공식 KRDS 전환·토큰·컴포넌트·접근성·검증 |
-| [Docs/krds-uiux-가이드라인(2025.08).md](Docs/krds-uiux-가이드라인%282025.08%29.md) | 행정안전부 **디지털 정부서비스 UI/UX 가이드라인(2025.08)** 텍스트 추출본 |
-| [Docs/krds-uiux-자체검증-체크리스트.md](Docs/krds-uiux-자체검증-체크리스트.md) | KRDS **자체 검증 체크리스트** 텍스트 추출본 |
+| [Docs/krds-uiux-가이드라인(2025.08).md](Docs/krds-uiux-가이드라인%282025.08%29.md) · [요약본](Docs/krds-uiux-가이드라인%282025.08%29-요약.md) | 행정안전부 **UI/UX 가이드라인(2025.08)** 추출본 + 프런트엔드 실무 요약 |
+| [Docs/krds-uiux-자체검증-체크리스트.md](Docs/krds-uiux-자체검증-체크리스트.md) · [요약본](Docs/krds-uiux-자체검증-체크리스트-요약.md) | KRDS **자체 검증 체크리스트** 추출본 + P/F/E/N-A 점검 요약 |
 | [Docs/db-schema-guide.md](Docs/db-schema-guide.md) | `shtdb.sql` 기반 테이블 용도·컬럼·제약 가이드 |
+| [Docs/db-name-mapping.md](Docs/db-name-mapping.md) · [db-컬럼-한글명-매핑.md](Docs/db-컬럼-한글명-매핑.md) | 테이블·컬럼 명명 매핑(구→신) + 컬럼 한글 논리명 사전 + DDL/DML 주석 적용 내역 |
 | [Docs/java-config-convert.md](Docs/java-config-convert.md) | web.xml·context-*.xml 전반의 JavaConfig 변환 가이드 |
 | [Docs/configuration-setting-bean-regist.md](Docs/configuration-setting-bean-regist.md) | @Configuration/@Bean 규칙과 컴포넌트 스캔·메시지소스 등록 |
 | [Docs/context-datasource-convert.md](Docs/context-datasource-convert.md) | 데이터소스(HSQL 내장·DBCP) 설정 변환 |
@@ -301,6 +318,18 @@ java -jar target/*.jar --spring.profiles.active=prod
 | [Docs/context-whitelist-convert.md](Docs/context-whitelist-convert.md) | 링크 화이트리스트 Bean 전환 |
 | [Docs/WebApplicationInitializer-convert.md](Docs/WebApplicationInitializer-convert.md) | web.xml 부트스트랩의 JavaConfig 변환 |
 | [Docs/servlet.md](Docs/servlet.md) · [Docs/context-hierarchy.md](Docs/context-hierarchy.md) · [Docs/WebApplicationInitializer.md](Docs/WebApplicationInitializer.md) | 서블릿·컨텍스트 계층 개념 |
+
+### 개발 스킬 (`.claude/skills/`)
+
+Claude Code가 자동 인식하는 재사용 작업 스킬(저장소에 포함, 클론 시 바로 사용 가능):
+
+| 스킬 | 용도 |
+| :--- | :--- |
+| `egov-project` | 프로젝트 **표준 절차·규약**(참조순서·DB/매퍼/Java/KRDS/빌드·해시·권한) — 신규 작업 전 참조 |
+| `egov-component` | eGovFramework **신규 컴포넌트 스캐폴딩**(Controller/Service/DAO/SQL XML 7종 DBMS)·매퍼·설정 점검·빌드 |
+| `krds-conversion` | 화면을 **KRDS 네이티브**로 전환 + 자체검증(`scripts/krds-verify.sh`) |
+
+> 루트 [SKILL.md](SKILL.md)는 위 `egov-project` 스킬로 가는 짧은 안내(포인터)입니다.
 
 ---
 
