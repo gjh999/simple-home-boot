@@ -289,15 +289,22 @@ textarea:focus-visible,
 .sns-naver .sns-mark { font-weight: 900; }
 .sns-kakao { background: #FEE500; color: #191600; }
 
-/* ── 포털 페이지 타이틀 (KRDS 강조 바) ── */
-.page-title-bar { padding: 8px 0 4px; }
-.page-title-bar h1 {
-  font-size: 1.6rem; font-weight: 800; color: var(--krds-gray-90);
-  margin: 6px 0 18px; padding-left: 14px; position: relative; letter-spacing: -0.02em;
+/* ── 페이지 타이틀 바 (전 페이지 공통 · 상하 여백/글씨 밸런스) ── */
+.page-title-bar { padding: .85rem 0 .25rem; }
+/* 브레드크럼: 회색 박스 제거 + 작고 단정하게 */
+.page-title-bar .breadcrumb {
+  font-size: .85rem !important; padding: 2px 0 !important; margin: 0 0 .35rem !important;
+  background: transparent !important; border: 0 !important;
 }
-.page-title-bar h1::before {
+.page-title-bar .breadcrumb-item.active { font-weight: 600; }
+/* 타이틀(h1/h2 공통): 균형 크기 + KRDS 강조 바 */
+.page-title-bar h1, .page-title-bar h2 {
+  font-size: 1.4rem; font-weight: 800; color: var(--krds-gray-90);
+  margin: .1rem 0 0; padding-left: .65rem; position: relative; letter-spacing: -.02em; line-height: 1.3;
+}
+.page-title-bar h1::before, .page-title-bar h2::before {
   content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  width: 5px; height: 1.1em; border-radius: 3px; background: var(--krds-primary);
+  width: 4px; height: 1.05em; border-radius: 3px; background: var(--krds-primary);
 }
 
 /* ── 환영 히어로 배너 (KRDS — 장식 패턴·글로우·링 아이콘) ── */
@@ -345,12 +352,15 @@ textarea:focus-visible,
    ============================================================ */
 body { font-size: 1rem; line-height: 1.6; }
 
-/* 버튼 */
+/* 버튼 — KRDS 사이즈 토큰(10px 기준 height)이 16px 루트에서 과대해지지 않도록 전 변형 보정 */
 .krds-btn{
   height: auto; min-height: 0; line-height: 1.4; gap: .4em;
   font-size: .95rem; padding: .5rem 1rem; border-radius: var(--krds-radius, 6px);
 }
+/* 사이즈 변형: 토큰 height 무력화(자동) + 균형 패딩/폰트 (specificity 0,2,0 으로 krds.min.css 덮어씀) */
+.krds-btn.xsmall,.krds-btn.small,.krds-btn.medium,.krds-btn.large,.krds-btn.xlarge{ height: auto; min-height: 0; }
 .krds-btn.xsmall,.krds-btn.small{ font-size: .85rem; padding: .35rem .75rem; }
+.krds-btn.medium{ font-size: .95rem; padding: .5rem 1rem; }
 .krds-btn.large{ font-size: 1.05rem; padding: .6rem 1.25rem; }
 .krds-btn.xlarge{ font-size: 1.1rem; padding: .7rem 1.4rem; }
 .krds-btn.icon{ padding: .45rem; }
@@ -358,21 +368,27 @@ body { font-size: 1rem; line-height: 1.6; }
 /* 폼 입력/셀렉트 */
 .krds-input,.krds-form-select{ height: auto; font-size: .95rem; padding: .5rem .75rem; line-height: 1.5; }
 
-/* 표 */
-.krds-table-wrap .tbl{ font-size: .95rem; }
-.krds-table-wrap .tbl th,.krds-table-wrap .tbl td{ padding: .7rem .75rem; }
+/* 표 (KRDS 토큰이 16px 루트에서 과대 → !important 로 강제 정규화) */
+.krds-table-wrap .tbl{ font-size: .95rem !important; }
+.krds-table-wrap .tbl th,.krds-table-wrap .tbl td,
+.krds-table-wrap .tbl.data thead th,.krds-table-wrap .tbl.data tbody td{
+  font-size: .95rem !important; padding: .7rem .75rem !important; }
 
 /* 브레드크럼 / 페이지네이션 / 배지 */
-.krds-breadcrumb-wrap{ font-size: .9rem; }
+.krds-breadcrumb-wrap,.krds-breadcrumb-wrap .breadcrumb li{ font-size: .875rem !important; }
 .krds-breadcrumb-wrap .breadcrumb{ background: transparent; border: 0; padding: 6px 0; }
-.krds-pagination{ font-size: .95rem; }
-.krds-pagination .page-link,.krds-pagination .page-navi{ min-width: 2.2rem; height: 2.2rem; line-height: 2.2rem; }
-.krds-badge{ font-size: .8rem; }
+.krds-pagination .page-link,.krds-pagination .page-navi{
+  min-width: 2.1rem !important; height: 2.1rem !important; padding: 0 .55rem !important; font-size: .9rem !important; }
+.krds-badge{ font-size: .8rem !important; }
 
-/* 탭 / 아코디언 폰트 */
-.krds-tab-area .btn-tab{ font-size: 1rem; }
-.krds-accordion .btn-accordion{ font-size: 1.05rem; }
-.krds-accordion .accordion-body{ font-size: .95rem; }
+/* 탭 */
+.krds-tab-area .tab .btn-tab,.krds-tab-area .btn-tab{
+  height: auto !important; font-size: 1rem !important; padding: .7rem 1rem !important; }
+
+/* 아코디언 — 제목/본문 글자 균형 + 본문 여백(상단 밀착 방지) */
+.krds-accordion .accordion-item .btn-accordion{ font-size: 1.1rem !important; padding: 1rem 1.25rem !important; }
+.krds-accordion .accordion-item.active .accordion-body{
+  font-size: .95rem !important; line-height: 1.65 !important; padding: 1rem 1.25rem 1.25rem !important; }
 
 /* 헤딩 정규화(KRDS 디스플레이 토큰 과대 방지) */
 .egov-content h1{ font-size: 1.75rem; } .egov-content h2{ font-size: 1.375rem; }

@@ -13,10 +13,10 @@
     <!-- 페이지 타이틀 + KRDS 브레드크럼 -->
     <div class="page-title-bar">
         <div class="container-fluid px-4">
-            <nav class="krds-breadcrumb-wrap" aria-label="현재 경로">
+            <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="home"><a th:href="@{/}" class="txt">홈</a></li>
-                    <li><a href="#" class="txt" th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
+                    <li class="breadcrumb-item active" th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</li>
                 </ol>
             </nav>
             <h2 th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</h2>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="form-group">
                         <div class="form-tit"><label for="searchWrd">검색어</label></div>
                         <div class="form-conts">
@@ -59,16 +59,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <button type="submit" class="krds-btn primary medium w-100">
                         <i class="bi bi-search"></i> 검색
                     </button>
                 </div>
-                <div class="col-md-2 text-end">
-                    <span class="text-muted">전체 <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong>건</span>
-                </div>
             </div>
         </form>
+
+        <!-- 목록 헤더: 전체 건수 -->
+        <div class="d-flex justify-content-between align-items-center mb-2 mt-3">
+            <span class="text-muted">전체 <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong>건</span>
+        </div>
 
         <!-- 게시물 목록 (KRDS 표) -->
         <div class="krds-table-wrap">

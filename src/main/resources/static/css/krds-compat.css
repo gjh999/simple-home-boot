@@ -206,9 +206,10 @@ small,.small{ font-size:.875em; }
 .breadcrumb-item a:hover{ color:var(--k-primary); text-decoration:underline; }
 .breadcrumb-item.active{ color:var(--k-g90); font-weight:600; }
 
-/* ── 페이지네이션 ── */
-.pagination{ display:flex; flex-wrap:wrap; gap:2px; list-style:none; padding:0; justify-content:center; }
-.page-link{ display:block; padding:.45rem .75rem; color:var(--k-g60); background:#fff;
+/* ── 페이지네이션 (밸런스: 컴팩트) ── */
+.pagination{ display:flex; flex-wrap:wrap; gap:4px; list-style:none; padding:0; justify-content:center; }
+.page-link{ display:flex; align-items:center; justify-content:center; min-width:2rem; height:2rem;
+  padding:0 .5rem; font-size:.9rem; color:var(--k-g60); background:#fff;
   border:1px solid var(--k-g10); border-radius:var(--k-radius); text-decoration:none; }
 .page-link:hover{ background:var(--k-primary-light); color:var(--k-primary-hover); }
 .page-item.active .page-link{ background:var(--k-primary); border-color:var(--k-primary); color:#fff; }
