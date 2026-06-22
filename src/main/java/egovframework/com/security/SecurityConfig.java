@@ -78,6 +78,8 @@ public class SecurityConfig {
             "/images/**",
             "/fonts/**",
             "/static/**",
+            "/krds/**", // KRDS HTML Component Kit 자산(css/js/fonts/img)
+
             "/favicon.ico",
             "/index.html",
 

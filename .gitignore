@@ -61,3 +61,6 @@ application-local.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# 대용량 원본 PDF — 텍스트 MD 버전(krds-uiux-*.md)을 대신 추적, 저장소 비대화 방지
+Docs/*.pdf

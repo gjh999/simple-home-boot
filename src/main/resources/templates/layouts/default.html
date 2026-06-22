@@ -10,17 +10,21 @@
     <title layout:title-pattern="$CONTENT_TITLE - 전자정부표준프레임워크">전자정부표준프레임워크</title>
 
     <!--
-        KRDS (한국 정부 통합 디자인 시스템)
-        공식 CDN: https://uiux.egovframe.go.kr
-        현재: Bootstrap 5 기반 임시 적용 — KRDS 파일 제공 시 krds.css/krds.js로 교체
+        KRDS (Korea Design System · 디지털정부 표준 디자인 시스템, 행정안전부)
+        https://www.krds.go.kr  |  로컬 자원만 사용(CDN 미사용 정책)
+        Bootstrap 5 는 레이아웃/그리드 기반으로만 사용하고, 시각 디자인은 krds.css 가
+        최종 권위로 덮어쓴다(반드시 마지막 로드). 기존 다크 theme.css 는 KRDS 밝은
+        정부 표준 톤과 상충하므로 미사용(파일은 보존).
     -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Bootstrap Icons (아이콘 폰트 — 프레임워크 아님, 유지) -->
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons.min.css}">
-    <link rel="stylesheet" th:href="@{/css/krds.css}"/>
+    <!-- 공식 KRDS 디자인 시스템 (HTML Component Kit, /krds) -->
+    <link rel="stylesheet" th:href="@{/krds/resources/cdn/krds.min.css}"/>
     <!-- 공통 CSS -->
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
-    <!-- 모던 다크 테마 (전역 오버라이드) -->
-    <link rel="stylesheet" th:href="@{/css/theme.css}"/>
+    <!-- KRDS 호환 레이어(그리드/유틸/컴포넌트 구조·Pretendard GOV) + 스킨 (최종 권위) -->
+    <link rel="stylesheet" th:href="@{/css/krds-compat.css}"/>
+    <link rel="stylesheet" th:href="@{/css/krds.css}"/>
     <link rel="icon" type="image/svg+xml" th:href="@{/images/logo.svg}"/>
 
     <!-- 페이지별 추가 CSS -->
@@ -47,9 +51,9 @@
 <!-- 푸터 -->
 <footer class="egov-footer" th:replace="~{fragments/footer :: footer}"></footer>
 
-<!-- Bootstrap 5 JS (로컬) -->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-<!-- KRDS JS (로컬 오버라이드) -->
+<!-- KRDS 호환 JS(data-bs-* 동작 대체: 드롭다운·모바일메뉴·알림닫기) -->
+<script th:src="@{/js/krds-compat.js}"></script>
+<!-- KRDS JS (접근성 보조) -->
 <script th:src="@{/js/krds.js}"></script>
 <!-- 공통 JS -->
 <script th:src="@{/js/common.js}"></script>

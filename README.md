@@ -35,7 +35,7 @@
 | :--- | :--- |
 | 프레임워크 | eGovFrame 5.0 (RTE) + Spring Boot 3.5.6 / Spring Framework 6.2.11 |
 | 언어/런타임 | Java 17, Jakarta EE 10, Servlet 6.0 |
-| 화면(SSR) | Thymeleaf + Thymeleaf Layout Dialect, Bootstrap 5(KRDS) |
+| 화면(SSR) | Thymeleaf + Thymeleaf Layout Dialect · **공식 KRDS**(디지털정부 표준 디자인시스템, `krds.min.css`) + KRDS 호환 레이어(`krds-compat.css`) + **Pretendard GOV** · 아이콘 Bootstrap Icons (※ Bootstrap 프레임워크 미사용) |
 | 데이터 접근 | MyBatis (DBMS별 SQL 매퍼 분리) |
 | 인증 | JWT (HttpOnly 쿠키 `ACCESS_TOKEN`), Spring Security (STATELESS) |
 | DB | 내장 HSQLDB(기본) / MySQL · PostgreSQL · Oracle · Altibase · Tibero · CUBRID |
@@ -285,6 +285,9 @@ java -jar target/*.jar --spring.profiles.active=prod
 
 | 문서 | 설명 |
 | :--- | :--- |
+| [Docs/krds-적용-가이드.md](Docs/krds-적용-가이드.md) | **KRDS 적용** 내역 — Bootstrap 제거·공식 KRDS 전환·토큰·컴포넌트·접근성·검증 |
+| [Docs/krds-uiux-가이드라인(2025.08).md](Docs/krds-uiux-가이드라인%282025.08%29.md) | 행정안전부 **디지털 정부서비스 UI/UX 가이드라인(2025.08)** 텍스트 추출본 |
+| [Docs/krds-uiux-자체검증-체크리스트.md](Docs/krds-uiux-자체검증-체크리스트.md) | KRDS **자체 검증 체크리스트** 텍스트 추출본 |
 | [Docs/db-schema-guide.md](Docs/db-schema-guide.md) | `shtdb.sql` 기반 테이블 용도·컬럼·제약 가이드 |
 | [Docs/java-config-convert.md](Docs/java-config-convert.md) | web.xml·context-*.xml 전반의 JavaConfig 변환 가이드 |
 | [Docs/configuration-setting-bean-regist.md](Docs/configuration-setting-bean-regist.md) | @Configuration/@Bean 규칙과 컴포넌트 스캔·메시지소스 등록 |

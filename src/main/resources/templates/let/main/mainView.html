@@ -25,12 +25,13 @@
 
     <div class="container-fluid px-4">
 
-        <!-- 환영 배너 -->
-        <div class="card mb-4 border-0" style="background: linear-gradient(135deg, #0054A6, #0077C8); color: white;">
-            <div class="card-body py-4 px-4">
+        <!-- 환영 배너 (KRDS 히어로) -->
+        <div class="card egov-hero mb-4 border-0">
+            <div class="card-body py-5 px-4">
                 <div class="d-flex align-items-center">
                     <div>
-                        <h2 class="mb-1 fw-bold">
+                        <span class="egov-hero-badge"><i class="bi bi-stars me-1"></i>eGovFrame 5.0</span>
+                        <h2 class="egov-hero-title fw-bold">
                             <span th:text="#{dash.welcome}">전자정부표준프레임워크에 오신 것을 환영합니다</span>
                             <th:block sec:authorize="isAuthenticated()">
                                 <span class="fs-5 fw-normal ms-2">
@@ -38,10 +39,10 @@
                                 </span>
                             </th:block>
                         </h2>
-                        <p class="mb-0 opacity-75" th:text="#{dash.welcome.sub}">eGovFrame 5.0 + Spring Boot + Thymeleaf</p>
+                        <p class="mb-0 egov-hero-sub" th:text="#{dash.welcome.sub}">eGovFrame 5.0 + Spring Boot + Thymeleaf</p>
                     </div>
-                    <div class="ms-auto">
-                        <i class="bi bi-house-door fs-1 opacity-50"></i>
+                    <div class="ms-auto d-none d-md-block">
+                        <div class="egov-hero-icon"><i class="bi bi-house-door"></i></div>
                     </div>
                 </div>
             </div>
