@@ -39,6 +39,9 @@ backend
 .claude/settings.local.json
 .claude/settings.json
 
+# DB 백업 산출물(db-safe-migrate 스킬) — 비밀/대용량 가능, 커밋 금지
+.dbbackup/
+
 .git/
 .svn/
 
