@@ -375,7 +375,10 @@ CREATE TABLE TB_CMMNTY (
   CMMNTY_ID varchar2(20) NOT NULL,  -- 커뮤니티ID
   CMMNTY_NM varchar2(60) ,  -- 커뮤니티명
   USE_AT char(1) ,  -- 사용여부(Y/N)
-  FRST_REGIST_PNTTM DATE , FRST_REGISTER_ID varchar2(20) , LAST_UPDT_PNTTM DATE , LAST_UPDUSR_ID varchar2(20) ,  -- 최초등록시각
+  FRST_REGIST_PNTTM DATE,  -- 최초등록시각
+  FRST_REGISTER_ID  varchar2(20),  -- 최초등록자ID
+  LAST_UPDT_PNTTM   DATE,  -- 최종수정시각
+  LAST_UPDUSR_ID    varchar2(20),  -- 최종수정자ID
   CONSTRAINT TB_CMMNTY_PK PRIMARY KEY (CMMNTY_ID)
 ) ;
 CREATE TABLE TB_CMMNTY_USER (
@@ -385,14 +388,20 @@ CREATE TABLE TB_CMMNTY_USER (
   MNGR_AT char(1) ,  -- 관리자 여부(Y/N)
   USE_AT char(1) ,  -- 사용여부(Y/N)
   REGIST_SE_CODE varchar2(6) ,  -- 등록구분코드
-  FRST_REGIST_PNTTM DATE , FRST_REGISTER_ID varchar2(20) , LAST_UPDT_PNTTM DATE , LAST_UPDUSR_ID varchar2(20) ,  -- 최초등록시각
+  FRST_REGIST_PNTTM DATE,  -- 최초등록시각
+  FRST_REGISTER_ID  varchar2(20),  -- 최초등록자ID
+  LAST_UPDT_PNTTM   DATE,  -- 최종수정시각
+  LAST_UPDUSR_ID    varchar2(20),  -- 최종수정자ID
   CONSTRAINT TB_CMMNTY_USER_PK PRIMARY KEY (ESNTL_ID)
 ) ;
 CREATE TABLE TB_CLUB (
   CLB_ID varchar2(20) NOT NULL,  -- 동호회ID
   CLB_NM varchar2(60) ,  -- 동호회명
   USE_AT char(1) ,  -- 사용여부(Y/N)
-  FRST_REGIST_PNTTM DATE , FRST_REGISTER_ID varchar2(20) , LAST_UPDT_PNTTM DATE , LAST_UPDUSR_ID varchar2(20) ,  -- 최초등록시각
+  FRST_REGIST_PNTTM DATE,  -- 최초등록시각
+  FRST_REGISTER_ID  varchar2(20),  -- 최초등록자ID
+  LAST_UPDT_PNTTM   DATE,  -- 최종수정시각
+  LAST_UPDUSR_ID    varchar2(20),  -- 최종수정자ID
   CONSTRAINT TB_CLUB_PK PRIMARY KEY (CLB_ID)
 ) ;
 CREATE TABLE TB_CLUB_USER (
@@ -402,7 +411,10 @@ CREATE TABLE TB_CLUB_USER (
   OPRTR_AT char(1) ,  -- 운영자 여부(Y/N)
   USE_AT char(1) ,  -- 사용여부(Y/N)
   REGIST_SE_CODE varchar2(6) ,  -- 등록구분코드
-  FRST_REGIST_PNTTM DATE , FRST_REGISTER_ID varchar2(20) , LAST_UPDT_PNTTM DATE , LAST_UPDUSR_ID varchar2(20) ,  -- 최초등록시각
+  FRST_REGIST_PNTTM DATE,  -- 최초등록시각
+  FRST_REGISTER_ID  varchar2(20),  -- 최초등록자ID
+  LAST_UPDT_PNTTM   DATE,  -- 최종수정시각
+  LAST_UPDUSR_ID    varchar2(20),  -- 최종수정자ID
   CONSTRAINT TB_CLUB_USER_PK PRIMARY KEY (ESNTL_ID)
 ) ;
 CREATE TABLE TB_STPLAT_INFO (
@@ -410,14 +422,20 @@ CREATE TABLE TB_STPLAT_INFO (
   USE_STPLAT_NM varchar2(100) ,  -- 이용약관명
   USE_STPLAT_CN CLOB ,  -- 이용약관 내용
   INFO_PROVD_AGRE_CN CLOB ,  -- 정보제공 동의 내용
-  FRST_REGIST_PNTTM DATE , FRST_REGISTER_ID varchar2(20) , LAST_UPDT_PNTTM DATE , LAST_UPDUSR_ID varchar2(20) ,  -- 최초등록시각
+  FRST_REGIST_PNTTM DATE,  -- 최초등록시각
+  FRST_REGISTER_ID  varchar2(20),  -- 최초등록자ID
+  LAST_UPDT_PNTTM   DATE,  -- 최종수정시각
+  LAST_UPDUSR_ID    varchar2(20),  -- 최종수정자ID
   CONSTRAINT TB_STPLAT_INFO_PK PRIMARY KEY (USE_STPLAT_ID)
 ) ;
 CREATE TABLE TB_DIARY_INFO (
   DIARY_ID varchar2(20) NOT NULL,  -- 다이어리ID
   SCHDUL_ID varchar2(20) ,  -- 일정ID
   DIARY_CN varchar2(2500) ,  -- 다이어리 내용
-  FRST_REGIST_PNTTM DATE , FRST_REGISTER_ID varchar2(20) , LAST_UPDT_PNTTM DATE , LAST_UPDUSR_ID varchar2(20) ,  -- 최초등록시각
+  FRST_REGIST_PNTTM DATE,  -- 최초등록시각
+  FRST_REGISTER_ID  varchar2(20),  -- 최초등록자ID
+  LAST_UPDT_PNTTM   DATE,  -- 최종수정시각
+  LAST_UPDUSR_ID    varchar2(20),  -- 최종수정자ID
   CONSTRAINT TB_DIARY_INFO_PK PRIMARY KEY (DIARY_ID)
 ) ;
 
