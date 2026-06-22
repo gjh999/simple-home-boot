@@ -22,7 +22,11 @@
         .ksample-top-inner{ max-width:1080px; margin:0 auto; padding:12px 24px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
         .ksample-brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; color:#1E2124; text-decoration:none; }
         .ksample-brand img{ width:34px; height:34px; }
-        .ksample-top-right{ display:flex; align-items:center; gap:10px; }
+        .ksample-nav{ display:flex; align-items:center; gap:24px; }
+        .ksample-nav .link{ font-size:15px; font-weight:600; color:#58616A; text-decoration:none; }
+        .ksample-nav .link:hover{ color:#256EF4; }
+        .ksample-nav .link.active{ color:#256EF4; }
+        @media (max-width:860px){ .ksample-nav .link{ display:none; } .ksample-nav{ gap:10px; } }
         .ksample-lang{ display:inline-flex; border:1px solid #CDD1D5; border-radius:8px; overflow:hidden; }
         .ksample-lang a{ font-size:12px; font-weight:700; color:#58616A; text-decoration:none; padding:5px 11px; background:#fff; }
         .ksample-lang a+a{ border-left:1px solid #E7E8EA; }
@@ -58,14 +62,18 @@
             <img th:src="@{/images/logo.svg}" alt="eGovFrame"/>
             <span>eGovFrame</span>
         </a>
-        <div class="ksample-top-right">
+        <nav class="ksample-nav" aria-label="주요 메뉴">
+            <a href="/#about" class="link">소개</a>
+            <a href="/#services" class="link">서비스</a>
+            <a href="/#works" class="link">주요사업</a>
+            <a href="/#contact" class="link">문의</a>
+            <a th:href="@{/krds-sample}" class="link active">KRDS 예시</a>
             <span class="ksample-lang" role="group" aria-label="언어 선택">
                 <a th:href="@{/cmm/lang(lang='ko')}" th:classappend="${#locale.language == 'ko'} ? 'on'">KO</a>
                 <a th:href="@{/cmm/lang(lang='en')}" th:classappend="${#locale.language == 'en'} ? 'on'">EN</a>
             </span>
-            <a th:href="@{/}" class="krds-btn tertiary small"><i class="bi bi-house"></i> 홈으로</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/portal}" class="krds-btn primary small"><i class="bi bi-grid-1x2"></i> 포털</a>
-        </div>
+            <a th:href="@{/portal}" class="krds-btn primary small"><i class="bi bi-grid-1x2"></i> 포털 바로가기</a>
+        </nav>
     </div>
 </header>
 
