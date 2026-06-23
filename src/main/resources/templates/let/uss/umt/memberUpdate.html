@@ -48,7 +48,8 @@
                                 <div class="form-tit"><label for="moblphonNo" th:text="#{mber.field.moblphon}">휴대폰</label></div>
                                 <div class="form-conts">
                                     <input type="text" id="moblphonNo" name="moblphonNo" class="krds-input"
-                                           th:value="${member?.moblphonNo}" maxlength="20"/>
+                                           data-phone inputmode="numeric" placeholder="010-1234-5678"
+                                           th:value="${member?.moblphonNo}" maxlength="13"/>
                                 </div>
                             </div>
                         </div>

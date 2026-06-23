@@ -53,7 +53,7 @@
                             <span th:text="${f.orignlFileNm}">파일명</span>
                             <span class="text-muted small ms-1"
                                   th:if="${f.fileMg != null and !#strings.isEmpty(f.fileMg)}"
-                                  th:text="'(' + ${f.fileMg} + ' bytes)'">(0 bytes)</span>
+                                  th:text="'(' + ${#numbers.formatInteger(f.fileMg, 1, 'COMMA')} + ' bytes)'">(0 bytes)</span>
                         </a>
                     </li>
                 </ul>
