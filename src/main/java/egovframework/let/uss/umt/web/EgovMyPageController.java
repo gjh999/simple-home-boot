@@ -41,6 +41,9 @@ public class EgovMyPageController {
     @Autowired
     private EgovJwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private egovframework.com.cmm.util.MessageUtil messageUtil;
+
     @Value("${Globals.jwt.cookieSecure:false}")
     private boolean cookieSecure;
 
@@ -49,10 +52,10 @@ public class EgovMyPageController {
      */
     @GetMapping(value = "/mypage", produces = MediaType.TEXT_HTML_VALUE)
     public String myPage(@AuthenticationPrincipal LoginVO user, Model model) throws Exception {
-        if (user == null || user.getUniqId() == null) {
+        if (user == null || user.getId() == null) {
             return "redirect:/login";
         }
-        MberManageVO mber = mberManageService.selectMber(user.getUniqId());
+        MberManageVO mber = mberManageService.selectMber(user.getId());
         model.addAttribute("mber", mber);
         return "let/uss/umt/myPage";
     }
@@ -71,11 +74,11 @@ public class EgovMyPageController {
                              HttpServletResponse response,
                              RedirectAttributes ra) {
         try {
-            if (user == null || user.getUniqId() == null) {
+            if (user == null || user.getId() == null) {
                 return "redirect:/login";
             }
             // 기존 정보를 불러와 편집 항목만 변경 (상태/권한/아이디 등은 보존)
-            MberManageVO mber = mberManageService.selectMber(user.getUniqId());
+            MberManageVO mber = mberManageService.selectMber(user.getId());
             if (mber == null) {
                 return "redirect:/login";
             }
@@ -93,10 +96,10 @@ public class EgovMyPageController {
             user.setName(mberNm);
             reissueToken(user, response);
 
-            ra.addFlashAttribute("successMsg", "회원정보가 수정되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.mypage.info.updated"));
         } catch (Exception e) {
             log.error("회원정보 수정 오류", e);
-            ra.addFlashAttribute("errorMsg", "회원정보 수정 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.mypage.info.error"));
         }
         return "redirect:/mypage";
     }
@@ -111,26 +114,26 @@ public class EgovMyPageController {
                                  @RequestParam("confirmPassword") String confirmPassword,
                                  RedirectAttributes ra) {
         try {
-            if (user == null || user.getUniqId() == null) {
+            if (user == null || user.getId() == null) {
                 return "redirect:/login";
             }
             if (!newPassword.equals(confirmPassword)) {
-                ra.addFlashAttribute("pwErrorMsg", "새 비밀번호가 일치하지 않습니다.");
+                ra.addFlashAttribute("pwErrorMsg", messageUtil.get("msg.mypage.pw.mismatch"));
                 return "redirect:/mypage";
             }
             if (newPassword.length() < 4) {
-                ra.addFlashAttribute("pwErrorMsg", "비밀번호는 4자 이상이어야 합니다.");
+                ra.addFlashAttribute("pwErrorMsg", messageUtil.get("msg.mypage.pw.tooShort"));
                 return "redirect:/mypage";
             }
 
-            MberManageVO mber = mberManageService.selectMber(user.getUniqId());
+            MberManageVO mber = mberManageService.selectMber(user.getId());
             if (mber == null) {
                 return "redirect:/login";
             }
             // 현재 비밀번호 검증 (저장값은 이중해시)
             String oldHash = EgovFileScrty.encryptPasswordTwice(oldPassword, mber.getMberId());
             if (!oldHash.equals(mber.getPassword())) {
-                ra.addFlashAttribute("pwErrorMsg", "현재 비밀번호가 올바르지 않습니다.");
+                ra.addFlashAttribute("pwErrorMsg", messageUtil.get("msg.mypage.pw.curWrong"));
                 return "redirect:/mypage";
             }
 
@@ -138,10 +141,10 @@ public class EgovMyPageController {
             mber.setPassword(newPassword);
             mberManageService.updateMber(mber);
 
-            ra.addFlashAttribute("pwSuccessMsg", "비밀번호가 변경되었습니다.");
+            ra.addFlashAttribute("pwSuccessMsg", messageUtil.get("msg.mypage.pw.changed"));
         } catch (Exception e) {
             log.error("비밀번호 변경 오류", e);
-            ra.addFlashAttribute("pwErrorMsg", "비밀번호 변경 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("pwErrorMsg", messageUtil.get("msg.mypage.pw.error"));
         }
         return "redirect:/mypage";
     }

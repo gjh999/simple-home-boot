@@ -153,7 +153,7 @@
     
     <delete id="deleteMber_S">
             DELETE FROM TB_EMPLYR_INFO 
-            WHERE ESNTL_ID=#{delId}
+            WHERE EMPLYR_ID=#{delId}
     </delete>
     
     <select id="selectMber_S" resultType="mberVO">
@@ -181,7 +181,7 @@
             HOUSE_MIDDLE_TELNO     middleTelno,
             SBSCRB_DE        sbscrbDe
         FROM TB_EMPLYR_INFO
-        WHERE ESNTL_ID=#{uniqId}
+        WHERE EMPLYR_ID=#{mberId}
     </select>
     
     <update id="updateMber_S">
@@ -204,7 +204,7 @@
              FXNUM       = #{mberFxnum},
              EMAIL_ADRES = #{mberEmailAdres},
              HOUSE_MIDDLE_TELNO     = #{middleTelno}
-         WHERE ESNTL_ID=#{uniqId}
+         WHERE EMPLYR_ID=#{mberId}
     </update>
     
     <select id="selectStplat_S" resultMap="stplatMap">

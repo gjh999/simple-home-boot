@@ -25,6 +25,10 @@ public class EgovMberManageController {
     @Resource(name = "mberManageService")
     private EgovMberManageService mberService;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private egovframework.com.cmm.util.MessageUtil messageUtil;
+
+
     @Resource(name = "propertiesService")
     private EgovPropertyService propertyService;
 
@@ -78,16 +82,28 @@ public class EgovMberManageController {
      */
     @PostMapping("/{mberId}/update")
     public String memberUpdateProcess(@PathVariable String mberId,
-                                      @ModelAttribute MberManageVO mberVO,
+                                      @ModelAttribute MberManageVO formVO,
                                       RedirectAttributes ra) {
         try {
-            mberVO.setMberId(mberId);
-            mberService.updateMber(mberVO);
-            ra.addFlashAttribute("successMsg", "회원 정보가 수정되었습니다.");
+            // 기존 정보를 불러와 편집 항목만 변경 (비밀번호/상태/고유ID 등 미입력 항목 보존)
+            MberManageVO mber = mberService.selectMber(mberId);
+            if (mber == null) {
+                ra.addFlashAttribute("errorMsg", messageUtil.get("msg.mber.update.error"));
+                return "redirect:/member/list";
+            }
+            mber.setMberNm(formVO.getMberNm());
+            mber.setMberEmailAdres(formVO.getMberEmailAdres());
+            mber.setMoblphonNo(formVO.getMoblphonNo());
+            mber.setZip(formVO.getZip());
+            mber.setAdres(formVO.getAdres());
+            mber.setPassword(""); // 빈 값 → 비밀번호는 변경하지 않음(updateMber 가 해시/SET 생략)
+
+            mberService.updateMber(mber);
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.mber.updated"));
             return "redirect:/member/" + mberId + "/detail";
         } catch (Exception e) {
             log.error("회원 수정 오류", e);
-            ra.addFlashAttribute("errorMsg", "회원 정보 수정 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.mber.update.error"));
             return "redirect:/member/" + mberId + "/update";
         }
     }
@@ -99,10 +115,10 @@ public class EgovMberManageController {
     public String memberDeleteProcess(@PathVariable String mberId, RedirectAttributes ra) {
         try {
             mberService.deleteMber(mberId);
-            ra.addFlashAttribute("successMsg", "회원이 삭제되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.mber.deleted"));
         } catch (Exception e) {
             log.error("회원 삭제 오류", e);
-            ra.addFlashAttribute("errorMsg", "회원 삭제 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.mber.delete.error"));
         }
         return "redirect:/member/list";
     }
