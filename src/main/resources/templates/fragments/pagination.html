@@ -6,35 +6,35 @@
   사용법: th:replace="~{fragments/pagination :: pagination(paginationInfo=${paginationInfo}, baseUrl='/bbs/list', searchCnd='', searchWrd='')}"
   paginationInfo: org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo
 -->
-<nav th:fragment="pagination(paginationInfo, baseUrl, searchCnd, searchWrd)" aria-label="페이지 네비게이션"
+<nav th:fragment="pagination(paginationInfo, baseUrl, searchCnd, searchWrd)" th:attr="aria-label=#{paging.nav}" aria-label="페이지 네비게이션"
      th:if="${paginationInfo != null and paginationInfo.totalRecordCount > 0}">
     <div class="krds-pagination">
 
         <!-- 이전 페이지 그룹 -->
-        <span th:if="${paginationInfo.firstPageNoOnPageList == 1}" class="page-navi prev disabled">이전</span>
+        <span th:if="${paginationInfo.firstPageNoOnPageList == 1}" class="page-navi prev disabled" th:text="#{paging.prev}">이전</span>
         <a th:unless="${paginationInfo.firstPageNoOnPageList == 1}" class="page-navi prev"
-           th:href="@{${baseUrl}(pageIndex=${paginationInfo.firstPageNoOnPageList - 1}, searchCnd=${searchCnd}, searchWrd=${searchWrd})}">이전</a>
+           th:href="@{${baseUrl}(pageIndex=${paginationInfo.firstPageNoOnPageList - 1}, searchCnd=${searchCnd}, searchWrd=${searchWrd})}" th:text="#{paging.prev}">이전</a>
 
         <!-- 페이지 번호 -->
         <div class="page-links">
             <th:block th:each="pageNo : ${#numbers.sequence(paginationInfo.firstPageNoOnPageList, paginationInfo.lastPageNoOnPageList)}">
                 <a class="page-link" th:classappend="${pageNo == paginationInfo.currentPageNo} ? 'active' : ''"
                    th:href="@{${baseUrl}(pageIndex=${pageNo}, searchCnd=${searchCnd}, searchWrd=${searchWrd})}">
-                    <span th:if="${pageNo == paginationInfo.currentPageNo}" class="sr-only">현재페이지 </span>
+                    <span th:if="${pageNo == paginationInfo.currentPageNo}" class="sr-only" th:text="#{paging.current}">현재페이지 </span>
                     <span th:text="${pageNo}">1</span>
                 </a>
             </th:block>
         </div>
 
         <!-- 다음 페이지 그룹 -->
-        <span th:if="${paginationInfo.lastPageNoOnPageList == paginationInfo.totalPageCount}" class="page-navi next disabled">다음</span>
+        <span th:if="${paginationInfo.lastPageNoOnPageList == paginationInfo.totalPageCount}" class="page-navi next disabled" th:text="#{paging.next}">다음</span>
         <a th:unless="${paginationInfo.lastPageNoOnPageList == paginationInfo.totalPageCount}" class="page-navi next"
-           th:href="@{${baseUrl}(pageIndex=${paginationInfo.lastPageNoOnPageList + 1}, searchCnd=${searchCnd}, searchWrd=${searchWrd})}">다음</a>
+           th:href="@{${baseUrl}(pageIndex=${paginationInfo.lastPageNoOnPageList + 1}, searchCnd=${searchCnd}, searchWrd=${searchWrd})}" th:text="#{paging.next}">다음</a>
 
     </div>
     <p class="text-center text-muted small" style="margin-top:.5rem;">
-        전체 <strong th:text="${paginationInfo.totalRecordCount}">0</strong>건
-        (<span th:text="${paginationInfo.currentPageNo}">1</span>/<span th:text="${paginationInfo.totalPageCount}">1</span> 페이지)
+        <span th:text="#{paging.total.pre}">전체 </span><strong th:text="${paginationInfo.totalRecordCount}">0</strong><span th:text="#{paging.total.post}">건</span>
+        (<span th:text="${paginationInfo.currentPageNo}">1</span>/<span th:text="${paginationInfo.totalPageCount}">1</span> <span th:text="#{paging.page}">페이지</span>)
     </p>
 </nav>
 </body>

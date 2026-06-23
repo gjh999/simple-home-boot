@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/default}"
       lang="ko">
-<head><title>회원관리</title></head>
+<head><title th:text="#{mber.list.title}">회원관리</title></head>
 <body>
 <main layout:fragment="content">
 
@@ -13,11 +13,11 @@
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item active">회원관리</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item active" th:text="#{mber.list.title}">회원관리</li>
                 </ol>
             </nav>
-            <h2>회원관리</h2>
+            <h2 th:text="#{mber.list.title}">회원관리</h2>
         </div>
     </div>
 
@@ -26,11 +26,11 @@
         <!-- 플래시 메시지 -->
         <div th:if="${successMsg}" class="alert alert-success auto-dismiss" role="alert">
             <span th:text="${successMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}"></button>
         </div>
         <div th:if="${errorMsg}" class="alert alert-danger" role="alert">
             <span th:text="${errorMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}"></button>
         </div>
 
         <!-- 검색 영역 (KRDS 폼) -->
@@ -38,27 +38,27 @@
             <div class="row g-2 align-items-end">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <div class="form-tit"><label for="searchCondition">검색구분</label></div>
+                        <div class="form-tit"><label for="searchCondition" th:text="#{com.label.searchCnd}">검색구분</label></div>
                         <div class="form-conts">
-                            <select id="searchCondition" name="searchCondition" class="krds-form-select" title="검색구분 선택">
-                                <option value="0" th:selected="${searchVO.searchCondition == '0'}">아이디</option>
-                                <option value="1" th:selected="${searchVO.searchCondition == '1'}">이름</option>
+                            <select id="searchCondition" name="searchCondition" class="krds-form-select" th:attr="title=#{com.label.searchCndSelect}" title="검색구분 선택">
+                                <option value="0" th:selected="${searchVO.searchCondition == '0'}" th:text="#{mber.search.id}">아이디</option>
+                                <option value="1" th:selected="${searchVO.searchCondition == '1'}" th:text="#{mber.search.nm}">이름</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="form-tit"><label for="searchKeyword">검색어</label></div>
+                        <div class="form-tit"><label for="searchKeyword" th:text="#{com.label.keyword}">검색어</label></div>
                         <div class="form-conts">
                             <input type="text" id="searchKeyword" name="searchKeyword" class="krds-input"
-                                   th:value="${searchVO.searchKeyword}" placeholder="검색어를 입력하세요" maxlength="50"/>
+                                   th:value="${searchVO.searchKeyword}" th:placeholder="#{com.ph.keyword}" placeholder="검색어를 입력하세요" maxlength="50"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="krds-btn primary medium w-100">
-                        <i class="bi bi-search"></i> 검색
+                        <i class="bi bi-search"></i> <span th:text="#{com.btn.search}">검색</span>
                     </button>
                 </div>
             </div>
@@ -66,25 +66,25 @@
 
         <!-- 목록 헤더: 전체 건수 -->
         <div class="d-flex justify-content-between align-items-center mb-2 mt-3">
-            <span class="text-muted">전체 <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong>건</span>
+            <span class="text-muted"><span th:text="#{com.total.pre}">전체</span> <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong><span th:text="#{com.total.post}">건</span></span>
         </div>
 
         <!-- 회원 목록 (KRDS 표) -->
         <div class="krds-table-wrap">
             <table class="tbl">
-                <caption>회원 목록 — 번호·아이디·이름·이메일·상태·가입일·관리</caption>
+                <caption th:text="#{mber.list.caption}">회원 목록 — 번호·아이디·이름·이메일·상태·가입일·관리</caption>
                 <colgroup>
                     <col style="width:60px"><col style="width:120px"><col><col style="width:170px"><col style="width:90px"><col style="width:110px"><col style="width:90px">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th scope="col">번호</th>
-                    <th scope="col">아이디</th>
-                    <th scope="col">이름</th>
-                    <th scope="col">이메일</th>
-                    <th scope="col">상태</th>
-                    <th scope="col">가입일</th>
-                    <th scope="col">관리</th>
+                    <th scope="col" th:text="#{com.col.no}">번호</th>
+                    <th scope="col" th:text="#{mber.field.id}">아이디</th>
+                    <th scope="col" th:text="#{mber.field.nm}">이름</th>
+                    <th scope="col" th:text="#{mber.field.email}">이메일</th>
+                    <th scope="col" th:text="#{mber.col.status}">상태</th>
+                    <th scope="col" th:text="#{mber.col.regDate}">가입일</th>
+                    <th scope="col" th:text="#{com.col.manage}">관리</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -105,12 +105,12 @@
                         th:text="${member.sbscrbDe != null ? #strings.substring(member.sbscrbDe, 0, 10) : ''}">2026-01-01</td>
                     <td class="text-center">
                         <a th:href="@{/member/{id}/update(id=${member.mberId})}"
-                           class="krds-btn tertiary xsmall">수정</a>
+                           class="krds-btn tertiary xsmall" th:text="#{com.btn.edit}">수정</a>
                     </td>
                 </tr>
                 <tr th:if="${memberList == null or #lists.isEmpty(memberList)}">
                     <td colspan="7" class="text-center py-4 text-muted">
-                        <i class="bi bi-people fs-3 d-block mb-2"></i>등록된 회원이 없습니다.
+                        <i class="bi bi-people fs-3 d-block mb-2"></i><span th:text="#{mber.list.empty}">등록된 회원이 없습니다.</span>
                     </td>
                 </tr>
                 </tbody>

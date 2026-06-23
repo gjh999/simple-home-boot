@@ -3,19 +3,19 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}"
       lang="ko">
-<head><title>일정 수정</title></head>
+<head><title th:text="#{sch.update.title}">일정 수정</title></head>
 <body>
 <main layout:fragment="content">
     <div class="page-title-bar">
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/schedule}">일정관리</a></li>
-                    <li class="breadcrumb-item active">수정</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/schedule}" th:text="#{sch.list.title}">일정관리</a></li>
+                    <li class="breadcrumb-item active" th:text="#{sch.crumb.update}">수정</li>
                 </ol>
             </nav>
-            <h2>일정 수정</h2>
+            <h2 th:text="#{sch.update.title}">일정 수정</h2>
         </div>
     </div>
     <div class="container-fluid px-4">
@@ -26,7 +26,7 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <div class="form-group">
-                                <div class="form-tit"><label for="schdulNm">일정명 <span class="frm-rq">*</span></label></div>
+                                <div class="form-tit"><label for="schdulNm"><span th:text="#{sch.field.nm}">일정명</span> <span class="frm-rq">*</span></label></div>
                                 <div class="form-conts">
                                     <input type="text" id="schdulNm" name="schdulNm" class="krds-input"
                                            th:value="${schedule?.schdulNm}" required maxlength="255"/>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-tit"><label for="schdulBgnde">시작일시</label></div>
+                                <div class="form-tit"><label for="schdulBgnde" th:text="#{sch.field.bgn}">시작일시</label></div>
                                 <div class="form-conts">
                                     <input type="datetime-local" id="schdulBgnde" name="schdulBgnde"
                                            class="krds-input" th:value="${schedule?.schdulBgnde}"/>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-tit"><label for="schdulEndde">종료일시</label></div>
+                                <div class="form-tit"><label for="schdulEndde" th:text="#{sch.field.end}">종료일시</label></div>
                                 <div class="form-conts">
                                     <input type="datetime-local" id="schdulEndde" name="schdulEndde"
                                            class="krds-input" th:value="${schedule?.schdulEndde}"/>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-tit"><label for="schdulPlace">장소</label></div>
+                                <div class="form-tit"><label for="schdulPlace" th:text="#{sch.field.place}">장소</label></div>
                                 <div class="form-conts">
                                     <input type="text" id="schdulPlace" name="schdulPlace" class="krds-input"
                                            th:value="${schedule?.schdulPlace}" maxlength="255"/>
@@ -62,19 +62,19 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-tit"><label for="schdulIpcrCode">중요도</label></div>
+                                <div class="form-tit"><label for="schdulIpcrCode" th:text="#{sch.field.ipcr}">중요도</label></div>
                                 <div class="form-conts">
                                     <select id="schdulIpcrCode" name="schdulIpcrCode" class="krds-form-select">
-                                        <option value="3" th:selected="${schedule?.schdulIpcrCode == '3'}">낮음</option>
-                                        <option value="2" th:selected="${schedule?.schdulIpcrCode == '2'}">보통</option>
-                                        <option value="1" th:selected="${schedule?.schdulIpcrCode == '1'}">높음</option>
+                                        <option value="3" th:selected="${schedule?.schdulIpcrCode == '3'}" th:text="#{sch.ipcr.low}">낮음</option>
+                                        <option value="2" th:selected="${schedule?.schdulIpcrCode == '2'}" th:text="#{sch.ipcr.mid}">보통</option>
+                                        <option value="1" th:selected="${schedule?.schdulIpcrCode == '1'}" th:text="#{sch.ipcr.high}">높음</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <div class="form-tit"><label for="schdulCn">내용</label></div>
+                                <div class="form-tit"><label for="schdulCn" th:text="#{sch.field.cn}">내용</label></div>
                                 <div class="form-conts">
                                     <textarea id="schdulCn" name="schdulCn" class="krds-input" rows="5"
                                               th:text="${schedule?.schdulCn}"></textarea>
@@ -84,10 +84,10 @@
                     </div>
                     <div class="d-flex justify-content-between mt-4">
                         <a th:href="@{/schedule/{id}/detail(id=${schedule?.schdulId})}" class="krds-btn tertiary">
-                            <i class="bi bi-x-circle"></i> 취소
+                            <i class="bi bi-x-circle"></i> <span th:text="#{com.btn.cancel}">취소</span>
                         </a>
                         <button type="submit" class="krds-btn primary">
-                            <i class="bi bi-save"></i> 저장
+                            <i class="bi bi-save"></i> <span th:text="#{com.btn.save}">저장</span>
                         </button>
                     </div>
                 </form>

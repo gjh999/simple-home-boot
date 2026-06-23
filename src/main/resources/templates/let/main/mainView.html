@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/default}"
       lang="ko">
 <head>
-    <title>홈</title>
+    <title th:text="#{nav.home}">홈</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -59,7 +59,7 @@
                     </div>
                     <div class="krds-panel-body flush">
                         <table class="tbl" th:if="${notiList != null and !#lists.isEmpty(notiList)}">
-                            <caption class="sr-only">공지사항 목록</caption>
+                            <caption class="sr-only" th:text="#{dash.notice.caption}">공지사항 목록</caption>
                             <thead>
                             <tr>
                                 <th scope="col" style="width:50px" th:text="#{dash.col.no}">번호</th>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="krds-panel-body flush">
                         <table class="tbl" th:if="${galList != null and !#lists.isEmpty(galList)}">
-                            <caption class="sr-only">자유게시판 목록</caption>
+                            <caption class="sr-only" th:text="#{dash.board.caption}">자유게시판 목록</caption>
                             <thead>
                             <tr>
                                 <th scope="col" style="width:50px" th:text="#{dash.col.no}">번호</th>

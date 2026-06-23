@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/default}"
       lang="ko">
 <head>
-    <title>게시판 사용정보 등록</title>
+    <title th:text="#{bbsuse.write.title}">게시판 사용정보 등록</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -13,12 +13,12 @@
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/bbs/use/list}">게시판 사용정보</a></li>
-                    <li class="breadcrumb-item active">등록</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/bbs/use/list}" th:text="#{bbsuse.crumb}">게시판 사용정보</a></li>
+                    <li class="breadcrumb-item active" th:text="#{bbsmst.crumb.write}">등록</li>
                 </ol>
             </nav>
-            <h2>게시판 사용정보 등록</h2>
+            <h2 th:text="#{bbsuse.write.title}">게시판 사용정보 등록</h2>
         </div>
     </div>
 
@@ -29,20 +29,20 @@
 
                     <div class="fieldset">
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="bbsId">게시판 선택 <span class="frm-rq">*</span></label></div>
+                            <div class="col-sm-3 form-tit"><label for="bbsId"><span th:text="#{bbsuse.write.selectBbs}">게시판 선택</span> <span class="frm-rq">*</span></label></div>
                             <div class="col-sm-9 form-conts">
                                 <select id="bbsId" name="bbsId" class="krds-form-select" required>
-                                    <option value="">-- 게시판을 선택하세요 --</option>
+                                    <option value="" th:text="#{bbsuse.write.selectBbs.ph}">-- 게시판을 선택하세요 --</option>
                                     <option th:each="bbs : ${notUsedList}"
                                             th:value="${bbs.bbsId}"
                                             th:text="${bbs.bbsNm}">게시판명</option>
                                 </select>
-                                <p class="form-hint">미사용 게시판 마스터 목록입니다. 사용하려면 게시판 관리에서 먼저 등록하세요.</p>
+                                <p class="form-hint" th:text="#{bbsuse.write.hint}">미사용 게시판 마스터 목록입니다. 사용하려면 게시판 관리에서 먼저 등록하세요.</p>
                             </div>
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="trgetId">대상시스템 ID <span class="frm-rq">*</span></label></div>
+                            <div class="col-sm-3 form-tit"><label for="trgetId"><span th:text="#{bbsuse.col.trgetId}">대상시스템 ID</span> <span class="frm-rq">*</span></label></div>
                             <div class="col-sm-9 form-conts">
                                 <input type="text" id="trgetId" name="trgetId" class="krds-input"
                                        value="SYSTEM_DEFAULT_BOARD" maxlength="20" required/>
@@ -50,15 +50,15 @@
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label>사용여부</label></div>
+                            <div class="col-sm-3 form-tit"><label th:text="#{bbsmst.field.useAt}">사용여부</label></div>
                             <div class="col-sm-9 pt-2 form-conts">
                                 <div class="form-check form-check-inline">
                                     <input type="radio" id="useAtY" name="useAt" value="Y" class="form-check-input" checked/>
-                                    <label for="useAtY" class="form-check-label">사용</label>
+                                    <label for="useAtY" class="form-check-label" th:text="#{com.use.y}">사용</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input type="radio" id="useAtN" name="useAt" value="N" class="form-check-input"/>
-                                    <label for="useAtN" class="form-check-label">미사용</label>
+                                    <label for="useAtN" class="form-check-label" th:text="#{com.use.n}">미사용</label>
                                 </div>
                             </div>
                         </div>
@@ -66,10 +66,10 @@
 
                     <div class="d-flex justify-content-between mt-4">
                         <a th:href="@{/bbs/use/list}" class="krds-btn tertiary">
-                            <i class="bi bi-x-circle"></i> 취소
+                            <i class="bi bi-x-circle"></i> <span th:text="#{com.btn.cancel}">취소</span>
                         </a>
                         <button type="submit" class="krds-btn primary">
-                            <i class="bi bi-save"></i> 저장
+                            <i class="bi bi-save"></i> <span th:text="#{com.btn.save}">저장</span>
                         </button>
                     </div>
                 </form>

@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}"
       lang="ko">
-<head><title>회원 상세</title></head>
+<head><title th:text="#{mber.detail.title}">회원 상세</title></head>
 <body>
 <main layout:fragment="content">
 
@@ -11,12 +11,12 @@
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/member/list}">회원관리</a></li>
-                    <li class="breadcrumb-item active">상세</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/member/list}" th:text="#{mber.list.title}">회원관리</a></li>
+                    <li class="breadcrumb-item active" th:text="#{mber.crumb.detail}">상세</li>
                 </ol>
             </nav>
-            <h2>회원 상세</h2>
+            <h2 th:text="#{mber.detail.title}">회원 상세</h2>
         </div>
     </div>
 
@@ -25,31 +25,31 @@
             <div class="krds-panel-body">
                 <div class="krds-table-wrap">
                     <table class="tbl col">
-                        <caption>회원 상세 정보</caption>
+                        <caption th:text="#{mber.detail.caption}">회원 상세 정보</caption>
                         <colgroup><col style="width:150px"/><col/><col style="width:150px"/><col/></colgroup>
                         <tbody>
                         <tr>
-                            <th scope="row" class="text-center bg-light">아이디</th>
+                            <th scope="row" class="text-center bg-light" th:text="#{mber.field.id}">아이디</th>
                             <td th:text="${member?.mberId}">-</td>
-                            <th scope="row" class="text-center bg-light">이름</th>
+                            <th scope="row" class="text-center bg-light" th:text="#{mber.field.nm}">이름</th>
                             <td th:text="${member?.mberNm}">-</td>
                         </tr>
                         <tr>
-                            <th scope="row" class="text-center bg-light">이메일</th>
+                            <th scope="row" class="text-center bg-light" th:text="#{mber.field.email}">이메일</th>
                             <td th:text="${member?.mberEmailAdres}">-</td>
-                            <th scope="row" class="text-center bg-light">휴대폰</th>
+                            <th scope="row" class="text-center bg-light" th:text="#{mber.field.moblphon}">휴대폰</th>
                             <td th:text="${member?.moblphonNo}">-</td>
                         </tr>
                         <tr>
-                            <th scope="row" class="text-center bg-light">우편번호</th>
+                            <th scope="row" class="text-center bg-light" th:text="#{mber.field.zip}">우편번호</th>
                             <td th:text="${member?.zip}">-</td>
-                            <th scope="row" class="text-center bg-light">주소</th>
+                            <th scope="row" class="text-center bg-light" th:text="#{mber.field.adres}">주소</th>
                             <td th:text="${member?.adres}">-</td>
                         </tr>
                         <tr>
-                            <th scope="row" class="text-center bg-light">회원상태</th>
+                            <th scope="row" class="text-center bg-light" th:text="#{mber.field.sttus}">회원상태</th>
                             <td th:text="${member?.mberSttus}">-</td>
-                            <th scope="row" class="text-center bg-light">가입일</th>
+                            <th scope="row" class="text-center bg-light" th:text="#{mber.field.regDate}">가입일</th>
                             <td th:text="${member?.sbscrbDe}">-</td>
                         </tr>
                         </tbody>
@@ -58,16 +58,16 @@
             </div>
             <div class="krds-panel-body d-flex justify-content-between" style="border-top:1px solid var(--krds-gray-10,#E7E8EA);">
                 <a th:href="@{/member/list}" class="krds-btn tertiary small">
-                    <i class="bi bi-list-ul"></i> 목록
+                    <i class="bi bi-list-ul"></i> <span th:text="#{com.btn.list}">목록</span>
                 </a>
                 <div class="d-flex gap-2">
                     <a th:href="@{/member/{id}/update(id=${member?.mberId})}" class="krds-btn secondary small">
-                        <i class="bi bi-pencil"></i> 수정
+                        <i class="bi bi-pencil"></i> <span th:text="#{com.btn.edit}">수정</span>
                     </a>
                     <form th:action="@{/member/{id}/delete(id=${member?.mberId})}" method="post" id="delMemberForm" class="d-inline">
                         <button type="button" class="krds-btn danger small"
-                                onclick="if(confirm('회원을 삭제하시겠습니까?')) document.getElementById('delMemberForm').submit()">
-                            <i class="bi bi-trash"></i> 삭제
+                                th:onclick="'if(confirm(\'' + #{mber.confirm.delete} + '\')) document.getElementById(\'delMemberForm\').submit()'">
+                            <i class="bi bi-trash"></i> <span th:text="#{com.btn.delete}">삭제</span>
                         </button>
                     </form>
                 </div>

@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/login}"
       lang="ko">
 <head>
-    <title>로그인</title>
+    <title th:text="#{login.title}">로그인</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -29,7 +29,7 @@
         </div>
         <div th:if="${param.registered}" class="alert alert-success d-flex align-items-center gap-2" role="alert">
             <i class="bi bi-check-circle-fill"></i>
-            <span>회원가입이 완료되었습니다. 가입하신 정보로 로그인해 주세요.</span>
+            <span th:text="#{login.signup.done}">회원가입이 완료되었습니다. 가입하신 정보로 로그인해 주세요.</span>
         </div>
 
         <!-- 로그인 폼 -->
@@ -73,10 +73,10 @@
 
         <!-- SNS 로그인 -->
         <div class="sns-login">
-            <a th:href="@{/login/naver}" class="sns-btn sns-naver" title="네이버로 로그인">
+            <a th:href="@{/login/naver}" class="sns-btn sns-naver" th:attr="title=#{login.naver.title}" title="네이버로 로그인">
                 <span class="sns-mark">N</span> <span th:text="#{login.naver}">네이버 로그인</span>
             </a>
-            <a th:href="@{/login/kakao}" class="sns-btn sns-kakao" title="카카오로 로그인">
+            <a th:href="@{/login/kakao}" class="sns-btn sns-kakao" th:attr="title=#{login.kakao.title}" title="카카오로 로그인">
                 <i class="bi bi-chat-fill"></i> <span th:text="#{login.kakao}">카카오 로그인</span>
             </a>
         </div>

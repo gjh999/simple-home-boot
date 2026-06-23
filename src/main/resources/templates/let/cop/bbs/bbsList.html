@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/default}"
       lang="ko">
 <head>
-    <title th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</title>
+    <title th:text="${result?.brdMstrVO?.bbsNm} ?: #{bbs.board}">게시판</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -15,11 +15,11 @@
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item active" th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item active" th:text="${result?.brdMstrVO?.bbsNm} ?: #{bbs.board}">게시판</li>
                 </ol>
             </nav>
-            <h2 th:text="${result?.brdMstrVO?.bbsNm} ?: '게시판'">게시판</h2>
+            <h2 th:text="${result?.brdMstrVO?.bbsNm} ?: #{bbs.board}">게시판</h2>
         </div>
     </div>
 
@@ -28,11 +28,11 @@
         <!-- 플래시 메시지 -->
         <div th:if="${successMsg}" class="alert alert-success auto-dismiss" role="alert">
             <span th:text="${successMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}" title="닫기"></button>
         </div>
         <div th:if="${errorMsg}" class="alert alert-danger" role="alert">
             <span th:text="${errorMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}" title="닫기"></button>
         </div>
 
         <!-- 검색 영역 (KRDS 폼) -->
@@ -40,28 +40,28 @@
             <div class="row g-2 align-items-end">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <div class="form-tit"><label for="searchCnd">검색구분</label></div>
+                        <div class="form-tit"><label for="searchCnd" th:text="#{com.label.searchCnd}">검색구분</label></div>
                         <div class="form-conts">
-                            <select id="searchCnd" name="searchCnd" class="krds-form-select" title="검색구분 선택">
-                                <option value="0" th:selected="${search.searchCnd == '0'}">제목</option>
-                                <option value="1" th:selected="${search.searchCnd == '1'}">내용</option>
-                                <option value="2" th:selected="${search.searchCnd == '2'}">작성자</option>
+                            <select id="searchCnd" name="searchCnd" class="krds-form-select" th:attr="title=#{com.label.searchCndSelect}" title="검색구분 선택">
+                                <option value="0" th:selected="${search.searchCnd == '0'}" th:text="#{bbs.search.title}">제목</option>
+                                <option value="1" th:selected="${search.searchCnd == '1'}" th:text="#{bbs.search.content}">내용</option>
+                                <option value="2" th:selected="${search.searchCnd == '2'}" th:text="#{bbs.search.writer}">작성자</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <div class="form-tit"><label for="searchWrd">검색어</label></div>
+                        <div class="form-tit"><label for="searchWrd" th:text="#{com.label.keyword}">검색어</label></div>
                         <div class="form-conts">
                             <input type="text" id="searchWrd" name="searchWrd" class="krds-input"
-                                   th:value="${search.searchWrd}" placeholder="검색어를 입력하세요" maxlength="100"/>
+                                   th:value="${search.searchWrd}" th:placeholder="#{com.ph.keyword}" placeholder="검색어를 입력하세요" maxlength="100"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="krds-btn primary medium w-100">
-                        <i class="bi bi-search"></i> 검색
+                        <i class="bi bi-search"></i> <span th:text="#{com.btn.search}">검색</span>
                     </button>
                 </div>
             </div>
@@ -69,23 +69,23 @@
 
         <!-- 목록 헤더: 전체 건수 -->
         <div class="d-flex justify-content-between align-items-center mb-2 mt-3">
-            <span class="text-muted">전체 <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong>건</span>
+            <span class="text-muted"><span th:text="#{com.total.pre}">전체</span> <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong><span th:text="#{com.total.post}">건</span></span>
         </div>
 
         <!-- 게시물 목록 (KRDS 표) -->
         <div class="krds-table-wrap">
             <table class="tbl">
-                <caption>게시판 목록 — 번호·제목·작성자·등록일·조회수</caption>
+                <caption th:text="#{bbs.list.caption}">게시판 목록 — 번호·제목·작성자·등록일·조회수</caption>
                 <colgroup>
                     <col style="width:70px"><col><col style="width:110px"><col style="width:120px"><col style="width:80px">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th scope="col">번호</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">등록일</th>
-                    <th scope="col">조회</th>
+                    <th scope="col" th:text="#{com.col.no}">번호</th>
+                    <th scope="col" th:text="#{com.col.title}">제목</th>
+                    <th scope="col" th:text="#{com.col.writer}">작성자</th>
+                    <th scope="col" th:text="#{com.col.date}">등록일</th>
+                    <th scope="col" th:text="#{com.col.views}">조회</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -103,7 +103,7 @@
                     <td class="text-center" th:text="${item.inqireCo}">0</td>
                 </tr>
                 <tr th:if="${result == null or result.resultList == null or #lists.isEmpty(result.resultList)}">
-                    <td colspan="5" class="text-center py-4 text-muted">등록된 게시물이 없습니다.</td>
+                    <td colspan="5" class="text-center py-4 text-muted" th:text="#{bbs.list.empty}">등록된 게시물이 없습니다.</td>
                 </tr>
                 </tbody>
             </table>
@@ -116,7 +116,7 @@
         <div class="d-flex justify-content-end mt-3">
             <th:block sec:authorize="isAuthenticated()">
                 <a th:href="@{/bbs/{bbsId}/write(bbsId=${bbsId})}" class="krds-btn primary">
-                    <i class="bi bi-pencil-square"></i> 글쓰기
+                    <i class="bi bi-pencil-square"></i> <span th:text="#{com.btn.write}">글쓰기</span>
                 </a>
             </th:block>
         </div>

@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/default}"
       lang="ko">
 <head>
-    <title>게시판 상세</title>
+    <title th:text="#{bbsmst.detail.title}">게시판 상세</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -13,12 +13,12 @@
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/bbs/master/list}">게시판 관리</a></li>
-                    <li class="breadcrumb-item active">상세</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/bbs/master/list}" th:text="#{bbsmst.crumb.manage}">게시판 관리</a></li>
+                    <li class="breadcrumb-item active" th:text="#{bbsmst.crumb.detail}">상세</li>
                 </ol>
             </nav>
-            <h2>게시판 마스터 상세</h2>
+            <h2 th:text="#{bbsmst.detail.title}">게시판 마스터 상세</h2>
         </div>
     </div>
 
@@ -26,68 +26,68 @@
 
         <div th:if="${successMsg}" class="alert alert-success" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}" title="닫기"></button>
         </div>
         <div th:if="${errorMsg}" class="alert alert-danger" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}" title="닫기"></button>
         </div>
 
         <div class="krds-panel">
             <div class="krds-panel-body">
                 <div class="krds-table-wrap">
                     <table class="tbl col">
-                        <caption>게시판 마스터 상세 정보</caption>
+                        <caption th:text="#{bbsmst.detail.caption}">게시판 마스터 상세 정보</caption>
                         <colgroup>
                             <col style="width:30%"/>
                             <col style="width:70%"/>
                         </colgroup>
                         <tbody>
                         <tr>
-                            <th scope="row">게시판 ID</th>
+                            <th scope="row" th:text="#{bbsmst.field.bbsId}">게시판 ID</th>
                             <td th:text="${bbsId}"></td>
                         </tr>
                         <tr>
-                            <th scope="row">게시판명</th>
+                            <th scope="row" th:text="#{bbsmst.field.bbsNm}">게시판명</th>
                             <td th:text="${detail?.bbsNm}"></td>
                         </tr>
                         <tr>
-                            <th scope="row">게시판 소개</th>
+                            <th scope="row" th:text="#{bbsmst.field.bbsIntrcn}">게시판 소개</th>
                             <td th:text="${detail?.bbsIntrcn}"></td>
                         </tr>
                         <tr>
-                            <th scope="row">게시판 유형</th>
+                            <th scope="row" th:text="#{bbsmst.field.bbsTy}">게시판 유형</th>
                             <td th:text="${detail?.bbsTyCodeNm} ?: '-'"></td>
                         </tr>
                         <tr>
-                            <th scope="row">게시판 속성</th>
+                            <th scope="row" th:text="#{bbsmst.field.bbsAttrb}">게시판 속성</th>
                             <td th:text="${detail?.bbsAttrbCodeNm} ?: '-'"></td>
                         </tr>
                         <tr>
-                            <th scope="row">사용여부</th>
+                            <th scope="row" th:text="#{bbsmst.field.useAt}">사용여부</th>
                             <td>
-                                <span th:if="${detail?.useAt == 'Y'}" class="krds-badge bg-success">사용</span>
-                                <span th:unless="${detail?.useAt == 'Y'}" class="krds-badge bg-gray">미사용</span>
+                                <span th:if="${detail?.useAt == 'Y'}" class="krds-badge bg-success" th:text="#{com.use.y}">사용</span>
+                                <span th:unless="${detail?.useAt == 'Y'}" class="krds-badge bg-gray" th:text="#{com.use.n}">미사용</span>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">첨부파일 허용</th>
+                            <th scope="row" th:text="#{bbsmst.field.fileAllow}">첨부파일 허용</th>
                             <td>
-                                <span th:if="${detail?.fileAtchPosblAt == 'Y'}" class="text-success">허용</span>
-                                <span th:unless="${detail?.fileAtchPosblAt == 'Y'}" class="text-secondary">불가</span>
+                                <span th:if="${detail?.fileAtchPosblAt == 'Y'}" class="text-success" th:text="#{com.allow.y}">허용</span>
+                                <span th:unless="${detail?.fileAtchPosblAt == 'Y'}" class="text-secondary" th:text="#{com.allow.n}">불가</span>
                                 <span th:if="${detail?.fileAtchPosblAt == 'Y'}" class="text-muted ms-2 small"
-                                      th:text="'(최대 ' + ${detail?.posblAtchFileNumber} + '개)'"></span>
+                                      th:text="#{bbsmst.ph.maxNum(${detail?.posblAtchFileNumber})}"></span>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">답글 허용</th>
+                            <th scope="row" th:text="#{bbsmst.field.replyAllow}">답글 허용</th>
                             <td>
-                                <span th:if="${detail?.replyPosblAt == 'Y'}" class="text-success">허용</span>
-                                <span th:unless="${detail?.replyPosblAt == 'Y'}" class="text-secondary">불가</span>
+                                <span th:if="${detail?.replyPosblAt == 'Y'}" class="text-success" th:text="#{com.allow.y}">허용</span>
+                                <span th:unless="${detail?.replyPosblAt == 'Y'}" class="text-secondary" th:text="#{com.allow.n}">불가</span>
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row">등록일</th>
+                            <th scope="row" th:text="#{bbsmst.field.regDate}">등록일</th>
                             <td th:text="${detail?.frstRegisterPnttm != null ? #strings.substring(detail.frstRegisterPnttm, 0, 10) : '-'}"></td>
                         </tr>
                         </tbody>
@@ -98,16 +98,16 @@
 
         <div class="d-flex justify-content-between mt-3">
             <a th:href="@{/bbs/master/list}" class="krds-btn tertiary">
-                <i class="bi bi-arrow-left"></i> 목록
+                <i class="bi bi-arrow-left"></i> <span th:text="#{com.btn.list}">목록</span>
             </a>
             <div>
                 <a th:href="@{/bbs/master/{id}/update(id=${bbsId})}" class="krds-btn secondary me-2">
-                    <i class="bi bi-pencil"></i> 수정
+                    <i class="bi bi-pencil"></i> <span th:text="#{com.btn.edit}">수정</span>
                 </a>
                 <form th:action="@{/bbs/master/{id}/delete(id=${bbsId})}" method="post" class="d-inline"
-                      onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                      th:onsubmit="'return confirm(\'' + #{com.confirm.delete} + '\');'">
                     <button type="submit" class="krds-btn danger">
-                        <i class="bi bi-trash"></i> 삭제
+                        <i class="bi bi-trash"></i> <span th:text="#{com.btn.delete}">삭제</span>
                     </button>
                 </form>
             </div>

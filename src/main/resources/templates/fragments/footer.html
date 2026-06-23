@@ -14,10 +14,10 @@
         </a>
         <!-- 바로가기 링크 -->
         <div class="d-flex flex-wrap gap-3 mb-3" style="font-size:.85rem;">
-            <a th:href="@{/}" class="text-white text-decoration-none">홈</a>
-            <a th:href="@{/portal}" class="text-white text-decoration-none">포털</a>
-            <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}" class="text-white text-decoration-none">공지사항</a>
-            <a href="/swagger-ui/index.html" target="_blank" class="text-white text-decoration-none">API 문서</a>
+            <a th:href="@{/}" class="text-white text-decoration-none" th:text="#{nav.home}">홈</a>
+            <a th:href="@{/portal}" class="text-white text-decoration-none" th:text="#{nav.portal}">포털</a>
+            <a th:href="@{/bbs/BBSMSTR_AAAAAAAAAAAA/list}" class="text-white text-decoration-none" th:text="#{nav.notice}">공지사항</a>
+            <a href="/swagger-ui/index.html" target="_blank" class="text-white text-decoration-none" th:text="#{landing.footer.api}">API 문서</a>
         </div>
         <div class="row">
             <div class="col-md-6">

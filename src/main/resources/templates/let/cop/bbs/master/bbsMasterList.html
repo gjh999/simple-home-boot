@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/default}"
       lang="ko">
 <head>
-    <title>게시판 마스터 관리</title>
+    <title th:text="#{bbsmst.list.title}">게시판 마스터 관리</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -14,12 +14,12 @@
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item">관리자</li>
-                    <li class="breadcrumb-item active">게시판 관리</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item" th:text="#{com.breadcrumb.admin}">관리자</li>
+                    <li class="breadcrumb-item active" th:text="#{bbsmst.crumb.manage}">게시판 관리</li>
                 </ol>
             </nav>
-            <h2>게시판 마스터 관리</h2>
+            <h2 th:text="#{bbsmst.list.title}">게시판 마스터 관리</h2>
         </div>
     </div>
 
@@ -27,11 +27,11 @@
 
         <div th:if="${successMsg}" class="alert alert-success" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}" title="닫기"></button>
         </div>
         <div th:if="${errorMsg}" class="alert alert-danger" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${errorMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}" title="닫기"></button>
         </div>
 
         <!-- 검색 -->
@@ -39,21 +39,21 @@
             <div class="row g-2 align-items-end">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <div class="form-tit"><label for="searchWrd">검색어</label></div>
+                        <div class="form-tit"><label for="searchWrd" th:text="#{com.label.keyword}">검색어</label></div>
                         <div class="form-conts">
                             <input type="text" id="searchWrd" name="searchWrd" class="krds-input"
-                                   th:value="${search?.searchWrd}" placeholder="게시판명 검색" maxlength="100"/>
+                                   th:value="${search?.searchWrd}" th:placeholder="#{bbsmst.list.search.ph}" placeholder="게시판명 검색" maxlength="100"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <button type="submit" class="krds-btn primary small w-100">
-                        <i class="bi bi-search"></i> 검색
+                        <i class="bi bi-search"></i> <span th:text="#{com.btn.search}">검색</span>
                     </button>
                 </div>
                 <div class="col-md-6 text-end">
                     <span class="text-muted small">
-                        전체 <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong>건
+                        <span th:text="#{com.total.pre}">전체</span> <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong><span th:text="#{com.total.post}">건</span>
                     </span>
                 </div>
             </div>
@@ -62,19 +62,19 @@
         <!-- 목록 -->
         <div class="krds-table-wrap">
             <table class="tbl">
-                <caption>게시판 마스터 목록 — 번호·게시판명·유형·속성·사용여부·등록일·관리</caption>
+                <caption th:text="#{bbsmst.list.caption}">게시판 마스터 목록 — 번호·게시판명·유형·속성·사용여부·등록일·관리</caption>
                 <colgroup>
                     <col style="width:60px"><col><col style="width:120px"><col style="width:120px"><col style="width:80px"><col style="width:110px"><col style="width:100px">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th scope="col">번호</th>
-                    <th scope="col">게시판명</th>
-                    <th scope="col">게시판유형</th>
-                    <th scope="col">게시판속성</th>
-                    <th scope="col">사용여부</th>
-                    <th scope="col">등록일</th>
-                    <th scope="col">관리</th>
+                    <th scope="col" th:text="#{com.col.no}">번호</th>
+                    <th scope="col" th:text="#{bbsmst.col.bbsNm}">게시판명</th>
+                    <th scope="col" th:text="#{bbsmst.col.bbsTy}">게시판유형</th>
+                    <th scope="col" th:text="#{bbsmst.col.bbsAttrb}">게시판속성</th>
+                    <th scope="col" th:text="#{bbsmst.field.useAt}">사용여부</th>
+                    <th scope="col" th:text="#{com.col.date}">등록일</th>
+                    <th scope="col" th:text="#{com.col.manage}">관리</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -89,19 +89,19 @@
                     <td class="text-center small" th:text="${item.bbsTyCodeNm}">일반</td>
                     <td class="text-center small" th:text="${item.bbsAttrbCodeNm}">일반</td>
                     <td class="text-center small">
-                        <span th:if="${item.useAt == 'Y'}" class="krds-badge bg-success">사용</span>
-                        <span th:unless="${item.useAt == 'Y'}" class="krds-badge bg-gray">미사용</span>
+                        <span th:if="${item.useAt == 'Y'}" class="krds-badge bg-success" th:text="#{com.use.y}">사용</span>
+                        <span th:unless="${item.useAt == 'Y'}" class="krds-badge bg-gray" th:text="#{com.use.n}">미사용</span>
                     </td>
                     <td class="text-center small text-muted"
                         th:text="${item.frstRegisterPnttm != null ? #strings.substring(item.frstRegisterPnttm, 0, 10) : ''}"></td>
                     <td class="text-center">
                         <a th:href="@{/bbs/master/{id}/update(id=${item.bbsId})}"
-                           class="krds-btn tertiary small">수정</a>
+                           class="krds-btn tertiary small" th:text="#{com.btn.edit}">수정</a>
                     </td>
                 </tr>
                 <tr th:if="${result == null or result.resultList == null or #lists.isEmpty(result.resultList)}">
                     <td colspan="7" class="text-center py-4 text-muted">
-                        <i class="bi bi-inbox fs-3 d-block mb-2"></i>등록된 게시판이 없습니다.
+                        <i class="bi bi-inbox fs-3 d-block mb-2"></i><span th:text="#{bbsmst.list.empty}">등록된 게시판이 없습니다.</span>
                     </td>
                 </tr>
                 </tbody>
@@ -114,7 +114,7 @@
         <!-- 하단 버튼 -->
         <div class="d-flex justify-content-end mt-3">
             <a th:href="@{/bbs/master/write}" class="krds-btn primary">
-                <i class="bi bi-plus-circle"></i> 게시판 등록
+                <i class="bi bi-plus-circle"></i> <span th:text="#{bbsmst.list.register}">게시판 등록</span>
             </a>
         </div>
 

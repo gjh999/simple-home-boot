@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/default}"
       lang="ko">
-<head><title>일정관리</title></head>
+<head><title th:text="#{sch.list.title}">일정관리</title></head>
 <body>
 <main layout:fragment="content">
 
@@ -13,11 +13,11 @@
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item active">일정관리</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item active" th:text="#{sch.list.title}">일정관리</li>
                 </ol>
             </nav>
-            <h2>일정관리</h2>
+            <h2 th:text="#{sch.list.title}">일정관리</h2>
         </div>
     </div>
 
@@ -26,11 +26,11 @@
         <!-- 플래시 메시지 -->
         <div th:if="${successMsg}" class="alert alert-success auto-dismiss" role="alert">
             <span th:text="${successMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}"></button>
         </div>
         <div th:if="${errorMsg}" class="alert alert-danger" role="alert">
             <span th:text="${errorMsg}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" title="닫기"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}"></button>
         </div>
 
         <!-- 검색 영역 (KRDS 폼) -->
@@ -38,16 +38,16 @@
             <div class="row g-2 align-items-end">
                 <div class="col-md-9">
                     <div class="form-group">
-                        <div class="form-tit"><label for="searchKeyword">검색어</label></div>
+                        <div class="form-tit"><label for="searchKeyword" th:text="#{com.label.keyword}">검색어</label></div>
                         <div class="form-conts">
                             <input type="text" id="searchKeyword" name="searchKeyword" class="krds-input"
-                                   th:value="${searchVO.searchKeyword}" placeholder="일정명을 입력하세요" maxlength="100"/>
+                                   th:value="${searchVO.searchKeyword}" th:placeholder="#{sch.list.search.ph}" placeholder="일정명을 입력하세요" maxlength="100"/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="krds-btn primary medium w-100">
-                        <i class="bi bi-search"></i> 검색
+                        <i class="bi bi-search"></i> <span th:text="#{com.btn.search}">검색</span>
                     </button>
                 </div>
             </div>
@@ -55,24 +55,24 @@
 
         <!-- 목록 헤더: 전체 건수 -->
         <div class="d-flex justify-content-between align-items-center mb-2 mt-3">
-            <span class="text-muted">전체 <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong>건</span>
+            <span class="text-muted"><span th:text="#{com.total.pre}">전체</span> <strong th:text="${paginationInfo?.totalRecordCount} ?: 0">0</strong><span th:text="#{com.total.post}">건</span></span>
         </div>
 
         <!-- 일정 목록 (KRDS 표) -->
         <div class="krds-table-wrap">
             <table class="tbl">
-                <caption>일정 목록 — 번호·일정명·시작일시·종료일시·중요도·담당자</caption>
+                <caption th:text="#{sch.list.caption}">일정 목록 — 번호·일정명·시작일시·종료일시·중요도·담당자</caption>
                 <colgroup>
                     <col style="width:60px"><col><col style="width:150px"><col style="width:150px"><col style="width:90px"><col style="width:110px">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th scope="col">번호</th>
-                    <th scope="col">일정명</th>
-                    <th scope="col">시작일시</th>
-                    <th scope="col">종료일시</th>
-                    <th scope="col">중요도</th>
-                    <th scope="col">담당자</th>
+                    <th scope="col" th:text="#{com.col.no}">번호</th>
+                    <th scope="col" th:text="#{sch.field.nm}">일정명</th>
+                    <th scope="col" th:text="#{sch.field.bgn}">시작일시</th>
+                    <th scope="col" th:text="#{sch.field.end}">종료일시</th>
+                    <th scope="col" th:text="#{sch.col.ipcr}">중요도</th>
+                    <th scope="col" th:text="#{sch.field.mngr}">담당자</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -88,13 +88,13 @@
                     <td class="text-center">
                         <span class="krds-badge"
                               th:classappend="${item.schdulIpcrCode == '1'} ? 'bg-danger' : (${item.schdulIpcrCode == '2'} ? 'bg-warning' : 'bg-gray')"
-                              th:text="${item.schdulIpcrCode == '1'} ? '긴급' : (${item.schdulIpcrCode == '2'} ? '중요' : '일반')">-</span>
+                              th:text="${item.schdulIpcrCode == '1'} ? #{sch.ipcr.urgent} : (${item.schdulIpcrCode == '2'} ? #{sch.ipcr.important} : #{sch.ipcr.normal})">-</span>
                     </td>
                     <td class="text-center" th:text="${item.schdulChargerId}">-</td>
                 </tr>
                 <tr th:if="${scheduleList == null or #lists.isEmpty(scheduleList)}">
                     <td colspan="6" class="text-center py-4 text-muted">
-                        <i class="bi bi-calendar-x fs-3 d-block mb-2"></i>등록된 일정이 없습니다.
+                        <i class="bi bi-calendar-x fs-3 d-block mb-2"></i><span th:text="#{sch.list.empty}">등록된 일정이 없습니다.</span>
                     </td>
                 </tr>
                 </tbody>
@@ -108,7 +108,7 @@
         <div class="d-flex justify-content-end mt-3">
             <th:block sec:authorize="isAuthenticated()">
                 <a th:href="@{/schedule/write}" class="krds-btn primary">
-                    <i class="bi bi-calendar-plus"></i> 일정 등록
+                    <i class="bi bi-calendar-plus"></i> <span th:text="#{sch.list.register}">일정 등록</span>
                 </a>
             </th:block>
         </div>

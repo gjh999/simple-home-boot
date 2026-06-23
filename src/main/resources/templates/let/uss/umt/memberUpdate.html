@@ -3,19 +3,19 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}"
       lang="ko">
-<head><title>회원 수정</title></head>
+<head><title th:text="#{mber.update.title}">회원 수정</title></head>
 <body>
 <main layout:fragment="content">
     <div class="page-title-bar">
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/member/list}">회원관리</a></li>
-                    <li class="breadcrumb-item active">수정</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/member/list}" th:text="#{mber.list.title}">회원관리</a></li>
+                    <li class="breadcrumb-item active" th:text="#{mber.crumb.update}">수정</li>
                 </ol>
             </nav>
-            <h2>회원 정보 수정</h2>
+            <h2 th:text="#{mber.update.title}">회원 정보 수정</h2>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-tit"><label for="mberNm">이름 <span class="frm-rq">*</span></label></div>
+                                <div class="form-tit"><label for="mberNm"><span th:text="#{mber.field.nm}">이름</span> <span class="frm-rq">*</span></label></div>
                                 <div class="form-conts">
                                     <input type="text" id="mberNm" name="mberNm" class="krds-input"
                                            th:value="${member?.mberNm}" required maxlength="50"/>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-tit"><label for="mberEmailAdres">이메일</label></div>
+                                <div class="form-tit"><label for="mberEmailAdres" th:text="#{mber.field.email}">이메일</label></div>
                                 <div class="form-conts">
                                     <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="krds-input"
                                            th:value="${member?.mberEmailAdres}" maxlength="50"/>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-tit"><label for="moblphonNo">휴대폰</label></div>
+                                <div class="form-tit"><label for="moblphonNo" th:text="#{mber.field.moblphon}">휴대폰</label></div>
                                 <div class="form-conts">
                                     <input type="text" id="moblphonNo" name="moblphonNo" class="krds-input"
                                            th:value="${member?.moblphonNo}" maxlength="20"/>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <div class="form-tit"><label for="zip">우편번호</label></div>
+                                <div class="form-tit"><label for="zip" th:text="#{mber.field.zip}">우편번호</label></div>
                                 <div class="form-conts">
                                     <input type="text" id="zip" name="zip" class="krds-input"
                                            th:value="${member?.zip}" maxlength="6"/>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <div class="form-tit"><label for="adres">주소</label></div>
+                                <div class="form-tit"><label for="adres" th:text="#{mber.field.adres}">주소</label></div>
                                 <div class="form-conts">
                                     <input type="text" id="adres" name="adres" class="krds-input"
                                            th:value="${member?.adres}" maxlength="100"/>
@@ -74,10 +74,10 @@
 
                     <div class="d-flex justify-content-between mt-4">
                         <a th:href="@{/member/{id}/detail(id=${member?.mberId})}" class="krds-btn tertiary">
-                            <i class="bi bi-x-circle"></i> 취소
+                            <i class="bi bi-x-circle"></i> <span th:text="#{com.btn.cancel}">취소</span>
                         </a>
                         <button type="submit" class="krds-btn primary">
-                            <i class="bi bi-save"></i> 저장
+                            <i class="bi bi-save"></i> <span th:text="#{com.btn.save}">저장</span>
                         </button>
                     </div>
                 </form>

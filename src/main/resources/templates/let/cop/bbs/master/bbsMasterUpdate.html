@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/default}"
       lang="ko">
 <head>
-    <title>게시판 수정</title>
+    <title th:text="#{bbsmst.update.title}">게시판 수정</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -13,12 +13,12 @@
         <div class="container-fluid px-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a th:href="@{/}">홈</a></li>
-                    <li class="breadcrumb-item"><a th:href="@{/bbs/master/list}">게시판 관리</a></li>
-                    <li class="breadcrumb-item active">수정</li>
+                    <li class="breadcrumb-item"><a th:href="@{/}" th:text="#{nav.home}">홈</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/bbs/master/list}" th:text="#{bbsmst.crumb.manage}">게시판 관리</a></li>
+                    <li class="breadcrumb-item active" th:text="#{bbsmst.crumb.update}">수정</li>
                 </ol>
             </nav>
-            <h2>게시판 마스터 수정</h2>
+            <h2 th:text="#{bbsmst.update.title}">게시판 마스터 수정</h2>
         </div>
     </div>
 
@@ -29,14 +29,14 @@
 
                     <div class="fieldset">
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label>게시판 ID</label></div>
+                            <div class="col-sm-3 form-tit"><label th:text="#{bbsmst.field.bbsId}">게시판 ID</label></div>
                             <div class="col-sm-9 form-conts">
                                 <input type="text" class="krds-input" th:value="${bbsId}" readonly/>
                             </div>
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="bbsNm">게시판명 <span class="frm-rq">*</span></label></div>
+                            <div class="col-sm-3 form-tit"><label for="bbsNm"><span th:text="#{bbsmst.field.bbsNm}">게시판명</span> <span class="frm-rq">*</span></label></div>
                             <div class="col-sm-9 form-conts">
                                 <input type="text" id="bbsNm" name="bbsNm" class="krds-input"
                                        th:value="${detail?.bbsNm}" maxlength="255" required/>
@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="bbsIntrcn">게시판 소개</label></div>
+                            <div class="col-sm-3 form-tit"><label for="bbsIntrcn" th:text="#{bbsmst.field.bbsIntrcn}">게시판 소개</label></div>
                             <div class="col-sm-9 form-conts">
                                 <textarea id="bbsIntrcn" name="bbsIntrcn" class="krds-input" rows="3"
                                           maxlength="2400" th:text="${detail?.bbsIntrcn}"></textarea>
@@ -52,10 +52,10 @@
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="bbsTyCode">게시판 유형</label></div>
+                            <div class="col-sm-3 form-tit"><label for="bbsTyCode" th:text="#{bbsmst.field.bbsTy}">게시판 유형</label></div>
                             <div class="col-sm-9 form-conts">
                                 <select id="bbsTyCode" name="bbsTyCode" class="krds-form-select">
-                                    <option value="">-- 선택 --</option>
+                                    <option value="" th:text="#{com.select}">-- 선택 --</option>
                                     <option th:each="type : ${typeList}"
                                             th:value="${type.code}"
                                             th:text="${type.codeNm}"
@@ -65,10 +65,10 @@
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="bbsAttrbCode">게시판 속성</label></div>
+                            <div class="col-sm-3 form-tit"><label for="bbsAttrbCode" th:text="#{bbsmst.field.bbsAttrb}">게시판 속성</label></div>
                             <div class="col-sm-9 form-conts">
                                 <select id="bbsAttrbCode" name="bbsAttrbCode" class="krds-form-select">
-                                    <option value="">-- 선택 --</option>
+                                    <option value="" th:text="#{com.select}">-- 선택 --</option>
                                     <option th:each="attr : ${attrbList}"
                                             th:value="${attr.code}"
                                             th:text="${attr.codeNm}"
@@ -78,23 +78,23 @@
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label>첨부파일 허용</label></div>
+                            <div class="col-sm-3 form-tit"><label th:text="#{bbsmst.field.fileAllow}">첨부파일 허용</label></div>
                             <div class="col-sm-9 pt-2 form-conts">
                                 <div class="form-check form-check-inline">
                                     <input type="radio" id="fileAtchY" name="fileAtchPosblAt" value="Y" class="form-check-input"
                                            th:checked="${detail?.fileAtchPosblAt == 'Y'}"/>
-                                    <label for="fileAtchY" class="form-check-label">허용</label>
+                                    <label for="fileAtchY" class="form-check-label" th:text="#{com.allow.y}">허용</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input type="radio" id="fileAtchN" name="fileAtchPosblAt" value="N" class="form-check-input"
                                            th:checked="${detail?.fileAtchPosblAt != 'Y'}"/>
-                                    <label for="fileAtchN" class="form-check-label">불가</label>
+                                    <label for="fileAtchN" class="form-check-label" th:text="#{com.allow.n}">불가</label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="posblAtchFileNumber">최대 첨부파일 수</label></div>
+                            <div class="col-sm-3 form-tit"><label for="posblAtchFileNumber" th:text="#{bbsmst.field.maxFile}">최대 첨부파일 수</label></div>
                             <div class="col-sm-3 form-conts">
                                 <input type="number" id="posblAtchFileNumber" name="posblAtchFileNumber"
                                        class="krds-input" th:value="${detail?.posblAtchFileNumber}" min="0" max="10"/>
@@ -102,33 +102,33 @@
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label>답글 허용</label></div>
+                            <div class="col-sm-3 form-tit"><label th:text="#{bbsmst.field.replyAllow}">답글 허용</label></div>
                             <div class="col-sm-9 pt-2 form-conts">
                                 <div class="form-check form-check-inline">
                                     <input type="radio" id="replyY" name="replyPosblAt" value="Y" class="form-check-input"
                                            th:checked="${detail?.replyPosblAt == 'Y'}"/>
-                                    <label for="replyY" class="form-check-label">허용</label>
+                                    <label for="replyY" class="form-check-label" th:text="#{com.allow.y}">허용</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input type="radio" id="replyN" name="replyPosblAt" value="N" class="form-check-input"
                                            th:checked="${detail?.replyPosblAt != 'Y'}"/>
-                                    <label for="replyN" class="form-check-label">불가</label>
+                                    <label for="replyN" class="form-check-label" th:text="#{com.allow.n}">불가</label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label>사용여부</label></div>
+                            <div class="col-sm-3 form-tit"><label th:text="#{bbsmst.field.useAt}">사용여부</label></div>
                             <div class="col-sm-9 pt-2 form-conts">
                                 <div class="form-check form-check-inline">
                                     <input type="radio" id="useAtY" name="useAt" value="Y" class="form-check-input"
                                            th:checked="${detail?.useAt == 'Y'}"/>
-                                    <label for="useAtY" class="form-check-label">사용</label>
+                                    <label for="useAtY" class="form-check-label" th:text="#{com.use.y}">사용</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input type="radio" id="useAtN" name="useAt" value="N" class="form-check-input"
                                            th:checked="${detail?.useAt != 'Y'}"/>
-                                    <label for="useAtN" class="form-check-label">미사용</label>
+                                    <label for="useAtN" class="form-check-label" th:text="#{com.use.n}">미사용</label>
                                 </div>
                             </div>
                         </div>
@@ -136,10 +136,10 @@
 
                     <div class="d-flex justify-content-between mt-4">
                         <a th:href="@{/bbs/master/{id}/detail(id=${bbsId})}" class="krds-btn tertiary">
-                            <i class="bi bi-arrow-left"></i> 취소
+                            <i class="bi bi-arrow-left"></i> <span th:text="#{com.btn.cancel}">취소</span>
                         </a>
                         <button type="submit" class="krds-btn primary">
-                            <i class="bi bi-save"></i> 수정
+                            <i class="bi bi-save"></i> <span th:text="#{com.btn.edit}">수정</span>
                         </button>
                     </div>
 
