@@ -58,9 +58,12 @@
 | 회원 관리 | `/member/**` | `/etc/**` | 회원 목록·상세·수정 (ADMIN) |
 | 마이페이지 | `/mypage/**` | - | 본인 정보·비밀번호 |
 | 비밀번호 변경 | `/admin/password` | - | 관리자 비밀번호 (ADMIN) |
-| 다국어 전환 | `GET /cmm/lang?lang=ko\|en` | - | 쿠키 기반, 한/영 |
+| KRDS 컴포넌트 예시 | `GET /krds-sample` | - | 공개 페이지(KRDS 소개 + 컴포넌트 데모) |
+| 다국어 전환 | `GET /cmm/lang?lang=ko\|en` | - | 쿠키 기반, 한/영 전수 적용 |
 
 > MVC 컨트롤러는 `Egov{기능}Controller`, REST 컨트롤러는 `Egov{기능}ApiController` 로 구분됩니다.
+>
+> **UI**: 전 화면 **KRDS(디지털정부 표준 디자인시스템) 네이티브** 적용(Bootstrap 프레임워크 제거), 랜딩/예시는 공개 레이아웃(`layouts/public`), 푸터에 전자정부표준프레임워크 공식 홈페이지 배너, 전 페이지 '맨 위로' 스크롤 버튼.
 
 ---
 
@@ -197,9 +200,9 @@ src/main/resources/
   egovframework/message/    # 다국어 메시지(message-ui*.properties 등)
   egovframework/validator/  # 검증 XML
   db/shtdb.sql              # 내장 HSQLDB 초기화 DDL+DML (기본 구동 시 자동 적재)
-  static/                   # 정적 리소스(css/js/img — KRDS, Bootstrap, 로컬 보관)
+  static/                   # 정적 리소스(css/js/img — 공식 KRDS 킷 + 호환 레이어, 로컬 보관·CDN 금지)
   templates/                # Thymeleaf 템플릿
-    layouts/                # default.html, login.html
+    layouts/                # default.html(업무), public.html(공개: 랜딩·KRDS예시), login.html
     fragments/              # header, nav, footer, pagination
     let/{모듈}/             # 기능별 화면
   application*.properties   # 환경 설정(base / -dev / -prod)
@@ -276,7 +279,7 @@ export EGOV_JWT_SECRET="..."; export EGOV_CRYPTO_KEY="..."; java -jar app.jar --
 
 - 메시지: `src/main/resources/egovframework/message/` (`*_ko`, `*_en`).
 - 언어 전환: 화면의 한국어/EN 버튼 → `GET /cmm/lang?lang=ko|en` → `LANG` 쿠키 저장 후 직전 페이지로 리다이렉트(PRG). 한 번 클릭으로 즉시 반영.
-- 현재 랜딩/로그인/공통 영역이 다국어화되어 있으며, 업무 CRUD 화면 다국어는 점진 확장 대상입니다.
+- **다국어 전수 적용**: 메뉴·푸터·KRDS 예시·전 업무화면(게시판·일정·회원·로그인 등)의 사용자 노출 문구를 메시지 키로 전환했습니다. ko/en 키 집합이 정합(동일 키)하며 하드코딩 한글 fallback은 0건입니다.
 
 ---
 
@@ -368,6 +371,13 @@ Claude Code가 자동 인식하는 재사용 작업 스킬(저장소에 포함, 
 ## 라이선스
 
 본 프로젝트는 [Apache License 2.0](LICENSE)을 따릅니다.
+
+---
+
+## 문의 (Contact)
+
+- 이메일: **admin@jennysoft.co.kr**
+- 이슈·기능 제안: GitHub Issues / Pull Request
 
 ---
 
