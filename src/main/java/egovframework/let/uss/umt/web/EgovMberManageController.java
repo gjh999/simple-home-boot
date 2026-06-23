@@ -109,6 +109,39 @@ public class EgovMberManageController {
     }
 
     /**
+     * 회원 비밀번호 초기화 (관리자 전용)
+     * 임시 비밀번호(기본값)로 재설정한다. 저장값은 이중 SHA-256 해시 형식을 유지한다.
+     * (1차 = Base64(SHA256(id||pw)), 2차(저장) = Base64(SHA256(id||1차)) = encryptPasswordTwice)
+     */
+    @PostMapping("/{mberId}/reset-password")
+    public String memberResetPassword(@PathVariable String mberId, RedirectAttributes ra) {
+        try {
+            MberManageVO mber = mberService.selectMber(mberId);
+            if (mber == null || mber.getUniqId() == null || mber.getUniqId().isEmpty()) {
+                ra.addFlashAttribute("errorMsg", messageUtil.get("msg.mber.pwReset.error"));
+                return "redirect:/member/list";
+            }
+            // 임시 비밀번호 기본값 (관리자 안내용 — 로그인 후 변경 권장)
+            String tempPw = DEFAULT_RESET_PASSWORD;
+            String enpassword = egovframework.let.utl.sim.service.EgovFileScrty
+                    .encryptPasswordTwice(tempPw, mber.getMberId());
+            mber.setPassword(enpassword);
+            mberService.updatePassword(mber);
+
+            ra.addFlashAttribute("successMsg",
+                    messageUtil.get("msg.mber.pwReset.done") + " (" + tempPw + ")");
+            return "redirect:/member/" + mberId + "/detail";
+        } catch (Exception e) {
+            log.error("회원 비밀번호 초기화 오류", e);
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.mber.pwReset.error"));
+            return "redirect:/member/" + mberId + "/detail";
+        }
+    }
+
+    /** 비밀번호 초기화 기본 임시값 (공개 샘플 — 운영 시 정책에 맞게 조정) */
+    private static final String DEFAULT_RESET_PASSWORD = "egov1234!";
+
+    /**
      * 회원 삭제 처리
      */
     @PostMapping("/{mberId}/delete")

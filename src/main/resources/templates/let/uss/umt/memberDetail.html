@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/default}"
       lang="ko">
 <head><title th:text="#{mber.detail.title}">회원 상세</title></head>
 <body>
 <main layout:fragment="content">
+
+    <!-- 플래시 메시지 -->
+    <div class="container-fluid px-4" th:if="${successMsg != null or errorMsg != null}">
+        <div th:if="${successMsg != null}" class="alert alert-success auto-dismiss" role="alert">
+            <span th:text="${successMsg}"></span>
+        </div>
+        <div th:if="${errorMsg != null}" class="alert alert-danger" role="alert">
+            <span th:text="${errorMsg}"></span>
+        </div>
+    </div>
+
 
     <div class="page-title-bar">
         <div class="container-fluid px-4">
@@ -64,6 +76,12 @@
                     <a th:href="@{/member/{id}/update(id=${member?.mberId})}" class="krds-btn secondary small">
                         <i class="bi bi-pencil"></i> <span th:text="#{com.btn.edit}">수정</span>
                     </a>
+                    <form sec:authorize="hasRole('ADMIN')" th:action="@{/member/{id}/reset-password(id=${member?.mberId})}" method="post" id="resetPwForm" class="d-inline">
+                        <button type="button" class="krds-btn tertiary small"
+                                th:onclick="'if(confirm(\'' + #{mber.confirm.pwReset} + '\')) document.getElementById(\'resetPwForm\').submit()'">
+                            <i class="bi bi-key"></i> <span th:text="#{mber.btn.pwReset}">비밀번호 초기화</span>
+                        </button>
+                    </form>
                     <form th:action="@{/member/{id}/delete(id=${member?.mberId})}" method="post" id="delMemberForm" class="d-inline">
                         <button type="button" class="krds-btn danger small"
                                 th:onclick="'if(confirm(\'' + #{mber.confirm.delete} + '\')) document.getElementById(\'delMemberForm\').submit()'">
