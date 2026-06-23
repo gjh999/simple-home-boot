@@ -33,9 +33,9 @@
                         </tr>
                         <tr>
                             <th scope="row" class="text-center bg-light" th:text="#{sch.field.bgn}">시작일시</th>
-                            <td th:text="${schedule?.schdulBgnde}">-</td>
+                            <td th:text="${schedule?.schdulBgnde != null and #strings.length(schedule.schdulBgnde) >= 12} ? ${#strings.substring(schedule.schdulBgnde,0,4) + '-' + #strings.substring(schedule.schdulBgnde,4,6) + '-' + #strings.substring(schedule.schdulBgnde,6,8) + ' ' + #strings.substring(schedule.schdulBgnde,8,10) + ':' + #strings.substring(schedule.schdulBgnde,10,12)} : ${schedule?.schdulBgnde}">-</td>
                             <th scope="row" class="text-center bg-light" th:text="#{sch.field.end}">종료일시</th>
-                            <td th:text="${schedule?.schdulEndde}">-</td>
+                            <td th:text="${schedule?.schdulEndde != null and #strings.length(schedule.schdulEndde) >= 12} ? ${#strings.substring(schedule.schdulEndde,0,4) + '-' + #strings.substring(schedule.schdulEndde,4,6) + '-' + #strings.substring(schedule.schdulEndde,6,8) + ' ' + #strings.substring(schedule.schdulEndde,8,10) + ':' + #strings.substring(schedule.schdulEndde,10,12)} : ${schedule?.schdulEndde}">-</td>
                         </tr>
                         <tr>
                             <th scope="row" class="text-center bg-light" th:text="#{sch.field.place}">장소</th>

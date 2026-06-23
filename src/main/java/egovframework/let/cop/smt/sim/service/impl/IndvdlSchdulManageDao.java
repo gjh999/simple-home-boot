@@ -106,7 +106,7 @@ public class IndvdlSchdulManageDao extends EgovAbstractMapper {
 	 * @throws Exception
 	 */
 	public void updateIndvdlSchdulManage(IndvdlSchdulManageVO indvdlSchdulManageVO) throws Exception {
-		insert("IndvdlSchdulManage.updateIndvdlSchdulManage", indvdlSchdulManageVO);
+		update("IndvdlSchdulManage.updateIndvdlSchdulManage", indvdlSchdulManageVO);
 	}
 
 	/**
