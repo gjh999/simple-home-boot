@@ -368,9 +368,17 @@ Claude Code가 자동 인식하는 재사용 작업 스킬(저장소에 포함, 
 > ⚠️ **커밋 전 보안 점검**: 실제 키·비밀번호·토큰·개인정보(주민번호·실명+연락처·이메일)·`.env`·인증서 키 파일이
 > 스테이징에 포함되지 않았는지 반드시 확인하세요. 운영 시크릿은 환경변수(`EGOV_JWT_SECRET`, `EGOV_CRYPTO_KEY`)로만 주입합니다.
 
-## 라이선스
+## 라이선스 / 오픈소스 고지
 
-본 프로젝트는 [Apache License 2.0](LICENSE)을 따릅니다.
+본 프로젝트는 [Apache License 2.0](LICENSE)을 따릅니다(eGovFramework 기반).
+
+번들·의존된 서드파티 오픈소스/디자인시스템/폰트의 라이선스 고지는 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)를 참조하세요. 주요 항목:
+
+- **eGovFramework RTE** · **Spring Boot/Framework** · **Thymeleaf** · **MyBatis** — Apache License 2.0
+- **KRDS HTML Component Kit**(디지털정부 표준 디자인시스템) — KRDS 이용약관(`static/krds/` 동봉 약관 참조)
+- **Pretendard GOV** 폰트 — SIL Open Font License 1.1
+- **Bootstrap Icons** — MIT · **Swiper**(KRDS 동봉) — MIT · **Lombok** — MIT
+- **Andrej Karpathy Guidelines** 스킬(`.claude/skills/karpathy-guidelines/`) — MIT ([출처](https://github.com/multica-ai/andrej-karpathy-skills))
 
 ---
 
