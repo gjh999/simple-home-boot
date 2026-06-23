@@ -27,6 +27,10 @@ public class EgovIndvdlSchdulManageController {
     @Resource(name = "egovIndvdlSchdulManageService")
     private EgovIndvdlSchdulManageService schdulService;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private egovframework.com.cmm.util.MessageUtil messageUtil;
+
+
     @Resource(name = "propertiesService")
     private EgovPropertyService propertyService;
 
@@ -90,11 +94,11 @@ public class EgovIndvdlSchdulManageController {
                 vo.setSchdulChargerId(user.getId());
             }
             schdulService.insertIndvdlSchdulManage(vo);
-            ra.addFlashAttribute("successMsg", "일정이 등록되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.sch.registered"));
             return "redirect:/schedule";
         } catch (Exception e) {
             log.error("일정 등록 오류", e);
-            ra.addFlashAttribute("errorMsg", "일정 등록 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.sch.register.error"));
             return "redirect:/schedule/write";
         }
     }
@@ -122,17 +126,17 @@ public class EgovIndvdlSchdulManageController {
         try {
             // 소유자(작성자) 또는 관리자만 수정 가능
             if (!isOwnerOrAdmin(schdulId, user)) {
-                ra.addFlashAttribute("errorMsg", "해당 일정을 수정할 권한이 없습니다.");
+                ra.addFlashAttribute("errorMsg", messageUtil.get("msg.sch.noEditPerm"));
                 return "redirect:/schedule/" + schdulId + "/detail";
             }
             vo.setSchdulId(schdulId);
             if (user != null) vo.setLastUpdusrId(user.getUniqId());
             schdulService.updateIndvdlSchdulManage(vo);
-            ra.addFlashAttribute("successMsg", "일정이 수정되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.sch.updated"));
             return "redirect:/schedule/" + schdulId + "/detail";
         } catch (Exception e) {
             log.error("일정 수정 오류", e);
-            ra.addFlashAttribute("errorMsg", "일정 수정 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.sch.update.error"));
             return "redirect:/schedule/" + schdulId + "/update";
         }
     }
@@ -147,17 +151,17 @@ public class EgovIndvdlSchdulManageController {
         try {
             // 소유자(작성자) 또는 관리자만 삭제 가능
             if (!isOwnerOrAdmin(schdulId, user)) {
-                ra.addFlashAttribute("errorMsg", "해당 일정을 삭제할 권한이 없습니다.");
+                ra.addFlashAttribute("errorMsg", messageUtil.get("msg.sch.noDeletePerm"));
                 return "redirect:/schedule/" + schdulId + "/detail";
             }
             IndvdlSchdulManageVO vo = new IndvdlSchdulManageVO();
             vo.setSchdulId(schdulId);
             if (user != null) vo.setLastUpdusrId(user.getUniqId());
             schdulService.deleteIndvdlSchdulManage(vo);
-            ra.addFlashAttribute("successMsg", "일정이 삭제되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.sch.deleted"));
         } catch (Exception e) {
             log.error("일정 삭제 오류", e);
-            ra.addFlashAttribute("errorMsg", "일정 삭제 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.sch.delete.error"));
         }
         return "redirect:/schedule";
     }

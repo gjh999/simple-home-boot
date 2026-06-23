@@ -29,6 +29,7 @@ public class EgovLoginController {
 
     private final EgovLoginService loginService;
     private final EgovJwtTokenUtil jwtTokenUtil;
+    private final egovframework.com.cmm.util.MessageUtil messageUtil;
 
     @Value("${Globals.jwt.cookieSecure:false}")
     private boolean cookieSecure;
@@ -43,10 +44,10 @@ public class EgovLoginController {
                             @RequestParam(value = "logout", required = false) String logout,
                             Model model) {
         if (error != null) {
-            model.addAttribute("errorMsg", "아이디 또는 비밀번호가 올바르지 않습니다.");
+            model.addAttribute("errorMsg", messageUtil.get("msg.login.fail"));
         }
         if (logout != null) {
-            model.addAttribute("logoutMsg", "로그아웃 되었습니다.");
+            model.addAttribute("logoutMsg", messageUtil.get("msg.logout.done"));
         }
         return "let/uat/uia/loginView";
     }

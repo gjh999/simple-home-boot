@@ -42,6 +42,10 @@ public class EgovBBSManageController {
     @Resource(name = "EgovBBSManageService")
     private EgovBBSManageService bbsMngService;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private egovframework.com.cmm.util.MessageUtil messageUtil;
+
+
     @Resource(name = "EgovBBSAttributeManageService")
     private EgovBBSAttributeManageService bbsAttrbService;
 
@@ -152,7 +156,7 @@ public class EgovBBSManageController {
             board.setAtchFileId(atchFileId);
 
             bbsMngService.insertBoardArticle(board);
-            ra.addFlashAttribute("successMsg", "게시물이 등록되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.bbs.posted"));
             return "redirect:/bbs/" + bbsId + "/list";
         } catch (EgovBizException e) {
             // 첨부파일 확장자/크기 등 검증 오류 — 구체적 사유를 안내하고 입력값을 보존한다.
@@ -162,7 +166,7 @@ public class EgovBBSManageController {
             return "redirect:/bbs/" + bbsId + "/write";
         } catch (Exception e) {
             log.error("게시물 등록 오류", e);
-            ra.addFlashAttribute("errorMsg", "게시물 등록 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.bbs.post.error"));
             ra.addFlashAttribute("board", board);
             return "redirect:/bbs/" + bbsId + "/write";
         }
@@ -212,7 +216,7 @@ public class EgovBBSManageController {
             board.setAtchFileId(atchFileId);
 
             bbsMngService.updateBoardArticle(board);
-            ra.addFlashAttribute("successMsg", "게시물이 수정되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.bbs.updated"));
             return "redirect:/bbs/" + bbsId + "/" + nttId + "/detail";
         } catch (EgovBizException e) {
             log.warn("게시물 수정 검증 오류: {}", e.getMessage());
@@ -220,7 +224,7 @@ public class EgovBBSManageController {
             return "redirect:/bbs/" + bbsId + "/" + nttId + "/update";
         } catch (Exception e) {
             log.error("게시물 수정 오류", e);
-            ra.addFlashAttribute("errorMsg", "게시물 수정 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.bbs.update.error"));
             return "redirect:/bbs/" + bbsId + "/" + nttId + "/update";
         }
     }
@@ -239,10 +243,10 @@ public class EgovBBSManageController {
             req.setNttId(nttId);
 
             bbsMngService.deleteBoardArticle(req, user);
-            ra.addFlashAttribute("successMsg", "게시물이 삭제되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.bbs.deleted"));
         } catch (Exception e) {
             log.error("게시물 삭제 오류", e);
-            ra.addFlashAttribute("errorMsg", "게시물 삭제 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.bbs.delete.error"));
         }
         return "redirect:/bbs/" + bbsId + "/list";
     }

@@ -40,6 +40,10 @@ public class EgovMemberRegisterController {
     @Resource(name = "mberManageService")
     private EgovMberManageService mberManageService;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private egovframework.com.cmm.util.MessageUtil messageUtil;
+
+
     @Resource(name = "loginService")
     private EgovLoginService loginService;
 
@@ -77,23 +81,23 @@ public class EgovMemberRegisterController {
 
         // 1. 필수값 검증
         if (isBlank(mberId) || isBlank(password) || isBlank(mberNm)) {
-            model.addAttribute("errorMsg", "필수 항목을 모두 입력해 주세요.");
+            model.addAttribute("errorMsg", messageUtil.get("msg.register.required"));
             return "let/uss/umt/registerView";
         }
         // 2. 비밀번호 확인
         if (!password.equals(passwordConfirm)) {
-            model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
+            model.addAttribute("errorMsg", messageUtil.get("msg.register.pw.mismatch"));
             return "let/uss/umt/registerView";
         }
         if (password.length() < 4) {
-            model.addAttribute("errorMsg", "비밀번호는 4자 이상이어야 합니다.");
+            model.addAttribute("errorMsg", messageUtil.get("msg.register.pw.tooShort"));
             return "let/uss/umt/registerView";
         }
 
         try {
             // 3. 아이디 중복 확인 (EMPLYR_ID 기준 카운트)
             if (mberManageService.checkIdDplct(mberId) > 0) {
-                model.addAttribute("errorMsg", "이미 사용 중인 아이디입니다.");
+                model.addAttribute("errorMsg", messageUtil.get("msg.register.id.dup"));
                 return "let/uss/umt/registerView";
             }
 
@@ -138,7 +142,7 @@ public class EgovMemberRegisterController {
 
         } catch (Exception e) {
             log.error("회원가입 처리 중 오류", e);
-            model.addAttribute("errorMsg", "회원가입 처리 중 오류가 발생했습니다. 다른 아이디로 다시 시도해 주세요.");
+            model.addAttribute("errorMsg", messageUtil.get("msg.register.error"));
             return "let/uss/umt/registerView";
         }
     }

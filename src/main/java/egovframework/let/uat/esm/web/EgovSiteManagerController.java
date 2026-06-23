@@ -27,6 +27,10 @@ public class EgovSiteManagerController {
     @Resource(name = "siteManagerService")
     private EgovSiteManagerService siteManagerService;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private egovframework.com.cmm.util.MessageUtil messageUtil;
+
+
     /**
      * 관리자 비밀번호 변경 폼
      */
@@ -45,7 +49,7 @@ public class EgovSiteManagerController {
                                   @AuthenticationPrincipal LoginVO loginVO,
                                   RedirectAttributes ra) {
         if (!newPassword.equals(confirmPassword)) {
-            ra.addFlashAttribute("errorMsg", "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.adminpw.mismatch"));
             return "redirect:/admin/password";
         }
 
@@ -58,13 +62,13 @@ public class EgovSiteManagerController {
 
             Integer result = siteManagerService.updateAdminPassword(param);
             if (result != null && result > 0) {
-                ra.addFlashAttribute("successMsg", "비밀번호가 변경되었습니다.");
+                ra.addFlashAttribute("successMsg", messageUtil.get("msg.adminpw.changed"));
             } else {
-                ra.addFlashAttribute("errorMsg", "현재 비밀번호가 일치하지 않습니다.");
+                ra.addFlashAttribute("errorMsg", messageUtil.get("msg.adminpw.curWrong"));
             }
         } catch (Exception e) {
             log.error("비밀번호 변경 오류", e);
-            ra.addFlashAttribute("errorMsg", "비밀번호 변경 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.adminpw.error"));
         }
         return "redirect:/admin/password";
     }

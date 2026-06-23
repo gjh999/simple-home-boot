@@ -31,6 +31,10 @@ public class EgovBBSUseInfoManageController {
     @Resource(name = "EgovBBSUseInfoManageService")
     private EgovBBSUseInfoManageService bbsUseService;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private egovframework.com.cmm.util.MessageUtil messageUtil;
+
+
     @Resource(name = "EgovBBSAttributeManageService")
     private EgovBBSAttributeManageService bbsAttrbService;
 
@@ -125,10 +129,10 @@ public class EgovBBSUseInfoManageController {
             bdUseVO.setUseAt("Y");
             bdUseVO.setFrstRegisterId(loginVO.getUniqId());
             bbsUseService.insertBBSUseInf(bdUseVO);
-            ra.addFlashAttribute("successMsg", "게시판 사용정보가 등록되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.bbsuse.registered"));
         } catch (Exception e) {
             log.error("게시판 사용정보 등록 오류", e);
-            ra.addFlashAttribute("errorMsg", "등록 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.bbsuse.register.error"));
         }
         return "redirect:/bbs/use/list";
     }
@@ -146,10 +150,10 @@ public class EgovBBSUseInfoManageController {
             bdUseVO.setBbsId(bbsId);
             bdUseVO.setTrgetId(trgetId);
             bbsUseService.updateBBSUseInf(bdUseVO);
-            ra.addFlashAttribute("successMsg", "게시판 사용정보가 수정되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.bbsuse.updated"));
         } catch (Exception e) {
             log.error("게시판 사용정보 수정 오류", e);
-            ra.addFlashAttribute("errorMsg", "수정 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.bbsuse.update.error"));
         }
         return "redirect:/bbs/use/" + trgetId + "/" + bbsId + "/detail";
     }

@@ -36,6 +36,10 @@ public class EgovBBSAttributeManageController {
     @Resource(name = "EgovBBSAttributeManageService")
     private EgovBBSAttributeManageService bbsAttrbService;
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private egovframework.com.cmm.util.MessageUtil messageUtil;
+
+
     @Resource(name = "EgovCmmUseService")
     private EgovCmmUseService cmmUseService;
 
@@ -104,10 +108,10 @@ public class EgovBBSAttributeManageController {
             dto.setTrgetId("SYSTEM_DEFAULT_BOARD");
             dto.setPosblAtchFileSize(propertyService.getString("Globals.posblAtchFileSize"));
             bbsAttrbService.insertBBSMastetInf(dto);
-            ra.addFlashAttribute("successMsg", "게시판이 등록되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.bbsmst.registered"));
         } catch (Exception e) {
             log.error("게시판 등록 오류", e);
-            ra.addFlashAttribute("errorMsg", "게시판 등록 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.bbsmst.register.error"));
         }
         return "redirect:/bbs/master/list";
     }
@@ -145,10 +149,10 @@ public class EgovBBSAttributeManageController {
             dto.setLastUpdusrId(loginVO.getUniqId());
             dto.setPosblAtchFileSize(propertyService.getString("Globals.posblAtchFileSize"));
             bbsAttrbService.updateBBSMasterInf(dto);
-            ra.addFlashAttribute("successMsg", "게시판 정보가 수정되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.bbsmst.updated"));
         } catch (Exception e) {
             log.error("게시판 수정 오류", e);
-            ra.addFlashAttribute("errorMsg", "게시판 수정 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.bbsmst.update.error"));
         }
         return "redirect:/bbs/master/" + bbsId + "/detail";
     }
@@ -162,10 +166,10 @@ public class EgovBBSAttributeManageController {
                                       RedirectAttributes ra) {
         try {
             bbsAttrbService.deleteBBSMasterInf(loginVO.getUniqId(), bbsId);
-            ra.addFlashAttribute("successMsg", "게시판이 삭제되었습니다.");
+            ra.addFlashAttribute("successMsg", messageUtil.get("msg.bbsmst.deleted"));
         } catch (Exception e) {
             log.error("게시판 삭제 오류", e);
-            ra.addFlashAttribute("errorMsg", "게시판 삭제 중 오류가 발생했습니다.");
+            ra.addFlashAttribute("errorMsg", messageUtil.get("msg.bbsmst.delete.error"));
         }
         return "redirect:/bbs/master/list";
     }
