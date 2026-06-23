@@ -90,7 +90,7 @@
                               th:classappend="${item.schdulIpcrCode == '1'} ? 'bg-danger' : (${item.schdulIpcrCode == '2'} ? 'bg-warning' : 'bg-gray')"
                               th:text="${item.schdulIpcrCode == '1'} ? #{sch.ipcr.urgent} : (${item.schdulIpcrCode == '2'} ? #{sch.ipcr.important} : #{sch.ipcr.normal})">-</span>
                     </td>
-                    <td class="text-center" th:text="${item.schdulChargerId}">-</td>
+                    <td class="text-center" th:text="${item.frstRegisterNm} ?: ${item.frstRegisterId}">-</td>
                 </tr>
                 <tr th:if="${scheduleList == null or #lists.isEmpty(scheduleList)}">
                     <td colspan="6" class="text-center py-4 text-muted">

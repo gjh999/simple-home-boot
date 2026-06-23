@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <th scope="row" class="text-center bg-light" th:text="#{sch.field.bgn}">시작일시</th>
-                            <td th:text="${schedule?.schdulBeginde}">-</td>
+                            <td th:text="${schedule?.schdulBgnde}">-</td>
                             <th scope="row" class="text-center bg-light" th:text="#{sch.field.end}">종료일시</th>
                             <td th:text="${schedule?.schdulEndde}">-</td>
                         </tr>
@@ -41,7 +41,7 @@
                             <th scope="row" class="text-center bg-light" th:text="#{sch.field.place}">장소</th>
                             <td th:text="${schedule?.schdulPlace}">-</td>
                             <th scope="row" class="text-center bg-light" th:text="#{sch.field.mngr}">담당자</th>
-                            <td th:text="${schedule?.schdulChargerId}">-</td>
+                            <td th:text="${schedule?.schdulChargerName} ?: ${schedule?.schdulChargerId}">-</td>
                         </tr>
                         <tr>
                             <th scope="row" class="text-center bg-light" th:text="#{sch.field.cn}">내용</th>
