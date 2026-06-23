@@ -143,6 +143,13 @@ public class SecurityConfig {
         FilterRegistrationBean<CharacterEncodingFilter> registration =
                 new FilterRegistrationBean<>(characterEncodingFilter());
         registration.addUrlPatterns("/*");
+        // DispatcherType.REQUEST 만으로는 FORWARD/ASYNC 시 인코딩이 누락될 수 있어 전 디스패처 적용
+        registration.setDispatcherTypes(
+                jakarta.servlet.DispatcherType.REQUEST,
+                jakarta.servlet.DispatcherType.FORWARD,
+                jakarta.servlet.DispatcherType.ASYNC,
+                jakarta.servlet.DispatcherType.ERROR,
+                jakarta.servlet.DispatcherType.INCLUDE);
         registration.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return registration;
     }
