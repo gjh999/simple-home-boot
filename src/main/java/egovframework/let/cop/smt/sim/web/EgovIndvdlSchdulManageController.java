@@ -38,7 +38,9 @@ public class EgovIndvdlSchdulManageController {
      * 일정 목록 조회
      */
     @GetMapping({"", "/"})
-    public String scheduleList(@ModelAttribute ComDefaultVO searchVO, Model model) throws Exception {
+    public String scheduleList(@ModelAttribute ComDefaultVO searchVO,
+                               @AuthenticationPrincipal LoginVO user,
+                               Model model) throws Exception {
         if (searchVO.getPageIndex() < 1) searchVO.setPageIndex(1);
 
         PaginationInfo paginationInfo = new PaginationInfo();
@@ -48,6 +50,11 @@ public class EgovIndvdlSchdulManageController {
         searchVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
         searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
         searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+        // 본인 일정만 노출(관리자는 전체). uniqId 를 미사용 필드(searchKeywordFrom)에 실어 매퍼 필터로 전달.
+        if (user != null && !"ROLE_ADMIN".equals(user.getGroupNm())) {
+            searchVO.setSearchKeywordFrom(user.getUniqId());
+        }
 
         List<?> scheduleList = schdulService.selectIndvdlSchdulManageList(searchVO);
         int totalCnt = schdulService.selectIndvdlSchdulManageListCnt(searchVO);
@@ -91,16 +98,34 @@ public class EgovIndvdlSchdulManageController {
             if (user != null) {
                 vo.setFrstRegisterId(user.getUniqId());
                 vo.setLastUpdusrId(user.getUniqId());
-                vo.setSchdulChargerId(user.getId());
+                vo.setSchdulChargerId(user.getUniqId());
             }
+            // datetime-local(yyyy-MM-ddTHH:mm) → 매퍼가 기대하는 yyyyMMddHHmm 형식으로 정규화
+            vo.setSchdulBgnde(normalizeDateTime(vo.getSchdulBgnde()));
+            vo.setSchdulEndde(normalizeDateTime(vo.getSchdulEndde()));
+            // 개인일정 기본 분류값(목록/조회 필터와 정합)
+            if (vo.getSchdulKindCode() == null || vo.getSchdulKindCode().isEmpty()) vo.setSchdulKindCode("2");
+            if (vo.getSchdulSe() == null || vo.getSchdulSe().isEmpty()) vo.setSchdulSe("1"); // 개인일정 구분(CHAR(1))
+
             schdulService.insertIndvdlSchdulManage(vo);
             ra.addFlashAttribute("successMsg", messageUtil.get("msg.sch.registered"));
+            ra.addFlashAttribute("savedModal", true);
             return "redirect:/schedule";
         } catch (Exception e) {
             log.error("일정 등록 오류", e);
             ra.addFlashAttribute("errorMsg", messageUtil.get("msg.sch.register.error"));
             return "redirect:/schedule/write";
         }
+    }
+
+    /**
+     * datetime-local 입력값(yyyy-MM-ddTHH:mm[:ss])을 숫자만 남긴 yyyyMMddHHmm(12자리)로 정규화한다.
+     * 매퍼 INSERT/UPDATE 의 SUBSTRING 파싱 규칙과 일치시킨다.
+     */
+    private String normalizeDateTime(String value) {
+        if (value == null) return null;
+        String digits = value.replaceAll("\\D", "");
+        return digits.length() >= 12 ? digits.substring(0, 12) : digits;
     }
 
     /**
@@ -131,8 +156,13 @@ public class EgovIndvdlSchdulManageController {
             }
             vo.setSchdulId(schdulId);
             if (user != null) vo.setLastUpdusrId(user.getUniqId());
+            vo.setSchdulBgnde(normalizeDateTime(vo.getSchdulBgnde()));
+            vo.setSchdulEndde(normalizeDateTime(vo.getSchdulEndde()));
+            if (vo.getSchdulKindCode() == null || vo.getSchdulKindCode().isEmpty()) vo.setSchdulKindCode("2");
+            if (vo.getSchdulSe() == null || vo.getSchdulSe().isEmpty()) vo.setSchdulSe("1"); // 개인일정 구분(CHAR(1))
             schdulService.updateIndvdlSchdulManage(vo);
             ra.addFlashAttribute("successMsg", messageUtil.get("msg.sch.updated"));
+            ra.addFlashAttribute("savedModal", true);
             return "redirect:/schedule/" + schdulId + "/detail";
         } catch (Exception e) {
             log.error("일정 수정 오류", e);

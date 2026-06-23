@@ -49,6 +49,76 @@ const Egov = {
     formatDate(str) {
         if (!str || str.length < 8) return str;
         return `${str.substring(0, 4)}-${str.substring(4, 6)}-${str.substring(6, 8)}`;
+    },
+
+    // 휴대폰 번호 자동 하이픈 (010-1234-5678). 숫자만 허용, 최대 11자리.
+    formatPhone(digits) {
+        const d = (digits || '').replace(/\D/g, '').slice(0, 11);
+        if (d.length < 4) return d;
+        if (d.length < 8) return d.slice(0, 3) + '-' + d.slice(3);
+        return d.slice(0, 3) + '-' + d.slice(3, 7) + '-' + d.slice(7);
+    },
+
+    // [data-phone] 또는 지정한 input 에 자동 하이픈 동작을 연결한다.
+    // 백스페이스/커서 이동 시에도 자연스럽게 동작하도록 input 이벤트로 재포맷한다.
+    bindPhoneInputs(root) {
+        const scope = root || document;
+        const inputs = scope.querySelectorAll('input[data-phone]');
+        inputs.forEach(function (el) {
+            const reformat = function () {
+                el.value = Egov.formatPhone(el.value);
+            };
+            // 초기값(서버 렌더링)도 정규화
+            if (el.value) reformat();
+            el.addEventListener('input', reformat);
+        });
+    },
+
+    // KRDS 스타일 저장완료 모달. 버튼 클릭 시 redirectUrl 로 이동(없으면 닫기).
+    showSaveModal(message, redirectUrl, btnLabel) {
+        const existing = document.getElementById('egov-save-modal');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'egov-save-modal';
+        overlay.className = 'egov-modal-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-labelledby', 'egov-save-modal-msg');
+
+        const box = document.createElement('div');
+        box.className = 'egov-modal-box';
+
+        const icon = document.createElement('div');
+        icon.className = 'egov-modal-icon';
+        icon.innerHTML = '<i class="bi bi-check-circle-fill"></i>';
+
+        const msg = document.createElement('p');
+        msg.id = 'egov-save-modal-msg';
+        msg.className = 'egov-modal-msg';
+        msg.textContent = message || '저장되었습니다.';
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'krds-btn primary';
+        btn.textContent = btnLabel || '확인';
+
+        const close = function () {
+            overlay.remove();
+            if (redirectUrl) window.location.href = redirectUrl;
+        };
+        btn.addEventListener('click', close);
+        overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+        document.addEventListener('keydown', function onKey(e) {
+            if (e.key === 'Escape') { document.removeEventListener('keydown', onKey); close(); }
+        });
+
+        box.appendChild(icon);
+        box.appendChild(msg);
+        box.appendChild(btn);
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+        btn.focus();
     }
 };
 
@@ -61,6 +131,9 @@ document.addEventListener('DOMContentLoaded', function () {
             bsAlert.close();
         }, 3000);
     });
+
+    // ----- 휴대폰 입력 자동 하이픈 ([data-phone] 전역 적용) -----
+    Egov.bindPhoneInputs(document);
 
     // ----- 헤더 스크롤 효과 -----
     const header = document.querySelector('.egov-header');

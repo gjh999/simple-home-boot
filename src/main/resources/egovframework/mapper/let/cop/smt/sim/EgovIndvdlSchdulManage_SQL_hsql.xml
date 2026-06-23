@@ -178,33 +178,40 @@
 			A.LAST_UPDUSR_ID,
 			A.REPTIT_SE_CODE 
 		FROM TB_SCHDUL_INFO A
-		WHERE 1=1 
-	 
+		WHERE 1=1
+
 	 <if test="searchKeyword != null and searchKeyword != ''">
-	 	
-	 		
-	 		AND SCHDUL_SE LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
-	 		
-	 	
+
+
+	 		AND A.SCHDUL_NM LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+
+
 	 </if>
-	 
+	 <!-- searchKeywordFrom 에 로그인 사용자 uniqId 가 실리면 본인 일정만 노출(관리자는 전체) -->
+	 <if test="searchKeywordFrom != null and searchKeywordFrom != ''">
+	 		AND A.FRST_REGISTER_ID = #{searchKeywordFrom}
+	 </if>
+
 		ORDER BY A.FRST_REGIST_PNTTM DESC
 		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
-	
+
 	</select>
 	
 	<!-- 개인일정정보::목록조회_게시물 총갯수  -->
 	<select id="selectIndvdlSchdulManageCnt" parameterType="comDefaultVO" resultType="int">
 		SELECT 
 		COUNT(*) totcnt
-		FROM TB_SCHDUL_INFO
-		WHERE 1=1 
+		FROM TB_SCHDUL_INFO A
+		WHERE 1=1
 	 <if test="searchKeyword != null and searchKeyword != ''">
-	 	
-	 		
-	 		AND SCHDUL_SE LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
-	 		
-	 	
+
+
+	 		AND A.SCHDUL_NM LIKE CONCAT(CONCAT('%', #{searchKeyword}), '%')
+
+
+	 </if>
+	 <if test="searchKeywordFrom != null and searchKeywordFrom != ''">
+	 		AND A.FRST_REGISTER_ID = #{searchKeywordFrom}
 	 </if>
 	</select>
 

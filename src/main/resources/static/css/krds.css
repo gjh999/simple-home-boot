@@ -555,3 +555,14 @@ select.krds-form-select:focus{ outline:0; border-color:var(--krds-primary,#256EF
 .scroll-top-btn:hover{ background:#0B50D0; transform:translateY(-3px); }
 .scroll-top-btn:focus-visible{ outline:3px solid #93b4ff; outline-offset:2px; }
 @media print { .scroll-top-btn{ display:none !important; } }
+
+/* ===== 저장완료 모달 (공통, Egov.showSaveModal) ===== */
+.egov-modal-overlay{ position:fixed; inset:0; z-index:1080; display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,.45); padding:1rem; animation:egovModalFade .15s ease-out; }
+@keyframes egovModalFade{ from{ opacity:0; } to{ opacity:1; } }
+.egov-modal-box{ background:#fff; border-radius:12px; max-width:380px; width:100%; padding:2rem 1.5rem 1.5rem;
+  text-align:center; box-shadow:0 12px 40px rgba(0,0,0,.22); animation:egovModalPop .18s ease-out; }
+@keyframes egovModalPop{ from{ transform:translateY(8px) scale(.98); opacity:0; } to{ transform:none; opacity:1; } }
+.egov-modal-icon{ font-size:2.6rem; line-height:1; color:#1B7E36; margin-bottom:.75rem; }
+.egov-modal-msg{ font-size:1.05rem; font-weight:600; color:#1f2937; margin:0 0 1.25rem; word-break:keep-all; }
+.egov-modal-box .krds-btn{ min-width:120px; }

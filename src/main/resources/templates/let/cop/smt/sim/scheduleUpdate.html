@@ -38,7 +38,8 @@
                                 <div class="form-tit"><label for="schdulBgnde" th:text="#{sch.field.bgn}">시작일시</label></div>
                                 <div class="form-conts">
                                     <input type="datetime-local" id="schdulBgnde" name="schdulBgnde"
-                                           class="krds-input" th:value="${schedule?.schdulBgnde}"/>
+                                           class="krds-input"
+                                           th:value="${schedule?.schdulBgnde != null and #strings.length(schedule.schdulBgnde) >= 12} ? ${#strings.substring(schedule.schdulBgnde,0,4) + '-' + #strings.substring(schedule.schdulBgnde,4,6) + '-' + #strings.substring(schedule.schdulBgnde,6,8) + 'T' + #strings.substring(schedule.schdulBgnde,8,10) + ':' + #strings.substring(schedule.schdulBgnde,10,12)} : ${schedule?.schdulBgnde}"/>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +48,8 @@
                                 <div class="form-tit"><label for="schdulEndde" th:text="#{sch.field.end}">종료일시</label></div>
                                 <div class="form-conts">
                                     <input type="datetime-local" id="schdulEndde" name="schdulEndde"
-                                           class="krds-input" th:value="${schedule?.schdulEndde}"/>
+                                           class="krds-input"
+                                           th:value="${schedule?.schdulEndde != null and #strings.length(schedule.schdulEndde) >= 12} ? ${#strings.substring(schedule.schdulEndde,0,4) + '-' + #strings.substring(schedule.schdulEndde,4,6) + '-' + #strings.substring(schedule.schdulEndde,6,8) + 'T' + #strings.substring(schedule.schdulEndde,8,10) + ':' + #strings.substring(schedule.schdulEndde,10,12)} : ${schedule?.schdulEndde}"/>
                                 </div>
                             </div>
                         </div>

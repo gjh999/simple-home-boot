@@ -83,8 +83,8 @@
                         <a th:href="@{/schedule/{id}/detail(id=${item.schdulId})}" class="txt"
                            th:text="${item.schdulNm}">일정명</a>
                     </td>
-                    <td class="text-center" th:text="${item.schdulBeginde}">-</td>
-                    <td class="text-center" th:text="${item.schdulEndde}">-</td>
+                    <td class="text-center" th:text="${item.schdulBgnde != null and #strings.length(item.schdulBgnde) >= 12} ? ${#strings.substring(item.schdulBgnde,0,4) + '-' + #strings.substring(item.schdulBgnde,4,6) + '-' + #strings.substring(item.schdulBgnde,6,8) + ' ' + #strings.substring(item.schdulBgnde,8,10) + ':' + #strings.substring(item.schdulBgnde,10,12)} : ${item.schdulBgnde}">-</td>
+                    <td class="text-center" th:text="${item.schdulEndde != null and #strings.length(item.schdulEndde) >= 12} ? ${#strings.substring(item.schdulEndde,0,4) + '-' + #strings.substring(item.schdulEndde,4,6) + '-' + #strings.substring(item.schdulEndde,6,8) + ' ' + #strings.substring(item.schdulEndde,8,10) + ':' + #strings.substring(item.schdulEndde,10,12)} : ${item.schdulEndde}">-</td>
                     <td class="text-center">
                         <span class="krds-badge"
                               th:classappend="${item.schdulIpcrCode == '1'} ? 'bg-danger' : (${item.schdulIpcrCode == '2'} ? 'bg-warning' : 'bg-gray')"
@@ -115,5 +115,17 @@
 
     </div>
 </main>
+<th:block layout:fragment="body-js">
+    <!-- 저장 성공 시 KRDS 모달 표시(확인 클릭 시 현재 목록 유지) -->
+    <script th:if="${savedModal}" th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            Egov.showSaveModal(
+                /*[[${successMsg}]]*/ '저장되었습니다.',
+                null,
+                /*[[#{com.btn.confirm}]]*/ '확인'
+            );
+        });
+    </script>
+</th:block>
 </body>
 </html>
