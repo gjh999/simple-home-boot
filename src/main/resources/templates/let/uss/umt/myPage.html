@@ -25,7 +25,7 @@
 
     <div class="container-fluid px-4">
 
-        <!-- 플래시 메시지 -->
+        <!-- 플래시 메시지 (회원정보 수정) -->
         <div th:if="${successMsg}" class="alert alert-success" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i><span th:text="${successMsg}"></span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}"></button>
@@ -35,140 +35,170 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" th:attr="title=#{com.btn.close}"></button>
         </div>
 
-        <div class="row g-4">
+        <!-- 회원정보/비밀번호를 KRDS 네이티브 탭으로 분리하여 각각 독립 저장 -->
+        <div class="krds-tab-area">
+            <!-- tab list -->
+            <div class="tab line">
+                <ul role="tablist">
+                    <li id="tab_mypage_info" role="tab" aria-selected="true" aria-controls="panel_mypage_info"
+                        th:classappend="${pwSuccessMsg != null or pwErrorMsg != null} ? '' : 'active'">
+                        <button type="button" class="btn-tab">
+                            <i class="bi bi-person-vcard me-1"></i><span th:text="#{mypage.tab.info}">회원정보 수정</span>
+                            <i class="sr-only created" th:text="#{krds.s2.selected}"> 선택됨</i>
+                        </button>
+                    </li>
+                    <li id="tab_mypage_pw" role="tab" aria-selected="false" aria-controls="panel_mypage_pw"
+                        th:classappend="${pwSuccessMsg != null or pwErrorMsg != null} ? 'active' : ''">
+                        <button type="button" class="btn-tab">
+                            <i class="bi bi-shield-lock me-1"></i><span th:text="#{mypage.tab.pw}">비밀번호 변경</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <!-- //tab list -->
 
-            <!-- 회원정보 수정 -->
-            <div class="col-lg-7">
-                <div class="krds-panel h-100">
-                    <div class="krds-panel-head">
-                        <i class="bi bi-person-vcard me-2 text-primary"></i><span th:text="#{mypage.section.info}">회원정보</span>
-                    </div>
-                    <div class="krds-panel-body">
-                        <form th:action="@{/mypage/info}" method="post" id="infoForm">
+            <!-- tab contents -->
+            <div class="tab-conts-wrap">
 
-                            <div class="fieldset">
-                                <div class="form-group">
-                                    <div class="form-tit"><label th:text="#{mber.field.id}">아이디</label></div>
-                                    <div class="form-conts">
-                                        <input type="text" class="krds-input" th:value="${mber?.mberId}" disabled readonly/>
-                                        <p class="form-hint" th:text="#{mypage.id.hint}">아이디는 변경할 수 없습니다.</p>
+                <!-- 회원정보 수정 -->
+                <section id="panel_mypage_info" aria-labelledby="tab_mypage_info" class="tab-conts" data-quick-nav="false"
+                         th:classappend="${pwSuccessMsg != null or pwErrorMsg != null} ? '' : 'active'">
+                    <h3 class="sr-only" th:text="#{mypage.tab.info}">회원정보 수정</h3>
+                    <div class="krds-panel">
+                        <div class="krds-panel-head">
+                            <i class="bi bi-person-vcard me-2 text-primary"></i><span th:text="#{mypage.section.info}">회원정보</span>
+                        </div>
+                        <div class="krds-panel-body">
+                            <form th:action="@{/mypage/info}" method="post" id="infoForm">
+
+                                <div class="fieldset">
+                                    <div class="form-group">
+                                        <div class="form-tit"><label th:text="#{mber.field.id}">아이디</label></div>
+                                        <div class="form-conts">
+                                            <input type="text" class="krds-input" th:value="${mber?.mberId}" disabled readonly/>
+                                            <p class="form-hint" th:text="#{mypage.id.hint}">아이디는 변경할 수 없습니다.</p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="form-tit"><label for="mberNm"><span th:text="#{mypage.field.nm}">이름</span> <span class="frm-rq">*</span></label></div>
-                                    <div class="form-conts">
-                                        <input type="text" id="mberNm" name="mberNm" class="krds-input"
-                                               th:value="${mber?.mberNm}" required maxlength="50"/>
+                                    <div class="form-group">
+                                        <div class="form-tit"><label for="mberNm"><span th:text="#{mypage.field.nm}">이름</span> <span class="frm-rq">*</span></label></div>
+                                        <div class="form-conts">
+                                            <input type="text" id="mberNm" name="mberNm" class="krds-input"
+                                                   th:value="${mber?.mberNm}" required maxlength="50"/>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="form-tit"><label for="mberEmailAdres" th:text="#{mypage.field.email}">이메일</label></div>
-                                    <div class="form-conts">
-                                        <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="krds-input"
-                                               th:value="${mber?.mberEmailAdres}" placeholder="name@example.com" maxlength="50"/>
+                                    <div class="form-group">
+                                        <div class="form-tit"><label for="mberEmailAdres" th:text="#{mypage.field.email}">이메일</label></div>
+                                        <div class="form-conts">
+                                            <input type="email" id="mberEmailAdres" name="mberEmailAdres" class="krds-input"
+                                                   th:value="${mber?.mberEmailAdres}" placeholder="name@example.com" maxlength="50"/>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="form-tit"><label for="moblphonNo" th:text="#{mypage.field.moblphon}">휴대전화</label></div>
-                                    <div class="form-conts">
-                                        <input type="text" id="moblphonNo" name="moblphonNo" class="krds-input"
-                                               th:value="${mber?.moblphonNo}" placeholder="010-0000-0000" maxlength="20"/>
+                                    <div class="form-group">
+                                        <div class="form-tit"><label for="moblphonNo" th:text="#{mypage.field.moblphon}">휴대전화</label></div>
+                                        <div class="form-conts">
+                                            <input type="text" id="moblphonNo" name="moblphonNo" class="krds-input"
+                                                   th:value="${mber?.moblphonNo}" placeholder="010-0000-0000" maxlength="20"/>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="row g-2">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <div class="form-tit"><label for="zip" th:text="#{mypage.field.zip}">우편번호</label></div>
-                                            <div class="form-conts">
-                                                <input type="text" id="zip" name="zip" class="krds-input"
-                                                       th:value="${mber?.zip}" maxlength="6"/>
+                                    <div class="row g-2">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <div class="form-tit"><label for="zip" th:text="#{mypage.field.zip}">우편번호</label></div>
+                                                <div class="form-conts">
+                                                    <input type="text" id="zip" name="zip" class="krds-input"
+                                                           th:value="${mber?.zip}" maxlength="6"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <div class="form-tit"><label for="adres" th:text="#{mypage.field.adres}">주소</label></div>
+                                                <div class="form-conts">
+                                                    <input type="text" id="adres" name="adres" class="krds-input"
+                                                           th:value="${mber?.adres}" maxlength="100"/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-8">
-                                        <div class="form-group">
-                                            <div class="form-tit"><label for="adres" th:text="#{mypage.field.adres}">주소</label></div>
-                                            <div class="form-conts">
-                                                <input type="text" id="adres" name="adres" class="krds-input"
-                                                       th:value="${mber?.adres}" maxlength="100"/>
-                                            </div>
+
+                                    <div class="form-group">
+                                        <div class="form-tit"><label for="detailAdres" th:text="#{mypage.field.detailAdres}">상세주소</label></div>
+                                        <div class="form-conts">
+                                            <input type="text" id="detailAdres" name="detailAdres" class="krds-input"
+                                                   th:value="${mber?.detailAdres}" maxlength="100"/>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <div class="form-tit"><label for="detailAdres" th:text="#{mypage.field.detailAdres}">상세주소</label></div>
-                                    <div class="form-conts">
-                                        <input type="text" id="detailAdres" name="detailAdres" class="krds-input"
-                                               th:value="${mber?.detailAdres}" maxlength="100"/>
-                                    </div>
+                                <div class="krds-form-actions end">
+                                    <button type="submit" class="krds-btn primary">
+                                        <i class="bi bi-save"></i> <span th:text="#{mypage.saveInfo}">정보 저장</span>
+                                    </button>
                                 </div>
-                            </div>
-
-                            <div class="text-end">
-                                <button type="submit" class="krds-btn primary">
-                                    <i class="bi bi-save"></i> <span th:text="#{mypage.saveInfo}">정보 저장</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 비밀번호 변경 -->
-            <div class="col-lg-5">
-                <div class="krds-panel h-100">
-                    <div class="krds-panel-head">
-                        <i class="bi bi-shield-lock me-2 text-info"></i><span th:text="#{mypage.section.pw}">비밀번호 변경</span>
-                    </div>
-                    <div class="krds-panel-body">
-                        <div th:if="${pwSuccessMsg}" class="alert alert-success" role="alert">
-                            <i class="bi bi-check-circle-fill me-2"></i><span th:text="${pwSuccessMsg}"></span>
+                            </form>
                         </div>
-                        <div th:if="${pwErrorMsg}" class="alert alert-danger" role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${pwErrorMsg}"></span>
-                        </div>
-
-                        <form th:action="@{/mypage/password}" method="post" id="pwForm">
-                            <div class="fieldset">
-                                <div class="form-group">
-                                    <div class="form-tit"><label for="oldPassword"><span th:text="#{mypage.pw.cur}">현재 비밀번호</span> <span class="frm-rq">*</span></label></div>
-                                    <div class="form-conts">
-                                        <input type="password" id="oldPassword" name="oldPassword" class="krds-input"
-                                               required autocomplete="current-password" maxlength="100"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-tit"><label for="newPassword"><span th:text="#{mypage.pw.new}">새 비밀번호</span> <span class="frm-rq">*</span></label></div>
-                                    <div class="form-conts">
-                                        <input type="password" id="newPassword" name="newPassword" class="krds-input"
-                                               required autocomplete="new-password" minlength="4" maxlength="100"
-                                               th:placeholder="#{mypage.pw.ph.new}" placeholder="4자 이상"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="form-tit"><label for="confirmPassword"><span th:text="#{mypage.pw.confirm}">새 비밀번호 확인</span> <span class="frm-rq">*</span></label></div>
-                                    <div class="form-conts">
-                                        <input type="password" id="confirmPassword" name="confirmPassword" class="krds-input"
-                                               required autocomplete="new-password" maxlength="100"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-end">
-                                <button type="submit" class="krds-btn primary">
-                                    <i class="bi bi-key"></i> <span th:text="#{mypage.pw.change}">비밀번호 변경</span>
-                                </button>
-                            </div>
-                        </form>
                     </div>
-                </div>
-            </div>
+                </section>
 
+                <!-- 비밀번호 변경 -->
+                <section id="panel_mypage_pw" aria-labelledby="tab_mypage_pw" class="tab-conts" data-quick-nav="false"
+                         th:classappend="${pwSuccessMsg != null or pwErrorMsg != null} ? 'active' : ''">
+                    <h3 class="sr-only" th:text="#{mypage.tab.pw}">비밀번호 변경</h3>
+                    <div class="krds-panel">
+                        <div class="krds-panel-head">
+                            <i class="bi bi-shield-lock me-2 text-info"></i><span th:text="#{mypage.section.pw}">비밀번호 변경</span>
+                        </div>
+                        <div class="krds-panel-body">
+                            <div th:if="${pwSuccessMsg}" class="alert alert-success" role="alert">
+                                <i class="bi bi-check-circle-fill me-2"></i><span th:text="${pwSuccessMsg}"></span>
+                            </div>
+                            <div th:if="${pwErrorMsg}" class="alert alert-danger" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i><span th:text="${pwErrorMsg}"></span>
+                            </div>
+
+                            <form th:action="@{/mypage/password}" method="post" id="pwForm">
+                                <div class="fieldset">
+                                    <div class="form-group">
+                                        <div class="form-tit"><label for="oldPassword"><span th:text="#{mypage.pw.cur}">현재 비밀번호</span> <span class="frm-rq">*</span></label></div>
+                                        <div class="form-conts">
+                                            <input type="password" id="oldPassword" name="oldPassword" class="krds-input"
+                                                   required autocomplete="current-password" maxlength="100"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-tit"><label for="newPassword"><span th:text="#{mypage.pw.new}">새 비밀번호</span> <span class="frm-rq">*</span></label></div>
+                                        <div class="form-conts">
+                                            <input type="password" id="newPassword" name="newPassword" class="krds-input"
+                                                   required autocomplete="new-password" minlength="4" maxlength="100"
+                                                   th:placeholder="#{mypage.pw.ph.new}" placeholder="4자 이상"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-tit"><label for="confirmPassword"><span th:text="#{mypage.pw.confirm}">새 비밀번호 확인</span> <span class="frm-rq">*</span></label></div>
+                                        <div class="form-conts">
+                                            <input type="password" id="confirmPassword" name="confirmPassword" class="krds-input"
+                                                   required autocomplete="new-password" maxlength="100"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="krds-form-actions end">
+                                    <button type="submit" class="krds-btn primary">
+                                        <i class="bi bi-key"></i> <span th:text="#{mypage.pw.change}">비밀번호 변경</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            <!-- //tab contents -->
         </div>
+
     </div>
 
 </main>
@@ -176,12 +206,33 @@
 <script>
 (function () {
     'use strict';
+
+    // ── 탭 전환 (KRDS 네이티브 마크업 기반, 외부 라이브러리 없이 자체 토글) ──
+    var tabArea = document.querySelector('.krds-tab-area');
+    if (tabArea) {
+        var tabs = tabArea.querySelectorAll('[role="tab"]');
+        tabs.forEach(function (tab) {
+            var btn = tab.querySelector('.btn-tab');
+            btn.addEventListener('click', function () {
+                tabs.forEach(function (t) {
+                    var selected = (t === tab);
+                    t.setAttribute('aria-selected', selected ? 'true' : 'false');
+                    t.classList.toggle('active', selected);
+                    var panel = document.getElementById(t.getAttribute('aria-controls'));
+                    if (panel) panel.classList.toggle('active', selected);
+                });
+            });
+        });
+    }
+
+    // ── 회원정보 수정 폼 검증 ──
     var infoForm = document.getElementById('infoForm');
     infoForm.addEventListener('submit', function (e) {
         if (!infoForm.checkValidity()) { e.preventDefault(); e.stopPropagation(); }
         infoForm.classList.add('was-validated');
     });
 
+    // ── 비밀번호 변경 폼 검증 ──
     var pwForm = document.getElementById('pwForm');
     var np = document.getElementById('newPassword');
     var cp = document.getElementById('confirmPassword');

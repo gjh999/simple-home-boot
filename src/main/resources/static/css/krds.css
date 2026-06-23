@@ -377,6 +377,23 @@ body { font-size: 1rem; line-height: 1.6; }
 .krds-btn.danger{ background:#fff; color: var(--krds-danger,#E63946); border:1px solid var(--krds-danger,#E63946); }
 .krds-btn.danger:hover{ background: var(--krds-light-danger,#FDECEE); color: var(--krds-danger,#E63946); }
 
+/* 폼 하단 버튼 영역 — 입력칸과의 상단 여백 + 버튼 사이 간격을 KRDS 간격으로 일관 적용.
+   (취소/저장/삭제/비밀번호변경 등 폼 액션 버튼이 입력칸이나 서로 밀착되지 않도록) */
+.krds-form-actions{
+  display:flex; flex-wrap:wrap; gap:.75rem; align-items:center;
+  margin-top:1.5rem; padding-top:1.25rem;
+  border-top:1px solid var(--krds-gray-10,#e5e7eb);
+}
+.krds-form-actions.end{ justify-content:flex-end; }
+.krds-form-actions.between{ justify-content:space-between; }
+.krds-form-actions.center{ justify-content:center; }
+.krds-form-actions.stack{ flex-direction:column; align-items:stretch; }
+.krds-form-actions.stack > .krds-btn{ width:100%; }
+/* 인접한 폼 액션 버튼끼리 추가 간격(gap 미적용 환경 대비) */
+.krds-form-actions > .krds-btn + .krds-btn,
+.krds-form-actions > form + .krds-btn,
+.krds-form-actions > .krds-btn + form{ margin-left:0; }
+
 /* 폼 입력/셀렉트 */
 .krds-input,.krds-form-select{ height: auto; font-size: .95rem; padding: .5rem .75rem; line-height: 1.5; }
 
@@ -396,7 +413,15 @@ body { font-size: 1rem; line-height: 1.6; }
 /* 페이지네이션 / 배지 */
 .krds-pagination .page-link,.krds-pagination .page-navi{
   min-width: 2.1rem !important; height: 2.1rem !important; padding: 0 .55rem !important; font-size: .9rem !important; }
-.krds-badge{ font-size: .8rem !important; }
+/* 배지 — 16px 루트에서 line-height 토큰(2.4rem) 과대/줄바꿈 방지.
+   상태 텍스트(예: ko '사용' / en 'In Use')가 좁은 표 셀에서 줄바꿈·넘침 없이 한 줄 유지되도록 정규화 */
+.krds-badge{
+  font-size: .8rem !important;
+  line-height: 1.2 !important;
+  white-space: nowrap;
+  padding: .2rem .5rem !important;
+  vertical-align: middle;
+}
 
 /* 탭 */
 .krds-tab-area .tab .btn-tab,.krds-tab-area .btn-tab{
