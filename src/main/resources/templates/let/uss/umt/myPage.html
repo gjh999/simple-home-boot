@@ -73,10 +73,14 @@
 
                                 <div class="fieldset">
                                     <div class="form-group">
-                                        <div class="form-tit"><label th:text="#{mber.field.id}">아이디</label></div>
+                                        <div class="form-tit">
+                                            <label th:text="#{mber.field.id}">아이디</label>
+                                            <i class="bi bi-info-circle" tabindex="0" role="img"
+                                               th:attr="title=#{mypage.id.hint},aria-label=#{mypage.id.hint}"
+                                               title="아이디는 변경할 수 없습니다."></i>
+                                        </div>
                                         <div class="form-conts">
                                             <input type="text" class="krds-input" th:value="${mber?.mberId}" disabled readonly/>
-                                            <p class="form-hint" th:text="#{mypage.id.hint}">아이디는 변경할 수 없습니다.</p>
                                         </div>
                                     </div>
 
