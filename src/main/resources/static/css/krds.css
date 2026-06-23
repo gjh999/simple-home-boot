@@ -501,3 +501,13 @@ select.krds-form-select:focus{ outline:0; border-color:var(--krds-primary,#256EF
 .egov-footer .footer-soc{ display:flex; gap:14px; font-size:1.15rem; }
 .egov-footer .footer-soc a{ color:#9EA4AA; }
 .egov-footer .footer-soc a:hover{ color:#fff; }
+
+/* ── 맨 위로(스크롤 톱) 버튼 ── */
+.scroll-top-btn{ position:fixed; right:24px; bottom:24px; z-index:1010; width:48px; height:48px; border-radius:50%;
+  border:none; background:#256EF4; color:#fff; font-size:1.35rem; box-shadow:0 6px 18px rgba(37,110,244,.42);
+  cursor:pointer; opacity:0; visibility:hidden; transition:opacity .25s, visibility .25s, transform .2s;
+  display:flex; align-items:center; justify-content:center; }
+.scroll-top-btn.show{ opacity:1; visibility:visible; }
+.scroll-top-btn:hover{ background:#0B50D0; transform:translateY(-3px); }
+.scroll-top-btn:focus-visible{ outline:3px solid #93b4ff; outline-offset:2px; }
+@media print { .scroll-top-btn{ display:none !important; } }
