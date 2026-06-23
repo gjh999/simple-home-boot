@@ -13,6 +13,7 @@
 		<result property="registSeCodeNm" column="REGIST_SE_CODE_NM"/>
 		<result property="useAt" column="USE_AT"/>
 		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
+		<result property="frstRegisterNm" column="FRST_REGISTER_NM"/>
 		<result property="frstRegisterPnttm" column="FRST_REGIST_PNTTM"/>
 		<result property="cmmntyId" column="CMMNTY_ID"/>
 		<result property="cmmntyNm" column="CMMNTY_NM"/>
@@ -160,7 +161,7 @@
  		
  			SELECT
 				a.BBS_ID, e.BBS_NM, a.TRGET_ID, a.REGIST_SE_CODE, b.CODE_NM as REGIST_SE_CODE_NM,
-			    a.USE_AT, a.FRST_REGISTER_ID, a.FRST_REGIST_PNTTM,
+			    a.USE_AT, a.FRST_REGISTER_ID, v.USER_NM AS FRST_REGISTER_NM, a.FRST_REGIST_PNTTM,
 				'NOUSE' CMMNTY_ID, 'NOUSE' CMMNTY_NM,
                 'NOUSE' CLB_ID, 'NOUSE' CLB_NM, 'NOUSE' BBS_TY_CODE
 			FROM
@@ -169,6 +170,8 @@
 				ON a.BBS_ID = e.BBS_ID
 			LEFT OUTER JOIN TB_CMMN_DETAIL_CODE b
 				ON b.CODE = a.REGIST_SE_CODE
+            LEFT OUTER JOIN VW_USER_MASTER v
+                ON v.ESNTL_ID = a.FRST_REGISTER_ID
 			WHERE
 				b.CODE_ID = 'COM001'
 			AND 

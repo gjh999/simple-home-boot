@@ -29,7 +29,7 @@
 
                     <div class="fieldset">
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="bbsId"><span th:text="#{bbsuse.write.selectBbs}">게시판 선택</span> <span class="frm-rq">*</span></label></div>
+                            <div class="col-sm-3 form-tit"><label for="bbsId"><span th:text="#{bbsuse.write.selectBbs}">게시판 선택</span> <span class="frm-rq">*</span><i class="bi bi-info-circle" tabindex="0" th:title="#{bbsuse.tip.selectBbs}" title="미사용 게시판 마스터 목록입니다."></i></label></div>
                             <div class="col-sm-9 form-conts">
                                 <select id="bbsId" name="bbsId" class="krds-form-select" required>
                                     <option value="" th:text="#{bbsuse.write.selectBbs.ph}">-- 게시판을 선택하세요 --</option>
@@ -37,15 +37,14 @@
                                             th:value="${bbs.bbsId}"
                                             th:text="${bbs.bbsNm}">게시판명</option>
                                 </select>
-                                <p class="form-hint" th:text="#{bbsuse.write.hint}">미사용 게시판 마스터 목록입니다. 사용하려면 게시판 관리에서 먼저 등록하세요.</p>
                             </div>
                         </div>
 
                         <div class="mb-3 row form-group">
-                            <div class="col-sm-3 form-tit"><label for="trgetId"><span th:text="#{bbsuse.col.trgetId}">대상시스템 ID</span> <span class="frm-rq">*</span></label></div>
+                            <div class="col-sm-3 form-tit"><label for="trgetId"><span th:text="#{bbsuse.col.trgetId}">대상시스템 ID</span><i class="bi bi-info-circle" tabindex="0" th:title="#{bbsuse.tip.trgetId}" title="대상 시스템 식별자"></i></label></div>
                             <div class="col-sm-9 form-conts">
                                 <input type="text" id="trgetId" name="trgetId" class="krds-input"
-                                       value="SYSTEM_DEFAULT_BOARD" maxlength="20" required/>
+                                       value="SYSTEM_DEFAULT_BOARD" maxlength="20" readonly required/>
                             </div>
                         </div>
 

@@ -568,9 +568,36 @@ select.krds-form-select:focus{ outline:0; border-color:var(--krds-primary,#256EF
 .egov-modal-box .krds-btn{ min-width:120px; }
 
 /* 폼 라벨 옆 정보 아이콘(툴팁) — 아이디 변경불가 안내 등. native title 사용 */
-.form-tit .bi-info-circle{
+.form-tit .bi-info-circle,
+label .bi-info-circle,
+th .bi-info-circle,
+.bi-info-circle{
   margin-left:.35rem; color:var(--krds-gray-50,#8A8E94);
   cursor:help; font-size:.95em; vertical-align:-.05em;
 }
 .form-tit .bi-info-circle:hover,
-.form-tit .bi-info-circle:focus-visible{ color:var(--krds-primary,#256ef4); }
+.form-tit .bi-info-circle:focus-visible,
+label .bi-info-circle:hover,
+label .bi-info-circle:focus-visible,
+th .bi-info-circle:hover,
+th .bi-info-circle:focus-visible,
+.bi-info-circle:hover,
+.bi-info-circle:focus-visible{ color:var(--krds-primary,#256ef4); }
+
+/* ── 라디오/체크박스 가시성 보정 (게시판 사용여부 등) ──
+   krds.min.css 가 라디오 스타일을 약하게 잡아 잘 안 보이는 문제 → 명시적 크기/테두리/액센트 */
+.form-check{ display:inline-flex; align-items:center; min-height:auto; }
+.form-check-inline{ margin-right:1.25rem; }
+.form-check-input[type="radio"],
+.form-check-input[type="checkbox"]{
+  /* krds.min.css 가 native radio 를 a11y-hidden(clip/position:absolute) 처리하는 것을 해제 —
+     이 화면들은 KRDS form-check 구조가 아닌 표준 .form-check 라 native 컨트롤을 직접 표시해야 함 */
+  position:static!important; clip:auto!important; clip-path:none!important; overflow:visible!important;
+  white-space:normal!important;
+  -webkit-appearance:auto!important; -moz-appearance:auto!important; appearance:auto!important;
+  width:1.15em!important; height:1.15em!important; min-width:1.15em; margin:0 .4em 0 0!important;
+  padding:0!important; vertical-align:middle; accent-color:var(--krds-primary,#256EF4);
+  border:1px solid var(--krds-gray-40,#8A8E94); cursor:pointer; flex:0 0 auto; opacity:1!important;
+}
+.form-check-input:focus-visible{ outline:2px solid var(--krds-primary,#256EF4); outline-offset:2px; }
+.form-check .form-check-label{ cursor:pointer; line-height:1.2; }
