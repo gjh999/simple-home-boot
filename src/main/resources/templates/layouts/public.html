@@ -62,7 +62,7 @@
     <div class="pub-wrap inner">
         <a th:href="@{/}" class="pub-brand">
             <img class="mark" th:src="@{/images/logo.svg}" alt="eGovFrame"/>
-            <span>eGovFrame</span>
+            <span th:text="#{landing.footer.brand}">전자정부 표준프레임워크</span>
         </a>
         <nav class="pub-links" id="pubLinks" th:attr="aria-label=#{nav.main}" aria-label="주요 메뉴">
             <a class="link" href="/#about" th:classappend="${activeMenu == 'about'} ? 'active'" th:text="#{landing.nav.about}">소개</a>
@@ -71,7 +71,7 @@
             <a class="link" href="/#contact" th:classappend="${activeMenu == 'contact'} ? 'active'" th:text="#{landing.nav.contact}">문의</a>
             <a class="link" th:href="@{/krds-sample}" th:classappend="${activeMenu == 'krds'} ? 'active'" th:text="#{landing.nav.krds}">KRDS 예시</a>
             <span class="pub-lang" role="group" th:attr="aria-label=#{lang.select}" aria-label="언어 선택">
-                <a th:href="@{/cmm/lang(lang='ko')}" th:classappend="${#locale.language == 'ko'} ? 'on'">KO</a>
+                <a th:href="@{/cmm/lang(lang='ko')}" th:classappend="${#locale.language == 'ko'} ? 'on'" th:text="#{lang.korean.short}">한국어</a>
                 <a th:href="@{/cmm/lang(lang='en')}" th:classappend="${#locale.language == 'en'} ? 'on'">EN</a>
             </span>
             <a th:href="@{/portal}" class="pub-cta"><i class="bi bi-grid-1x2"></i> <span th:text="#{landing.nav.portal}">포털 바로가기</span></a>
