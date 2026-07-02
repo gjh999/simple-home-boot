@@ -60,6 +60,7 @@ import lombok.RequiredArgsConstructor;
  *  2009.06.26	한성곤		    2단계 기능 추가 (댓글관리, 만족도조사)
  *  2011.08.31  JJY             경량환경 템플릿 커스터마이징버전 생성
  *  2024.04.06  김재섭(nirsa)     생성자 주입 전환, 불필요한 필드 제거, ResultVoHelper 적용 및 1차 코드 리팩토링
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *
  *  </pre>
  */

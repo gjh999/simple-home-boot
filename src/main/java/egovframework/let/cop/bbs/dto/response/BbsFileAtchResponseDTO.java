@@ -19,6 +19,7 @@ import lombok.experimental.SuperBuilder;
  *   ----------    ------------    ---------------------------
  *   2025.07.03    김재섭(nirsa)     최초 생성
  *   2025.08.11    김재섭(nirsa)     네이밍 변경(BbsDetailResponse -> BbsFileAtchResponseDTO)
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *
  * </pre>
  */

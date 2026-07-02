@@ -22,6 +22,7 @@ import egovframework.let.cop.bbs.dto.request.BbsAttributeUpdateRequestDTO;
  *  -------    --------    ---------------------------
  *  2009.03.12  이삼섭          최초 생성
  *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *
  *  </pre>
  */

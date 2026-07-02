@@ -21,6 +21,7 @@ import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
  *  2011. 8. 12.    서준식        최초생성
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *
  *  </pre>
  */

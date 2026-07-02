@@ -22,6 +22,7 @@ import egovframework.let.uat.esm.service.EgovSiteManagerService;
  *   수정일      수정자          수정내용
  *  -------    --------    ---------------------------
  *  2023.04.15  김일국          최초 생성
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *
  *  </pre>
  */

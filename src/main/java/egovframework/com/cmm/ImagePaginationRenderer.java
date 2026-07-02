@@ -19,6 +19,7 @@ import org.springframework.web.context.ServletContextAware;
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
  *   2011. 9. 16.   서준식       이미지 경로에 ContextPath추가
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  * </pre>
  */
 public class ImagePaginationRenderer extends AbstractPaginationRenderer implements ServletContextAware{

@@ -27,6 +27,7 @@ import lombok.experimental.SuperBuilder;
  *   ----------    ------------     -------------------
  *   2025.08.11    김재섭(nirsa)      최초 생성
  *   2025.08.26    김재섭(nirsa)      공통 필드 추출 및 Docs 보강
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *
  * </pre>
  */

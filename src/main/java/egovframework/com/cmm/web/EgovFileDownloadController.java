@@ -53,6 +53,7 @@ import lombok.extern.slf4j.Slf4j;
  *   2026.5.13  PHJ           보안취약점 대응
  *
  * Copyright (C) 2009 by MOPAS  All right reserved.
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  * </pre>
  */
 @Slf4j

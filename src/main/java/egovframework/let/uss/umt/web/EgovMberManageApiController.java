@@ -57,6 +57,7 @@ import lombok.RequiredArgsConstructor;
  *  -------    --------    ---------------------------
  *   2009.04.10  조재영          최초 생성
  *   2024.07.22  김일국          Boot 템플릿 커스터마이징버전 생성
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *
  *      </pre>
  */

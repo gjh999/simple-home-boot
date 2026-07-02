@@ -53,6 +53,7 @@ import lombok.extern.slf4j.Slf4j;
  *  2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *  2025.11.10             JWT 기반 로그인으로 전환, 세션 기반 로그인 제거
  *  2026.05.13             보안취약점 대응
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *
  *  </pre>
  */

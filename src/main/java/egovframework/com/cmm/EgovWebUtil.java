@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
  *  2018.08.17   신용호       filePathBlackList 수정
  *  2018.10.10   신용호       . => \\.으로 수정
  *  2024.12.04   신용호       filePathBlackList() basePath 파라미터 추가
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  * </pre>
  */
 

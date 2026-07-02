@@ -43,6 +43,7 @@ import lombok.extern.slf4j.Slf4j;
  *  2023.04.20  김일국     리액트에서 사용할 공통인증메서드 추가
  *	2024.07.17	김일국	 @RequestParam 에서 @RequestBody로 변경
  *	2026.05.13	PHJ	 	 보안취약점 대응
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  *  </pre>
  */
 @Slf4j

@@ -24,6 +24,7 @@ import org.springframework.stereotype.Repository;
  *   2009.04.10  JJY            최초 생성
  *   2011.08.31  JJY            경량환경 템플릿 커스터마이징버전 생성
  *	 2024.07.23	 김일국			스프링부트용으로 커스터마이징
+ *   2026.07.02  구재호        Spring Boot + Thymeleaf + KRDS + 다국어(i18n) 전환
  * </pre>
  */
 @Repository("mberManageDAO")
